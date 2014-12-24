@@ -7,7 +7,7 @@ use Chiara\Core\Router;
 abstract class InitAbstract{
 	
 	private $routerIstance;
-	protected $params;
+	private $params;
 	
 	public function __construct($indexStart){
 		$this->params = array();
@@ -27,9 +27,6 @@ abstract class InitAbstract{
 	}
 	
 	public function run(){
-		
-		$http = new Http();
-		Globals::setParam('Http', $http);
 		$router = new Router();
 		$this->routerIstance = $router;
 		Globals::setParam('Router', $router);

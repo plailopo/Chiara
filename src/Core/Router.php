@@ -2,10 +2,6 @@
 
 namespace Chiara\Core;
 
-use Medon\Models\Exception;
-
-use Medon\Controller\SiteController;
-use Chiara\log\Log;
 
 class Router{
 	
@@ -45,10 +41,10 @@ class Router{
 		$act = isset($_POST[$this->actionAccess]) ? $_POST[$this->actionAccess] : $act;
 		
 		//$length = strlen($_SERVER['SERVER_NAME']);
-		$req = substr(Globals::getParam('Http')->getRequestUri(), strpos(Globals::getParam('Http')->getRequestUri(), Globals::getParam('Http')->getServer('SERVER_NAME')));
+		$req = substr(Http::getRequestUri(), strpos(Http::getRequestUri(), Http::getServer('SERVER_NAME')));
 		
-		if(Globals::getParam('Http')->getBaseUrl()!='')
-			$req = str_replace(Globals::getParam('Http')->getBaseUrl().'/', '', $req);
+		if(Http::getBaseUrl()!='')
+			$req = str_replace(Http::getBaseUrl().'/', '', $req);
 		if(substr($req, 0, 1) == '/') $req = substr($req, 1);
 		$req_par = explode('?',$req);
 		$contextDescriptor = explode('/',$req_par[0]);
@@ -58,6 +54,13 @@ class Router{
 		
 		$this->paramContext = $ctrl;
 		$this->paramAction  = $act;
+		
+		if(count($contextDescriptor)>2){
+			for($i=2; $i < count($contextDescriptor); $i++){
+				$c = $i-2;
+				Http::setParam('URL_PARAM'.$c, $contextDescriptor[$i]);
+			}
+		}
 		
 	}
 	
@@ -114,7 +117,7 @@ class Router{
 	
 	public function getUrlFor($action, $context, $params=array()){
 		
-		$url =  Globals::getParam('Http')->getScheme().'://'. $_SERVER['SERVER_NAME'] . Globals::getParam('Http')->getBaseUrl();
+		$url =  Http::getScheme().'://'. $_SERVER['HTTP_HOST'] . Http::getBaseUrl();
 		
 		//if(substr($url, strlen($url)-1, strlen($url)) === '/') $url = substr($url, 0, strlen($url)-1);
 		$url .= (substr($context, 0, 1)==='/' ? '' : '/') . $context;

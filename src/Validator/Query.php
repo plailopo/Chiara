@@ -2,7 +2,7 @@
 
 namespace Chiara\Validator;
 
-class Name extends Validator{
+class Query extends Validator{
 	
 	
 	public static function isValid($str){

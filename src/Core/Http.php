@@ -19,57 +19,50 @@ class Http{
 	 * Allowed parameter sources
 	 * @var array
 	 */
-	protected $_paramSources = array('_GET', '_POST');
+	private static $_paramSources = array('_GET', '_POST');
 
 	/**
 	 * REQUEST_URI
 	 * @var string;
 	 */
-	protected $_requestUri;
+	private static $_requestUri;
 
 	/**
 	 * Base URL of request
 	 * @var string
 	 */
-	protected $_baseUrl = null;
+	private static $_baseUrl = null;
 
 	/**
 	 * Base path of request
 	 * @var string
 	 */
-	protected $_basePath = null;
+	private static $_basePath = null;
 
 	/**
 	 * PATH_INFO
 	 * @var string
 	 */
-	protected $_pathInfo = '';
+	private static $_pathInfo = '';
 
 	/**
 	 * Instance parameters
 	 * @var array
 	 */
-	protected $_params = array();
+	private static $_params = array();
 
 	/**
 	 * Raw request body
 	 * @var string|false
 	 */
-	protected $_rawBody;
+	private static $_rawBody;
 
 	/**
 	 * Alias keys for request parameters
 	 * @var array
 	 */
-	protected $_aliases = array();
+	private static $_aliases = array();
 
-	/**
-	 * Constructor
-	 * @return void
-	 * @throws 
-	 */
-	public function __construct(){
-	}
 
 	/**
 	 * Access values contained in the superglobals as public members
@@ -79,11 +72,11 @@ class Http{
 	 * @param string $key
 	 * @return mixed
 	 */
-	public function get($key)
+	public static function get($key)
 	{
 		switch (true) {
-			case isset($this->_params[$key]):
-				return $this->_params[$key];
+			case isset(self::$_params[$key]):
+				return self::$_params[$key];
 			case isset($_GET[$key]):
 				return $_GET[$key];
 			case isset($_POST[$key]):
@@ -91,9 +84,9 @@ class Http{
 			case isset($_COOKIE[$key]):
 				return $_COOKIE[$key];
 			case ($key == 'REQUEST_URI'):
-				return $this->getRequestUri();
+				return self::getRequestUri();
 			case ($key == 'PATH_INFO'):
-				return $this->getPathInfo();
+				return self::getPathInfo();
 			case isset($_SERVER[$key]):
 				return $_SERVER[$key];
 			case isset($_ENV[$key]):
@@ -109,10 +102,10 @@ class Http{
 	 * @param string $key
 	 * @return boolean
 	 */
-	public function exist($key)
+	public static function exist($key)
 	{
 		switch (true) {
-			case isset($this->_params[$key]):
+			case isset(self::$_params[$key]):
 				return true;
 			case isset($_GET[$key]):
 				return true;
@@ -136,7 +129,7 @@ class Http{
 	 * @param  null|mixed $value
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setQuery($spec, $value = null)
+	public static function setQuery($spec, $value = null)
 	{
 		if ((null === $value) && !is_array($spec)) {
 			require_once 'Zend/Controller/Exception.php';
@@ -144,12 +137,12 @@ class Http{
 		}
 		if ((null === $value) && is_array($spec)) {
 			foreach ($spec as $key => $value) {
-				$this->setQuery($key, $value);
+				self::setQuery($key, $value);
 			}
-			return $this;
+			return true;
 		}
 		$_GET[(string) $spec] = $value;
-		return $this;
+		return true;
 	}
 
 	/**
@@ -162,7 +155,7 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed Returns null if key does not exist
 	 */
-	public function getQuery($key = null, $default = null)
+	public static function getQuery($key = null, $default = null)
 	{
 		if (null === $key) {
 			return $_GET;
@@ -178,7 +171,7 @@ class Http{
 	 * @param  null|mixed $value
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setPost($spec, $value = null)
+	public static function setPost($spec, $value = null)
 	{
 		if ((null === $value) && !is_array($spec)) {
 			require_once 'Zend/Controller/Exception.php';
@@ -186,12 +179,12 @@ class Http{
 		}
 		if ((null === $value) && is_array($spec)) {
 			foreach ($spec as $key => $value) {
-				$this->setPost($key, $value);
+				self::setPost($key, $value);
 			}
-			return $this;
+			return true;
 		}
 		$_POST[(string) $spec] = $value;
-		return $this;
+		return true;
 	}
 
 	/**
@@ -204,7 +197,7 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed Returns null if key does not exist
 	 */
-	public function getPost($key = null, $default = null)
+	public static function getPost($key = null, $default = null)
 	{
 		if (null === $key) {
 			return $_POST;
@@ -223,7 +216,7 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed Returns null if key does not exist
 	 */
-	public function getCookie($key = null, $default = null)
+	public static function getCookie($key = null, $default = null)
 	{
 		if (null === $key) {
 			return $_COOKIE;
@@ -241,7 +234,7 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed Returns null if key does not exist
 	 */
-	public function getServer($key = null, $default = null)
+	public static function getServer($key = null, $default = null)
 	{
 		if (null === $key) {
 			return $_SERVER;
@@ -259,7 +252,7 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed Returns null if key does not exist
 	 */
-	public function getEnv($key = null, $default = null)
+	public static function getEnv($key = null, $default = null)
 	{
 		if (null === $key) {
 			return $_ENV;
@@ -277,7 +270,7 @@ class Http{
 	 * @param string $requestUri
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setRequestUri($requestUri = null)
+	public static function setRequestUri($requestUri = null)
 	{
 		if ($requestUri === null) {
 			if (isset($_SERVER['HTTP_X_REWRITE_URL'])) { // check this first so IIS will catch
@@ -293,7 +286,7 @@ class Http{
 			} elseif (isset($_SERVER['REQUEST_URI'])) {
 				$requestUri = $_SERVER['REQUEST_URI'];
 				// Http proxy reqs setup request uri with scheme and host [and port] + the url path, only use url path
-				$schemeAndHttpHost = $this->getScheme() . '://' . $this->getHttpHost();
+				$schemeAndHttpHost = self::getScheme() . '://' . self::getHttpHost();
 				if (strpos($requestUri, $schemeAndHttpHost) === 0) {
 					$requestUri = substr($requestUri, strlen($schemeAndHttpHost));
 				}
@@ -303,22 +296,22 @@ class Http{
 					$requestUri .= '?' . $_SERVER['QUERY_STRING'];
 				}
 			} else {
-				return $this;
+				return false;
 			}
 		} elseif (!is_string($requestUri)) {
-			return $this;
+			return false;
 		} else {
 			// Set GET items, if available
 			if (false !== ($pos = strpos($requestUri, '?'))) {
 				// Get key => value pairs and set $_GET
 				$query = substr($requestUri, $pos + 1);
 				parse_str($query, $vars);
-				$this->setQuery($vars);
+				self::setQuery($vars);
 			}
 		}
 
-		$this->_requestUri = $requestUri;
-		return $this;
+		self::$_requestUri = $requestUri;
+		return true;
 	}
 
 	/**
@@ -327,13 +320,13 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getRequestUri()
+	public static function getRequestUri()
 	{
-		if (empty($this->_requestUri)) {
-			$this->setRequestUri();
+		if (empty(self::$_requestUri)) {
+			self::setRequestUri();
 		}
 
-		return $this->_requestUri;
+		return self::$_requestUri;
 	}
 
 	/**
@@ -356,10 +349,10 @@ class Http{
 	 * @param mixed $baseUrl
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setBaseUrl($baseUrl = null)
+	public static function setBaseUrl($baseUrl = null)
 	{
 		if ((null !== $baseUrl) && !is_string($baseUrl)) {
-			return $this;
+			return false;
 		}
 
 		if ($baseUrl === null) {
@@ -389,18 +382,18 @@ class Http{
 			}
 
 			// Does the baseUrl have anything in common with the request_uri?
-			$requestUri = $this->getRequestUri();
+			$requestUri = self::getRequestUri();
 
 			if (0 === strpos($requestUri, $baseUrl)) {
 				// full $baseUrl matches
-				$this->_baseUrl = $baseUrl;
-				return $this;
+				self::$_baseUrl = $baseUrl;
+				return true;
 			}
 
 			if (0 === strpos($requestUri, dirname($baseUrl))) {
 				// directory portion of $baseUrl matches
-				$this->_baseUrl = rtrim(dirname($baseUrl), '/');
-				return $this;
+				self::$_baseUrl = rtrim(dirname($baseUrl), '/');
+				return true;
 			}
 
 			$truncatedRequestUri = $requestUri;
@@ -411,8 +404,8 @@ class Http{
 			$basename = basename($baseUrl);
 			if (empty($basename) || !strpos($truncatedRequestUri, $basename)) {
 				// no match whatsoever; set it blank
-				$this->_baseUrl = '';
-				return $this;
+				self::$_baseUrl = '';
+				return true;
 			}
 
 			// If using mod_rewrite or ISAPI_Rewrite strip the script filename
@@ -425,8 +418,8 @@ class Http{
 			}
 		}
 
-		$this->_baseUrl = rtrim($baseUrl, '/');
-		return $this;
+		self::$_baseUrl = rtrim($baseUrl, '/');
+		return true;
 	}
 
 	/**
@@ -435,13 +428,13 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getBaseUrl($raw = false)
+	public static function getBaseUrl($raw = false)
 	{
-		if (null === $this->_baseUrl) {
-			$this->setBaseUrl();
+		if (null === self::$_baseUrl) {
+			self::setBaseUrl();
 		}
 
-		return (($raw == false) ? urldecode($this->_baseUrl) : $this->_baseUrl);
+		return (($raw == false) ? urldecode(self::$_baseUrl) : self::$_baseUrl);
 	}
 
 	/**
@@ -450,17 +443,17 @@ class Http{
 	 * @param string|null $basePath
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setBasePath($basePath = null)
+	public static function setBasePath($basePath = null)
 	{
 		if ($basePath === null) {
 			$filename = (isset($_SERVER['SCRIPT_FILENAME']))
 			? basename($_SERVER['SCRIPT_FILENAME'])
 			: '';
 
-			$baseUrl = $this->getBaseUrl();
+			$baseUrl = self::getBaseUrl();
 			if (empty($baseUrl)) {
-				$this->_basePath = '';
-				return $this;
+				self::$_basePath = '';
+				return true;
 			}
 
 			if (basename($baseUrl) === $filename) {
@@ -474,8 +467,8 @@ class Http{
 			$basePath = str_replace('\\', '/', $basePath);
 		}
 
-		$this->_basePath = rtrim($basePath, '/');
-		return $this;
+		self::$_basePath = rtrim($basePath, '/');
+		return true;
 	}
 
 	/**
@@ -484,13 +477,13 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getBasePath()
+	public static function getBasePath()
 	{
-		if (null === $this->_basePath) {
-			$this->setBasePath();
+		if (null === self::$_basePath) {
+			self::setBasePath();
 		}
 
-		return $this->_basePath;
+		return self::$_basePath;
 	}
 
 	/**
@@ -499,15 +492,15 @@ class Http{
 	 * @param string|null $pathInfo
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setPathInfo($pathInfo = null)
+	public static function setPathInfo($pathInfo = null)
 	{
 		if ($pathInfo === null) {
-			$baseUrl = $this->getBaseUrl(); // this actually calls setBaseUrl() & setRequestUri()
-			$baseUrlRaw = $this->getBaseUrl(false);
+			$baseUrl = self::getBaseUrl(); // this actually calls setBaseUrl() & setRequestUri()
+			$baseUrlRaw = self::getBaseUrl(false);
 			$baseUrlEncoded = urlencode($baseUrlRaw);
 
-			if (null === ($requestUri = $this->getRequestUri())) {
-				return $this;
+			if (null === ($requestUri = self::getRequestUri())) {
+				return false;
 			}
 
 			// Remove the query string from REQUEST_URI
@@ -531,8 +524,8 @@ class Http{
 
 		}
 
-		$this->_pathInfo = (string) $pathInfo;
-		return $this;
+		self::$_pathInfo = (string) $pathInfo;
+		return true;
 	}
 
 	/**
@@ -542,13 +535,13 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getPathInfo()
+	public static function getPathInfo()
 	{
-		if (empty($this->_pathInfo)) {
-			$this->setPathInfo();
+		if (empty(self::$_pathInfo)) {
+			self::setPathInfo();
 		}
 
-		return $this->_pathInfo;
+		return self::$_pathInfo;
 	}
 
 	/**
@@ -559,10 +552,10 @@ class Http{
 	 * @param  array $paramSoures
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setParamSources(array $paramSources = array())
+	public static function setParamSources(array $paramSources = array())
 	{
-		$this->_paramSources = $paramSources;
-		return $this;
+		self::$_paramSources = $paramSources;
+		return true;
 	}
 
 	/**
@@ -570,9 +563,9 @@ class Http{
 	 *
 	 * @return array
 	 */
-	public function getParamSources()
+	public static function getParamSources()
 	{
-		return $this->_paramSources;
+		return self::$_paramSources;
 	}
 
 	/**
@@ -585,11 +578,12 @@ class Http{
 	 * @param mixed $value
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setParam($key, $value)
+	public static function setParam($key, $value)
 	{
-		$key = (null !== ($alias = $this->getAlias($key))) ? $alias : $key;
-		parent::setParam($key, $value);
-		return $this;
+		$alias = self::getAlias($key);
+		$key = (null !== $alias) ? $alias : $key;
+		self::$_params[$key] = $value;
+		return true;
 	}
 
 	/**
@@ -605,13 +599,13 @@ class Http{
 	 * @param mixed $default Default value to use if key not found
 	 * @return mixed
 	 */
-	public function getParam($key, $default = null)
+	public static function getParam($key, $default = null)
 	{
-		$keyName = (null !== ($alias = $this->getAlias($key))) ? $alias : $key;
+		$keyName = (null !== ($alias = self::getAlias($key))) ? $alias : $key;
 
-		$paramSources = $this->getParamSources();
-		if (isset($this->_params[$keyName])) {
-			return $this->_params[$keyName];
+		$paramSources = self::getParamSources();
+		if (isset(self::$_params[$keyName])) {
+			return self::$_params[$keyName];
 		} elseif (in_array('_GET', $paramSources) && (isset($_GET[$keyName]))) {
 			return $_GET[$keyName];
 		} elseif (in_array('_POST', $paramSources) && (isset($_POST[$keyName]))) {
@@ -630,10 +624,10 @@ class Http{
 	 *
 	 * @return array
 	 */
-	public function getParams()
+	public static function getParams()
 	{
-		$return       = $this->_params;
-		$paramSources = $this->getParamSources();
+		$return       = self::$_params;
+		$paramSources = self::getParamSources();
 		if (in_array('_GET', $paramSources)
 				&& isset($_GET)
 				&& is_array($_GET)
@@ -658,12 +652,12 @@ class Http{
 	 * @param array $params
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setParams(array $params)
+	public static function setParams(array $params)
 	{
 		foreach ($params as $key => $value) {
-			$this->setParam($key, $value);
+			self::setParam($key, $value);
 		}
-		return $this;
+		return true;
 	}
 
 	/**
@@ -676,10 +670,10 @@ class Http{
 	 * @param string $target
 	 * @return Zend_Controller_Request_Http
 	 */
-	public function setAlias($name, $target)
+	public static function setAlias($name, $target)
 	{
-		$this->_aliases[$name] = $target;
-		return $this;
+		self::$_aliases[$name] = $target;
+		return true;
 	}
 
 	/**
@@ -690,10 +684,10 @@ class Http{
 	 * @param string $name
 	 * @return string|null Returns null when no alias exists
 	 */
-	public function getAlias($name)
+	public static function getAlias($name)
 	{
-		if (isset($this->_aliases[$name])) {
-			return $this->_aliases[$name];
+		if (isset(self::$_aliases[$name])) {
+			return self::$_aliases[$name];
 		}
 
 		return null;
@@ -704,9 +698,9 @@ class Http{
 	 *
 	 * @return array
 	 */
-	public function getAliases()
+	public static function getAliases()
 	{
-		return $this->_aliases;
+		return self::$_aliases;
 	}
 
 	/**
@@ -714,9 +708,9 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getMethod()
+	public static function getMethod()
 	{
-		return $this->getServer('REQUEST_METHOD');
+		return self::getServer('REQUEST_METHOD');
 	}
 
 	/**
@@ -724,9 +718,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isPost()
+	public static function isPost()
 	{
-		if ('POST' == $this->getMethod()) {
+		if ('POST' == self::getMethod()) {
 			return true;
 		}
 
@@ -738,9 +732,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isGet()
+	public static function isGet()
 	{
-		if ('GET' == $this->getMethod()) {
+		if ('GET' == self::getMethod()) {
 			return true;
 		}
 
@@ -752,9 +746,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isPut()
+	public static function isPut()
 	{
-		if ('PUT' == $this->getMethod()) {
+		if ('PUT' == self::getMethod()) {
 			return true;
 		}
 
@@ -766,9 +760,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isDelete()
+	public static function isDelete()
 	{
-		if ('DELETE' == $this->getMethod()) {
+		if ('DELETE' == self::getMethod()) {
 			return true;
 		}
 
@@ -780,9 +774,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isHead()
+	public static function isHead()
 	{
-		if ('HEAD' == $this->getMethod()) {
+		if ('HEAD' == self::getMethod()) {
 			return true;
 		}
 
@@ -794,9 +788,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isOptions()
+	public static function isOptions()
 	{
-		if ('OPTIONS' == $this->getMethod()) {
+		if ('OPTIONS' == self::getMethod()) {
 			return true;
 		}
 
@@ -810,9 +804,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isXmlHttpRequest()
+	public static function isXmlHttpRequest()
 	{
-		return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
+		return (self::getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
 	}
 
 	/**
@@ -820,9 +814,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isFlashRequest()
+	public static function isFlashRequest()
 	{
-		$header = strtolower($this->getHeader('USER_AGENT'));
+		$header = strtolower(self::getHeader('USER_AGENT'));
 		return (strstr($header, ' flash')) ? true : false;
 	}
 
@@ -831,9 +825,9 @@ class Http{
 	 *
 	 * @return boolean
 	 */
-	public function isSecure()
+	public static function isSecure()
 	{
-		return ($this->getScheme() === self::SCHEME_HTTPS);
+		return (self::getScheme() === self::SCHEME_HTTPS);
 	}
 
 	/**
@@ -841,18 +835,18 @@ class Http{
 	 *
 	 * @return string|false Raw body, or false if not present
 	 */
-	public function getRawBody()
+	public static function getRawBody()
 	{
-		if (null === $this->_rawBody) {
+		if (null === self::$_rawBody) {
 			$body = file_get_contents('php://input');
 
 			if (strlen(trim($body)) > 0) {
-				$this->_rawBody = $body;
+				self::$_rawBody = $body;
 			} else {
-				$this->_rawBody = false;
+				self::$_rawBody = false;
 			}
 		}
-		return $this->_rawBody;
+		return self::$_rawBody;
 	}
 
 	/**
@@ -864,7 +858,7 @@ class Http{
 	 * @return string|false HTTP header value, or false if not found
 	 * @throws Zend_Controller_Request_Exception
 	 */
-	public function getHeader($header)
+	public static function getHeader($header)
 	{
 		if (empty($header)) {
 			require_once 'Zend/Controller/Request/Exception.php';
@@ -900,9 +894,9 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getScheme()
+	public static function getScheme()
 	{
-		return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
+		return (self::getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
 	}
 
 	/**
@@ -914,16 +908,16 @@ class Http{
 	 *
 	 * @return string
 	 */
-	public function getHttpHost()
+	public static function getHttpHost()
 	{
-		$host = $this->getServer('HTTP_HOST');
+		$host = self::getServer('HTTP_HOST');
 		if (!empty($host)) {
 			return $host;
 		}
 
-		$scheme = $this->getScheme();
-		$name   = $this->getServer('SERVER_NAME');
-		$port   = $this->getServer('SERVER_PORT');
+		$scheme = self::getScheme();
+		$name   = self::getServer('SERVER_NAME');
+		$port   = self::getServer('SERVER_PORT');
 
 		if(null === $name) {
 			return '';
@@ -941,14 +935,14 @@ class Http{
 	 * @param  boolean $checkProxy
 	 * @return string
 	 */
-	public function getClientIp($checkProxy = true)
+	public static function getClientIp($checkProxy = true)
 	{
-		if ($checkProxy && $this->getServer('HTTP_CLIENT_IP') != null) {
-			$ip = $this->getServer('HTTP_CLIENT_IP');
-		} else if ($checkProxy && $this->getServer('HTTP_X_FORWARDED_FOR') != null) {
-			$ip = $this->getServer('HTTP_X_FORWARDED_FOR');
+		if ($checkProxy && self::getServer('HTTP_CLIENT_IP') != null) {
+			$ip = self::getServer('HTTP_CLIENT_IP');
+		} else if ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
+			$ip = self::getServer('HTTP_X_FORWARDED_FOR');
 		} else {
-			$ip = $this->getServer('REMOTE_ADDR');
+			$ip = self::getServer('REMOTE_ADDR');
 		}
 
 		return $ip;

@@ -3,7 +3,6 @@
 namespace Chiara\Core;
 
 abstract class ControllerAbstract{
-
 	
 	public function __construct(){
 		
@@ -32,14 +31,25 @@ abstract class ControllerAbstract{
 		return $default;
 	}
 	
-	public function getParam($name, $default){
-		if(isset($_POST[$name])) return $_POST[$name];
-		if(isset($_GET[$name])) return $_GET[$name];
-		return $default;
+	public function getParam($name, $default=null){
+		return Http::getParam($name, $default);
 	}
 	
 	public function getFile($name){
 		if(isset($_FILES[$name])) return $_FILES[$name];
 		return false;
 	}
+	
+	public function setParam($name, $value){
+		$_POST[$name] = $value;
+	}
+	
+	public function setParamPost($name, $value){
+		$_POST[$name] = $value;
+	}
+	
+	public function setParamGet($name, $value){
+		$_GET[$name] = $value;
+	}
+	
 }

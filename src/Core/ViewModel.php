@@ -3,23 +3,20 @@
 namespace Chiara\Core;
 
 
+use Chiara\Message\UserMessage;
+use Chiara\Message\UserMessageMapper;
 class ViewModel{
 	
-	private $params;
-	private $layout;
+	// Accesso statico ai parametri
+	private static $params;
 	
-	private $viewName;
+	private static $preRenderingCallback = '';
+	private static $layout;
+	private static $viewName;
 	
 	public function __construct($vars=array()){
-		$this->params = $vars;
+		self::$params = $vars;
 		$this->layout = '';
-	}
-	
-	
-	public static function renderHTMLOnFly($name, $data=array()){
-		$vm = new ViewModel();
-		$vm->assign($data);
-		return $vm->renderHTML($name, true);
 	}
 	
 	/**
@@ -27,76 +24,132 @@ class ViewModel{
 	 * @param unknown_type $param
 	 * @param unknown_type $value
 	 */
-	public function assign($param, $value=''){
+	public static function assign($param, $value=''){
 		if(is_array($param)){
 			foreach ($param as $k=>$v){
-				$this->params[$k] = $v;
+				self::$params[$k] = $v;
 			}
 		}else{
-			$this->params[$param] = $value;
+			self::$params[$param] = $value;
 		}
 	}
 	
-	public function param($param){
-		if(isset($this->params[$param]))
-			return $this->params[$param];
+	public static function param($param){
+		if(isset(self::$params[$param]))
+			return self::$params[$param];
 		return '';
 	}
 	
-	public function setLayout($name){
-		$this->layout = $name;
+	public static function setLayout($name){
+		self::$layout = $name;
 	}
 	
-	public function renderJSON(){
-		header('Content-Type: application/json');
-		$rsp = json_encode($this->params);
+	public static function renderJSON($contentType='application/json'){
+		
+		self::callPreRenderingCallback();
+		
+		header('Content-Type: '.$contentType);
+		header('Access-Control-Allow-Origin: *');
+		$rsp = json_encode(self::$params);
 		if(isset($_GET['fnc']) && preg_match('/[A-Za-z_.]*/',$_GET['fnc'])!=0){
 			$rsp = $_GET['fnc'] . '(' . $rsp . ')';
 		}
 		echo $rsp;
 	}
 	
-	public function renderHTML($name, $asString = false){
+	public static function renderHTML($name, $asString = false, $callback=""){
+	
+		self::callPreRenderingCallback();
+	
+		self::$viewName = $name;
 		
-		$this->viewName = $name;
 		if($asString) ob_start();
-			
-		if($this->layout != ''){
+		
+		if(isset(self::$layout) && self::$layout != ''){
 			$file  = Globals::getParam('layoutsDir', '/');
-			$file .= '/' . $this->layout . '.phtml';
-			include realpath($file);
+			$file .= '/' . self::$layout . '.phtml';
+			if(file_exists($file))
+				include realpath($file);
 		}
 		else{
-			$this->getContents();
+			self::getContents();
 		}
-		
+	
 		if($asString) return ob_get_clean();
-		
+	
 	}
 	
-	private function getContents(){
+	public static function getContents($name=false){
 		
 		$file  = Globals::getParam('viewsDir', '/');
-		$file .= '/' . $this->viewName . '.phtml';
+		if($name) 
+			$file .= '/' . $name . '.phtml';
+		else 
+			$file .= '/' . self::$viewName . '.phtml';
 		
-		include realpath($file);
+		if(file_exists($file))
+			include realpath($file);
 	}
 	
-	private function getOption($name){
+	public static function getOption($name){
 		
 		switch ($name){
 			case 'urlbase':
-				return Globals::getParam('Http')->getBaseUrl();
+				return Http::getBaseUrl();
 			case 'abs_urlbase':
-				return Globals::getParam('Http')->getScheme() .'://'. $_SERVER['SERVER_NAME'] . Globals::getParam('Http')->getBaseUrl();
+				return Http::getScheme() .'://'. $_SERVER['HTTP_HOST'] . Http::getBaseUrl();
 			case 'http_abs_urlbase':
-				return 'http://'. $_SERVER['SERVER_NAME'] . Globals::getParam('Http')->getBaseUrl();
+				return 'http://'. $_SERVER['HTTP_HOST'] . Http::getBaseUrl();
 			case 'https_abs_urlbase':
-				return 'https://'. $_SERVER['SERVER_NAME'] . Globals::getParam('Http')->getBaseUrl();
+				return 'https://'. $_SERVER['HTTP_HOST'] . Http::getBaseUrl();
 			default:
 				return '';
 		}
 		
 	}
+	
+	public static function setPreRenderingCallback($fnc, $param){
+		self::$preRenderingCallback = array('name' => $fnc, 'params' => $param);
+	}
+	
+	public static function callPreRenderingCallback(){
+		if(is_array(self::$preRenderingCallback) && isset(self::$preRenderingCallback['name'])){
+			if(isset(self::$preRenderingCallback['params'])){
+				call_user_func_array(self::$preRenderingCallback['name'], array());
+			}
+			else{
+				call_user_func_array(self::$preRenderingCallback['name'], self::$preRenderingCallback['params']);
+			}
+		}
+	}
+	
+	public static function paginator($list, $page, $rows, $total){
+		
+		$ret = array(
+				'list' => $list,
+				'currentPage' => $page,
+				'pgTotalPage' => ceil($total/$rows),
+				'rowsPerPage' => $rows,
+				'pgTotalItem' => $total
+		);
+	
+		return $ret;
+	}
 
+	/** PARSING SPECIAL TAG
+	 example {#label asdasd ITA}
+	 \{\#label ([a-z\.\-_]*) ([a-zA-Z]*)\}\U
+	public static function parseSpecialTag($string){
+	
+		preg_match_all("|{\#(.*)\}|U", $string, $result);
+		
+		$conversion = [];
+		if(is_array($result)) for($i=0; $i<count($result[0]); $i++){
+			$func = explode(" ", $result[1][$i], 1);
+			
+			if($func == '')
+		}
+	
+	}
+	*/
 }

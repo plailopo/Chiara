@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiara\Core;
+namespace Chiara\Utils;
 
 class FileSystem{
 	
@@ -15,7 +15,7 @@ class FileSystem{
 					$absFile = realpath($dir.'/'.$file);
 					if(is_dir($absFile)){
 						if(!@rmdir($absFile)){
-							Application_Model_Utils::deleteDir($absFile.'/');
+							FileSystem::deleteDir($absFile.'/');
 						}
 					}
 					else{

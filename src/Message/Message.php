@@ -2,7 +2,7 @@
 
 namespace Chiara\Message;
 
-class UserMessage{
+class Message{
 
 	private $type;
 	private $text;
@@ -31,12 +31,12 @@ class UserMessage{
     }
 
  	public function create($text, $level=UserMessage::INFO, $type='fast', $description='', $buttons=array()){
-    	return new UserMessage($text, $level, $type, $description, $buttons);
+    	return new Message($text, $level, $type, $description, $buttons);
     }
     
     
     public function getText(){
-    	return htmlentities(htmlspecialchars($this->text));
+    	return $this->text;
     }
     
     public function setText($value){
@@ -56,7 +56,7 @@ class UserMessage{
     }
     
     public function getDescription(){
-    	return htmlentities(htmlspecialchars($this->description));
+    	return $this->description;
     }
     
     public function setDescription($value){

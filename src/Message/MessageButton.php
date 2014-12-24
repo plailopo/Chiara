@@ -2,7 +2,7 @@
 
 namespace Chiara\Message;
 
-class UserMessageButton{
+class MessageButton{
 
 	private $value;
 	private $type;
