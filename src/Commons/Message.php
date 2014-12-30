@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiara\Message;
+namespace Chiara\Commons;
 
 class Message{
 

@@ -1,9 +1,10 @@
 <?php
 
-namespace Chiara\Db;
+namespace Chiara\Commons;
 
+use \PDO;
 
-class Adapter{
+class DBDriver{
 	
 	const QUERY_DIRECT				= 0;
 	const QUERY_PREPARED_NAMED		= 1;
@@ -152,23 +153,23 @@ class Adapter{
 	/**
 	* Execute query
 	*/
-	public function query($sql, $params = array(), $type = Adapter::QUERY_DIRECT){
+	public function query($sql, $params = array(), $type = DBDriver::QUERY_DIRECT){
 		array_push($this->logs, $sql);
 		
 		$sth = null;
-		if($type == Adapter::QUERY_PREPARED_NAMED){
+		if($type == DBDriver::QUERY_PREPARED_NAMED){
 		
 			$sth = $this->pdo->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute($params);
 			
-		}else if($type == Adapter::QUERY_PREPARED_MARKED){
+		}else if($type == DBDriver::QUERY_PREPARED_MARKED){
 		
-			$sth = $dbh->prepare($sql);
+			$sth = $this->pdo->prepare($sql);
 			$sth->execute($params);
 			
 		}else{
 		
-			$sth = $dbh->query($sql);
+			$sth = $this->pdo->query($sql);
 			
 		}
 		
@@ -179,8 +180,8 @@ class Adapter{
 	/**
 	* Execute query and return first element
 	*/
-	public function queryOne($sql, $params = array(), $type = Adapter::QUERY_DIRECT){
-		$rslt = this->query($sql, $params, $type);
+	public function queryOne($sql, $params = array(), $type = DBDriver::QUERY_DIRECT){
+		$rslt = $this->query($sql, $params, $type);
 		if($rslt && count($rslt)>0) return $rslt[0];
 	}
 	

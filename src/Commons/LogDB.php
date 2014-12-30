@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiara\Log;
+namespace Chiara\Commons;
 
 class LogDB extends Log{
 	

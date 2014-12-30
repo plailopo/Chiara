@@ -1,10 +1,10 @@
 <?php
 
-namespace Chiara\Utils;
+namespace Chiara\Commons;
 
 use Chiara\Core\Exception;
 
-class UDatetime{
+class DateHelper{
 	
 	const DATE_COMPRESS				= 'Ymd';
 	

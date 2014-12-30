@@ -1,5 +1,5 @@
 <?php
-namespace Chiara\Message;
+namespace Chiara\Commons;
 
 
 use Chiara\Core\ViewModel;

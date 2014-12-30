@@ -1,4 +1,6 @@
 Chiara
 ======
 
-Another PHP framework, simple, fast...
+A complete PHP, css, javascript, HTML5 framework
+
+Very light, really fast

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiara\I18n;
+namespace Chiara\Commons;
 
 class Translator{
 

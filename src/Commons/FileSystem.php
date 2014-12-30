@@ -1,6 +1,6 @@
 <?php
 
-namespace Chiara\Utils;
+namespace Chiara\Commons;
 
 class FileSystem{
 	

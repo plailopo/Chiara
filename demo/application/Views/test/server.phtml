@@ -1,0 +1,195 @@
+<?php 
+use Chiara\Core\ViewModel;
+ViewModel::getContents('site/header');
+?>
+
+<div class="section group" id="main">
+	<div class="col span_1_of_5">
+		<ul class="leftmenu">
+			<li><a href="#S" onclick="Chiara.scrollTo('#SSce')">Scenario</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SFol')">Folders tree</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SCon')">Configuration</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SLoa')">Index.php / Loader</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SRou')">Routing</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SIni')">Init</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SCtr')">Controller</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SVie')">View</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SLay')">Layout</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SMod')">Model</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SSes')">Session</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SCac')">Cache</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SGlo')">Globals</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SHtt')">Http</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SFil')">File transfer</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SVal')">Validators</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SDat')">Date helper</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SDri')">Database driver</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SSys')">File system</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SLog')">Log</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#SMes')">Message</a></li>
+			<li><a href="#S" onclick="Chiara.scrollTo('#STra')">Translator I18n</a></li>
+			</ul>
+	</div>
+	<div class="col span_4_of_5">
+
+			<h1>Server side documentation</h1>
+
+			<div class="box padd mrggh" id="SSce">
+				<h2>Scenario</h2><br />
+				Chiara is a complete framework to develop any web service type.<br />
+				It's a MVC framework.
+			</div>
+			
+			<div class="box padd mrggh" id="SFol">
+				<h2>Folders tree</h2><br />
+				Chiara is a library that can be used externally to your application. Here is exhibited a masting of example for writing applications.
+				
+				<h4>/application</h4>
+				Really server side application<br /><br />
+				<h4>/application/Config</h4>
+				configuration files<br /><br />
+				<h4>/application/Controller</h4>
+				Controllers<br /><br />
+				<h4>/application/Layout</h4>
+				Layout tamplate page<br /><br />
+				<h4>/application/Model</h4>
+				Model classes<br /><br />
+				<h4>/application/View</h4>
+				Views<br /><br />
+				<h4>/public</h4>
+				Index.php, css, javascript and images
+			</div>
+			
+			<div class="box padd mrggh" id="SCon">
+				<h2>Configuration</h2>
+				<br /><br />
+				The only configuration you need is /application/configuration/configuration.php as a PHP Array<br />
+				<br />
+				
+				
+				<div>$config = array(</div>
+				<div class="padl">'config' => array(</div>
+				<div class="paddl">"controllerAccess" 	=> "ctrl", # post controller param name </div>
+				<div class="padddl">"actionAccess" 	=> "act", # post action param name</div>
+				<div class="padddl">"controllers" 		=> array( # Exposed controller </div>
+				<div class="paddddl">array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/"),</div>
+				<div class="paddddl">array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/site"),</div>
+				<div class="paddddl">array("classname" => "App\\Controllers\\ErrorCtrl", "context" => "/error"),</div>
+				<div class="paddddl">array("classname" => "App\\Controllers\\TestCtrl", "context" => "/test")</div>
+				<div class="paddddl">...</div>
+				<div class="paddl">),</div>
+				<div class="paddl">"params" 			=> array(</div>
+				<div class="padddl">...</div>
+				<div class="paddl">)</div>
+				<div class="padl">)</div>
+				<div>);</div>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SLoa">
+				<h2>Index.php / Loader</h2>
+				The start point of a PHP application is always the index.php file.<br />
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SRou">
+				<h2>Routing</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SIni">
+				<h2>Init</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SCtr">
+				<h2>Controller</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SRVie">
+				<h2>View</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SLay">
+				<h2>Layout</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SMod">
+				<h2>Model</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SSes">
+				<h2>Session</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SCac">
+				<h2>Cache</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SGlo">
+				<h2>Global</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SHtt">
+				<h2>Http helper</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SFil">
+				<h2>File transfer</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SVal">
+				<h2>Validators</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SDat">
+				<h2>Date helper</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SDri">
+				<h2>Database driver</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SSys">
+				<h2>File system</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SLog">
+				<h2>Log</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="SMes">
+				<h2>Message</h2>
+				
+			</div>
+			
+			<div class="box padd mrggh" id="STra">
+				<h2>Translator I18n</h2>
+				
+			</div>
+			
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+});
+</script>
+
+<?php ViewModel::getContents('site/footer');  ?>
+

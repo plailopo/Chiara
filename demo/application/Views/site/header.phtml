@@ -1,0 +1,24 @@
+<?php 
+use Chiara\Core\ViewModel;
+?>
+
+
+<header>
+
+
+	<div class="section group">
+		<div class="col span_1_of_5">
+			<h2 class="logo"><a href="<?php echo ViewModel::getOption('urlbase') ?>/">Demo</a></h2>
+		</div>
+		<div class="col span_4_of_5">
+			<ul>
+				<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/" class="<?php echo ViewModel::param('menu') == 'home' ? 'active' : '' ?>">Home</a></li>
+				<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test" class="<?php echo ViewModel::param('menu') == 'test' ? 'active' : '' ?>">Style</a></li>
+				<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/client" class="<?php echo ViewModel::param('menu') == 'client' ? 'active' : '' ?>">Client</a></li>
+				<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/server" class="<?php echo ViewModel::param('menu') == 'server' ? 'active' : '' ?>">Server</a></li>
+			</ul>
+		</div>
+	</div>
+	
+
+</header>
