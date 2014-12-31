@@ -8,8 +8,8 @@ body {
   background:#fff;
   color:#000;
   font-family:'Helvetica Neue', HelveticaNeue, Helvetica, sans-serif;
-  font-size:12px;
-  line-height:1.2em;
+  font-size:14px;
+  line-height:1.4em;
   margin:0; 
   padding:0;
   height:100%;
@@ -36,12 +36,13 @@ body {
 .span_8_of_8 { width: 100%; }  .span_7_of_8 { width: 87.3%; }.span_6_of_8 { width: 74.6%; }.span_5_of_8 { width: 61.9%; }.span_4_of_8 { width: 49.2%; }.span_3_of_8 { width: 36.5%; }  .span_2_of_8 { width: 23.8%; }.span_1_of_8 { width: 11.1%; }.span_9_of_9 { width: 100%; }  .span_8_of_9 { width: 88.71%; }  .span_7_of_9 { width: 77.42%; }.span_6_of_9 { width: 66.13%; }.span_5_of_9 { width: 54.84%; }.span_4_of_9 { width: 43.55%; }.span_3_of_9 { width: 32.26%; }  .span_2_of_9 { width: 20.97%; }.span_1_of_9 { width: 9.68%; }
 .span_10_of_10 { width: 100%; }  .span_9_of_10 { width: 89.84%; }  .span_8_of_10 { width: 79.68%; }  .span_7_of_10 { width: 69.52%; }.span_6_of_10 { width: 59.36%; }.span_5_of_10 { width: 49.2%; }.span_4_of_10 { width: 39.04%; }.span_3_of_10 { width: 28.88%; }  .span_2_of_10 { width: 18.72%; }.span_1_of_10 { width: 8.56%; }
 .span_11_of_11 { width: 100%; }  .span_10_of_11 { width: 90.76%; }  .span_9_of_11 { width: 81.52%; }  .span_8_of_11 { width: 72.29%; }  .span_7_of_11 { width: 63.05%; }.span_6_of_11 { width: 53.81%; }.span_5_of_11 { width: 44.58%; }.span_4_of_11 { width: 35.34%; }.span_3_of_11 { width: 26.1%; }  .span_2_of_11 { width: 16.87%; }.span_1_of_11 { width: 7.63%; }.span_12_of_12 { width: 100%; }  .span_11_of_12 { width: 91.53%; }  .span_10_of_12 { width: 83.06%; }  .span_9_of_12 { width: 74.6%; }  .span_8_of_12 { width: 66.13%; }  .span_7_of_12 { width: 57.66%; }.span_6_of_12 { width: 49.2%; }.span_5_of_12 { width: 40.73%; }.span_4_of_12 { width: 32.26%; }.span_3_of_12 { width: 23.8%; }  .span_2_of_12 { width: 15.33%; }.span_1_of_12 { width: 6.86%; }
+.onlybig{display:block;}
 
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 @media only screen and (max-width: 480px) {
 
 	.col { margin: 1% 0 1% 0%;}
-
+	.onlybig{display:none;}
 	.span_2_of_2, .span_1_of_2 , .span_3_of_3, .span_2_of_3, .span_1_of_3, .span_4_of_4 , .span_3_of_4 , .span_2_of_4 , .span_1_of_4 ,
 	.span_5_of_5 , .span_4_of_5 , .span_3_of_5 , .span_2_of_5 , .span_1_of_5  , .span_6_of_6 , .span_5_of_6 , .span_4_of_6 , .span_3_of_6 , 
 	.span_2_of_6 , .span_1_of_6  , .span_7_of_7 , .span_6_of_7 , .span_5_of_7 , .span_4_of_7 , .span_3_of_7 , .span_2_of_7 , .span_1_of_7  , 
@@ -54,9 +55,8 @@ body {
 	
 	.span_8_of_8 , .span_7_of_8 ,  .span_6_of_8 ,  .span_5_of_8 ,  .span_4_of_8{ width: 100%; margin-left: 0; }  
 	.span_3_of_8 { width: 74.2%; margin: 1% 0 1% 3.2%; }  .span_2_of_8 { width: 48.4%; margin: 1% 0 1% 3.2%; }	.span_1_of_8 { width: 22.6%; margin: 1% 0 1% 3.2%; }	.span_1_of_8:nth-child(4n+1) { clear: both; margin-left: 0; }
+	
 }
-
-
 
 /*********************** SECTIONS *****************/
 .box{background:#fff;position:relative;}
@@ -75,15 +75,16 @@ body {
 .brd{border:1px solid #aaa;}
 .rnd{border-radius:6px;}
 .title{background:#e0e0e0;margin:-10px -10px 10px -10px;line-height:2.4em;padding:0 10px;font-weight:bold;}
+.big{font-size:1.6em;line-height:1.4em;}
 
 
 /*********************** TYPOGRAPHY *****************/
-h1{font-size:2.8em;line-height:1.2em;font-weight:500;}
-h2{font-size:2.2em;line-height:1.2em;font-weight:500;}
-h3{font-size:1.8em;line-height:1.2em;font-weight:500;}
-h4{font-size:1.6em;line-height:1.2em;font-weight:200;}
-h5{font-size:1.2em;line-height:1.2em;font-weight:200;}
-h6{font-size:1em;line-height:1.2em;font-weight:200;}
+h1{font-size:2.4em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
+h2{font-size:2.0em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
+h3{font-size:1.6em;line-height:1.2em;font-weight:500;margin: 10px 0 10px;}
+h4{font-size:1.4em;line-height:1.2em;font-weight:200;margin: 6px 0;}
+h5{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 4px 0;}
+h6{font-size:1em;line-height:1.2em;font-weight:200;margin: 2px 0;}
 small{font-size:0.9em;}
 strong{font-weight:900;}
 .underline{border-bottom:1px solid #ccc;}
@@ -103,7 +104,7 @@ table.line tr td:first-child, table.line tr th:first-child{border-left:0px;}
 table.hover tr:hover td{background:#ddd;}
 
 /*********************** FORM *****************/
-input, select, textarea, checkbox{padding:0 2px;line-height:1.4em;border:1px solid #bbbbbb;}
+input, select, textarea, checkbox{padding: 2px 4px;line-height: 1.6em;border:1px solid #bbbbbb;}
 
 
 /*********************** BUTTONS *****************/
@@ -119,30 +120,29 @@ input, select, textarea, checkbox{padding:0 2px;line-height:1.4em;border:1px sol
   *line-height: 20px;
   color: #333333;
   text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   font-family:Arial;
   cursor: pointer;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   vertical-align: middle;
-  /*
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
-  */
+  -webkit-border-radius: 1px;
+     -moz-border-radius: 1px;
+          border-radius: 1px;
   *zoom: 1;
   -webkit-box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
      -moz-box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-	background: rgb(238,238,238); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(219,219,219,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(219,219,219,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(219,219,219,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(219,219,219,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(219,219,219,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(219,219,219,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
+
+background: rgb(226,226,226); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(226,226,226,1) 0%, rgba(219,219,219,1) 49%, rgba(221,221,221,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(49%,rgba(219,219,219,1)), color-stop(100%,rgba(221,221,221,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 49%,rgba(221,221,221,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 49%,rgba(221,221,221,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 49%,rgba(221,221,221,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 49%,rgba(221,221,221,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#dddddd',GradientType=0 ); /* IE6-9 */
+
 
 }
 
@@ -232,7 +232,6 @@ input, select, textarea, checkbox{padding:0 2px;line-height:1.4em;border:1px sol
 .btn-black,
 .btn-black:hover {
   color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-image: none;
 }
 
@@ -246,19 +245,17 @@ input, select, textarea, checkbox{padding:0 2px;line-height:1.4em;border:1px sol
 }
 
 .btn-blue {
-  background-color: #0074cc;
-  *background-color: #0055cc;
-  background-image: -ms-linear-gradient(top, #0088cc, #0055cc);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0055cc));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0055cc);
-  background-image: -o-linear-gradient(top, #0088cc, #0055cc);
-  background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
-  background-image: linear-gradient(top, #0088cc, #0055cc);
-  background-repeat: repeat-x;
+background: rgb(0,115,209); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(0,115,209,1) 0%, rgba(0,85,204,1) 49%, rgba(0,115,209,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,115,209,1)), color-stop(49%,rgba(0,85,204,1)), color-stop(100%,rgba(0,115,209,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(0,115,209,1) 0%,rgba(0,85,204,1) 49%,rgba(0,115,209,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(0,115,209,1) 0%,rgba(0,85,204,1) 49%,rgba(0,115,209,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(0,115,209,1) 0%,rgba(0,85,204,1) 49%,rgba(0,115,209,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(0,115,209,1) 0%,rgba(0,85,204,1) 49%,rgba(0,115,209,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0073d1', endColorstr='#0073d1',GradientType=0 ); /* IE6-9 */
+
   border-color: #0055cc #0055cc #003580;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#0088cc', endColorstr='#0055cc', GradientType=0);
-  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+
 }
 
 .btn-blue:hover,
@@ -779,6 +776,7 @@ input[type="submit"].btn.btn-mini {
 
 .alert-heading {
   color: inherit;
+  font-weight:bold;
 }
 
 .alert .close {
@@ -901,7 +899,7 @@ input[type="submit"].btn.btn-mini {
 
 /***************************************** LABELS */
 
-.label{
+.tag{
   	display:inline;
 	font-size: 0.9em;
 	font-weight: bold;
@@ -911,17 +909,17 @@ input[type="submit"].btn.btn-mini {
 	white-space: nowrap;
 	vertical-align: baseline;
 	background-color: #999999;
-	padding: 1px 4px 2px;
-	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-	        border-radius: 3px;
+	padding: 2px 8px 2px;
+	-webkit-border-radius: 1px;
+	   -moz-border-radius: 1px;
+	        border-radius: 1px;
 }
 
-.label-green{background-color: #5FB404;}
-.label-yellow{background-color: #fcf8e3;color:#000;}
-.label-orange{background-color: #f89406;}
-.label-red{background-color: #DF0101;color:#fff;}
-.label-celeste{background-color: #04B4AE;}
+.tag-green{background-color: #5FB404;}
+.tag-orange{background-color: #f89406;}
+.tag-red{background-color: #DF0101;color:#fff;}
+.tag-celeste{background-color: #04B4AE;}
+.tag-black{background-color: #111111;color:#fff;}
 
 
 /***************************************** ICONS */

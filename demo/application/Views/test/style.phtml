@@ -3,8 +3,8 @@ use Chiara\Core\ViewModel;
 ViewModel::getContents('site/header');
 ?>
 
-<div class="section group" id="main">
-	<div class="col span_1_of_5">
+<div class="section group container" id="main">
+	<div class="col span_1_of_5 onlybig">
 		<ul class="leftmenu">
 			<li><a href="#" onclick="Chiara.scrollTo('#SGri')">Grids</a></li>
 			<li><a href="#" onclick="Chiara.scrollTo('#SSec')">Sections</a></li>
@@ -12,26 +12,21 @@ ViewModel::getContents('site/header');
 			<li><a href="#" onclick="Chiara.scrollTo('#STab')">Tables</a></li>
 			<li><a href="#" onclick="Chiara.scrollTo('#SFor')">Forms</a></li>
 			<li><a href="#" onclick="Chiara.scrollTo('#SBut')">Buttons</a></li>
-			<li><a href="#" onclick="Chiara.scrollTo('#SToo')">Tooltip</a></li>
-			<li><a href="#" onclick="Chiara.scrollTo('#SLab')">Label</a></li>
-			<li><a href="#" onclick="Chiara.scrollTo('#SWin')">Window</a></li>
-			<li><a href="#" onclick="Chiara.scrollTo('#SAle')">Alert</a></li>
+			<li><a href="#" onclick="Chiara.scrollTo('#STag')">Tags</a></li>
+			<li><a href="#" onclick="Chiara.scrollTo('#SAle')">Alerts</a></li>
 			<li><a href="#" onclick="Chiara.scrollTo('#SIco')">Icons</a></li>
-			<li><a href="#" onclick="Chiara.scrollTo('#SPag')">Paginator</a></li>
 		</ul>
 	</div>
 	<div class="col span_4_of_5">
 
-			<h1>Demo Test Page</h1>
+			<h1>CSS Style</h1>
 
-			<div class="box padd mrggh" id="SGri">
+			<div class="box padd" id="SGri">
 				<h2>Grids</h2>
 				
 				<div class="gridtest">
 
-						<div class="section group">
-							<h4>Two Columns</h4>
-						</div>
+						Two to eleven columns
 
 						<div class="section group">
 							<div class="col span_1_of_2">1 of 2</div>
@@ -39,20 +34,12 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Three Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_3">1 of 3</div>
 							<div class="col span_1_of_3">1 of 3</div>
 							<div class="col span_1_of_3">1 of 3</div>
 						</div>
 
 						<div class="section group">
-							<h4>Four Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_4">1 of 4</div>
 							<div class="col span_1_of_4">1 of 4</div>
 							<div class="col span_1_of_4">1 of 4</div>
@@ -60,10 +47,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Five Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_5">1 of 5</div>
 							<div class="col span_1_of_5">1 of 5</div>
 							<div class="col span_1_of_5">1 of 5</div>
@@ -72,10 +55,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Six Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_6">1 of 6</div>
 							<div class="col span_1_of_6">1 of 6</div>
 							<div class="col span_1_of_6">1 of 6</div>
@@ -85,10 +64,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Seven Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_7">1 of 7</div>
 							<div class="col span_1_of_7">1 of 7</div>
 							<div class="col span_1_of_7">1 of 7</div>
@@ -99,10 +74,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Eight Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_8">1 of 8</div>
 							<div class="col span_1_of_8">1 of 8</div>
 							<div class="col span_1_of_8">1 of 8</div>
@@ -114,10 +85,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-							<h4>Nine Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_9">1 of 9</div>
 							<div class="col span_1_of_9">1 of 9</div>
 							<div class="col span_1_of_9">1 of 9</div>
@@ -127,10 +94,6 @@ ViewModel::getContents('site/header');
 							<div class="col span_1_of_9">1 of 9</div>
 							<div class="col span_1_of_9">1 of 9</div>
 							<div class="col span_1_of_9">1 of 9</div>
-						</div>
-
-						<div class="section group">
-						<h4>Ten Columns</h4>
 						</div>
 
 						<div class="section group">
@@ -147,10 +110,6 @@ ViewModel::getContents('site/header');
 						</div>
 
 						<div class="section group">
-						<h4>Eleven Columns</h4>
-						</div>
-
-						<div class="section group">
 							<div class="col span_1_of_11">1 of 11</div>
 							<div class="col span_1_of_11">1 of 11</div>
 							<div class="col span_1_of_11">1 of 11</div>
@@ -162,11 +121,6 @@ ViewModel::getContents('site/header');
 							<div class="col span_1_of_11">1 of 11</div>
 							<div class="col span_1_of_11">1 of 11</div>
 							<div class="col span_1_of_11">1 of 11</div>
-						</div>
-
-
-						<div class="section group">
-						<h4>Twelve Columns</h4>
 						</div>
 
 						<div class="section group">
@@ -187,7 +141,7 @@ ViewModel::getContents('site/header');
 
 			</div>
 			
-			<div class="box padd mrggh" id="SSec">
+			<div class="box padd" id="SSec">
 				<h2>Sections</h2>
 				
 				<div class="box brd pad mrg">
@@ -205,9 +159,11 @@ ViewModel::getContents('site/header');
 				</div>
 			</div>
 			
-			<div class="box padd mrggh" id="STyp">
+			<div class="box padd" id="STyp">
 				<h2>Typography</h2>
 				<div class="box pad mrg">
+					This is a normal text: totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci v'elit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam
+					<div class="big">This is a big text: totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci v'elit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam</div>
 					<h1>Heading 1</h1>
 					<h2>Heading 2</h2>
 					<h3>Heading 3</h3>
@@ -221,7 +177,7 @@ ViewModel::getContents('site/header');
 				</div>
 			</div>
 			
-			<div class="box padd mrggh" id="STab">
+			<div class="box padd" id="STab">
 				<h2 class="">Tables</h2>
 				
 				<table class="line hover">
@@ -251,7 +207,7 @@ ViewModel::getContents('site/header');
 			
 			</div>
 			
-			<div class="box padd mrggh" id="SFor">
+			<div class="box padd" id="SFor">
 				<h2>Forms</h2>
 				<div class="section group">
 					<div class="col span_1_of_3">
@@ -287,15 +243,10 @@ ViewModel::getContents('site/header');
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SBut">
+			<div class="box padd" id="SBut">
 				<h2>Buttons</h2>
-				<button class="btn btn-mini">Ok mini button</button> 
-				<button class="btn btn-small">Ok small button</button> 
+				
 				<button class="btn">Ok button</button> 
-				<button class="btn btn-large">Ok large button</button>
-				
-				<br />
-				
 				<button class="btn btn-green">Green button</button>
 				<button class="btn btn-red">Red button</button>
 				<button class="btn btn-blue">Blue button</button>
@@ -303,64 +254,43 @@ ViewModel::getContents('site/header');
 				<button class="btn btn-celeste">Celeste button</button>
 				<button class="btn btn-black">Black button</button>
 				
-			</div>
-			
-			<div class="box padd mrggh" id="SToo">
-				<h2>Tooltips</h2>
-				For tooltip Chiara inglobe <a href="http://qtip2.com/" target="_blank">qTip2</a>
-			</div>
-			
-			<div class="box padd mrggh" id="SWin">
-				<h2>Windows</h2>
-				Open modal window and overlay messages
-				<button class="btn" onclick="Chiara.modal.open('#WindowExample');">Open modal</button>
-			</div>
-			
-			<div class="box padd mrggh" id="SLab">
-				<h2>Fast messages</h2>
+				<br /><br />
+				<button class="btn btn-mini">Ok mini button</button> 
+				<button class="btn btn-small">Ok small button</button>
+				<button class="btn btn-large">Ok large button</button>
 				
+			</div>
+			
+			<div class="box padd" id="STag">
+				<h2>Tags</h2>
+				<span class="tag">Simple tag</span>
+				<span class="tag tag-green">green tag</span>
+				<span class="tag tag-red">Red tag</span>
+				<span class="tag tag-celeste">Celeste tag</span>
+				<span class="tag tag-orange">Orange tag</span>
+				<span class="tag tag-black">Black tag</span>
+			</div>
+			
+			<h2>Alert</h2>
+			<div class="box padd" id="SAle">	
 				<div class="alert">This is a message</div>
 				<div class="alert alert-green">This is an other message</div>
 				<div class="alert alert-celeste">This is an other message</div>
 				<div class="alert alert-red"><strong>Title</strong><br />This is an other message</div>
 			</div>
 			
-			<div class="box padd mrggh" id="SIco">
+			
+			
+			<div class="box padd" id="SIco">
 				<h2>Icons</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SPag">
-				<h2>Paginator</h2>
-				<div id="Paginator"></div>
-			</div>
 
 	</div>
 </div>
 
 
-
-<div class="modal" id="WindowExample">
-	<div class="modal-head">
-		<button class="close" onclick="Chiara.modal.close();">x</button>
-    	<h2>Modal window example</h2>
-	</div>
-	<div class="modal-body">
-		Text and content
-	</div>
-	<div class="modal-foot">
-		<div class="section group">
-			<div class="col span_1_of_3 left">
-				 <button class="btn btn-red" onclick=";">Left button</button>
-			</div>
-			<div class="col span_2_of_3">
-				<button class="btn" onclick="Chiara.modal.close();">Done</button>
-				<button class="btn btn-green" onclick="Chiara.modal.close();">Ok</button>
-			</div>
-		</div>
-		
-	</div>
-</div>
 <script type="text/javascript">
 $(document).ready(function(){
 	Chiara.paginator('Paginator',{currentPage:1, pgTotalPage:10, pgTotalItem:5},'null');

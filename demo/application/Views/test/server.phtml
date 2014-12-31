@@ -34,150 +34,226 @@ ViewModel::getContents('site/header');
 
 			<h1>Server side documentation</h1>
 
-			<div class="box padd mrggh" id="SSce">
-				<h2>Scenario</h2><br />
+			<h3>Scenario</h3>
+			<div class="box padd" id="SSce">
+				
 				Chiara is a complete framework to develop any web service type.<br />
 				It's a MVC framework.
+				Every request is dispatched to a specific action controller by the router:<br /><br />
+				
+				<strong>http://www.example.com/&lt;controller&gt;/&lt;action&gt;</strong>
 			</div>
 			
-			<div class="box padd mrggh" id="SFol">
-				<h2>Folders tree</h2><br />
+			<h3>Folders tree</h3>
+			<div class="box padd" id="SFol">
+				
 				Chiara is a library that can be used externally to your application. Here is exhibited a masting of example for writing applications.
 				
-				<h4>/application</h4>
+				<strong>/application</strong>
 				Really server side application<br /><br />
-				<h4>/application/Config</h4>
+				<strong>/application/Config</strong>
 				configuration files<br /><br />
-				<h4>/application/Controller</h4>
+				<strong>/application/Controller</strong>
 				Controllers<br /><br />
-				<h4>/application/Layout</h4>
+				<strong>/application/Layout</strong>
 				Layout tamplate page<br /><br />
-				<h4>/application/Model</h4>
+				<strong>/application/Model</strong>
 				Model classes<br /><br />
-				<h4>/application/View</h4>
+				<strong>/application/View</strong>
 				Views<br /><br />
-				<h4>/public</h4>
+				<strong>/public</strong>
 				Index.php, css, javascript and images
 			</div>
 			
-			<div class="box padd mrggh" id="SCon">
-				<h2>Configuration</h2>
-				<br /><br />
-				The only configuration you need is /application/configuration/configuration.php as a PHP Array<br />
-				<br />
+			
+			<h3>Configuration</h3>
+			<div class="box padd" id="SCon">
 				
+				The only configuration you need is /application/configuration/configuration.php as a PHP Array
 				
-				<div>$config = array(</div>
-				<div class="padl">'config' => array(</div>
-				<div class="paddl">"controllerAccess" 	=> "ctrl", # post controller param name </div>
-				<div class="padddl">"actionAccess" 	=> "act", # post action param name</div>
-				<div class="padddl">"controllers" 		=> array( # Exposed controller </div>
-				<div class="paddddl">array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/"),</div>
-				<div class="paddddl">array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/site"),</div>
-				<div class="paddddl">array("classname" => "App\\Controllers\\ErrorCtrl", "context" => "/error"),</div>
-				<div class="paddddl">array("classname" => "App\\Controllers\\TestCtrl", "context" => "/test")</div>
-				<div class="paddddl">...</div>
-				<div class="paddl">),</div>
-				<div class="paddl">"params" 			=> array(</div>
-				<div class="padddl">...</div>
-				<div class="paddl">)</div>
-				<div class="padl">)</div>
-				<div>);</div>
+				<pre>
+					<code class="php">
+$config = array(
+	'config' => array(
+		"controllerAccess" 	=> "ctrl", # post controller param name
+		"actionAccess" 	=> "act", # post action param name
+		"controllers" 		=> array( # Exposed controller 
+			array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/"),
+			array("classname" => "App\\Controllers\\SiteCtrl", "context" => "/site"),
+			array("classname" => "App\\Controllers\\ErrorCtrl", "context" => "/error"),
+			array("classname" => "App\\Controllers\\TestCtrl", "context" => "/test")
+		),
+		"params" 			=> array(
+				"Param1" 	=> true,
+				"Param2" 	=> 34,
+				'ConfigFile' 	=> BASE_DIR . '/demo/application/config/demo.config.ini',
+				'LogFile' 	=> BASE_DIR . '/demo/demo.log'
+		)
+	)
+);
+					</code>
+				</pre>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SLoa">
-				<h2>Index.php / Loader</h2>
-				The start point of a PHP application is always the index.php file.<br />
+			<h3>Index.php / Loader</h3>
+			<div class="box padd" id="SLoa">
+				
+				The start point of a PHP application is always the index.php file...<br />
+				<pre>
+					<code class="php">
+define('BASE_DIR', realpath(dirname(__FILE__) . '/../..'));
+
+// Loading Chiara and other external library
+require_once( BASE_DIR . '/src/NLoader.php');
+$nLoader = new Chiara\NLoader();
+$nLoader->letsInclude( BASE_DIR . '/demo/application/config/defines.php');
+$nLoader->addNamespace( 'App',  BASE_DIR . '/demo/application');
+$nLoader->load();
+
+// Set and run application
+$app = new App\Init(__FILE__);
+$app->setConfiguration(BASE_DIR . '/demo/application/Config/configuration.php', 'ARRAY');
+$app->setViewsDir(BASE_DIR . '/demo/application/Views');
+$app->setLayoutsDir(BASE_DIR . '/demo/application/Layouts');
+$app->run();
+					</code>
+				</pre>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SRou">
-				<h2>Routing</h2>
+			<h3>Routing</h3>
+			<div class="box padd" id="SRou">
+				
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SIni">
-				<h2>Init</h2>
+			<h3>Init</h3>
+			<div class="box padd" id="SIni">
+				Init.php is the specific class /application/Init.php<br />
+				It is executed every request on head of everything, after the run call, to initialize application.<br />
+				In this class is executed by Chiara, every method that start with init...
+				
+				<pre>
+					<code class="php">
+class Init extends InitAbstract{
+	
+	public function initError() {
+		// ...	    
+	}
+	
+	// ...
+}
+					</code>
+				</pre>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SCtr">
-				<h2>Controller</h2>
+			<h3>Controller</h3>
+			<div class="box padd" id="SCtr">
+				Controllers contain the action exposed by service.<br />
+				Every public method that end with ...Action() is an action. Usually it end with an HTML page or a JSON to serve.<br />
+				When a controller is dispatched the routing execute always the init method (if exist) and after the action required.
+				
+				<pre>
+					<code class="php">
+class TestCtrl extends ControllerAbstract{
+	
+	public function init(){
+		// ...
+	}
+	
+	public function indexAction(){
+		// ...
+	}
+	
+	public function clientAction(){
+		// ...
+	}
+}
+					</code>
+				</pre>
+				
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SRVie">
-				<h2>View</h2>
+			<h3>View</h3>
+			<div class="box padd" id="SRVie">
+				ViewModel is the class that prepare the response and serve it to client.<br />
+				It can processing PHTML template, JSON response or File to download.<br />
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SLay">
-				<h2>Layout</h2>
+			<h3>Layout</h3>
+			<div class="box padd" id="SLay">
+				Layout is the wrapper template.
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SMod">
-				<h2>Model</h2>
+			<h3>Model</h3>
+			<div class="box padd" id="SMod">
+				Models ... from MVC ;)
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SSes">
-				<h2>Session</h2>
+			<h3>Session</h3>
+			<div class="box padd" id="SSes">
+				Chiara has a session management
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SCac">
-				<h2>Cache</h2>
+			<h3>Cache</h3>
+			<div class="box padd" id="SCac">
+				
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SGlo">
+			<div class="box padd" id="SGlo">
 				<h2>Global</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SHtt">
+			<div class="box padd" id="SHtt">
 				<h2>Http helper</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SFil">
+			<div class="box padd" id="SFil">
 				<h2>File transfer</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SVal">
+			<div class="box padd" id="SVal">
 				<h2>Validators</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SDat">
+			<div class="box padd" id="SDat">
 				<h2>Date helper</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SDri">
+			<div class="box padd" id="SDri">
 				<h2>Database driver</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SSys">
+			<div class="box padd" id="SSys">
 				<h2>File system</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SLog">
+			<div class="box padd" id="SLog">
 				<h2>Log</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="SMes">
+			<div class="box padd" id="SMes">
 				<h2>Message</h2>
 				
 			</div>
 			
-			<div class="box padd mrggh" id="STra">
+			<div class="box padd" id="STra">
 				<h2>Translator I18n</h2>
 				
 			</div>
