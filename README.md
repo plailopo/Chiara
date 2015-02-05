@@ -7,4 +7,4 @@ Very light, really fast
 
 for more information visit:
 
-http://www.chiarafw,com
+http://www.chiarafw.com
