@@ -1,6 +1,10 @@
 Chiara
 ======
 
-A complete PHP, css, javascript, HTML5 framework
+A complete high&low web framework
 
 Very light, really fast
+
+for more information visit:
+
+http://www.chiarafw,com
