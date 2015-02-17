@@ -14,11 +14,11 @@ abstract class ControllerAbstract{
 	}
 	
 	public function forward($act, $ctrl=null){
-		Globals::getParam('Router')->forward($act, $ctrl==null ? get_class($this) : $ctrl);
+		Router::forward($act, $ctrl==null ? get_class($this) : $ctrl);
 	}
 	
 	public function redirect($act, $ctrl=null){
-		Globals::getParam('Router')->redirect($act, $ctrl==null ? get_class($this) : $ctrl);
+		Router::redirect($act, $ctrl==null ? get_class($this) : $ctrl);
 	}
 	
 	public function getParamPost($name, $default){

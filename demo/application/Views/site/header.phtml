@@ -2,18 +2,14 @@
 use Chiara\Core\ViewModel;
 ?>
 
-<div id="UserMessageBox"></div>
 <header>
-
-	<div class="container">
-		<ul>
-			<li class="logo"><a href="<?php echo ViewModel::getOption('urlbase') ?>/">ChiaraFW</a></li>
-			<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test" class="<?php echo ViewModel::param('menu') == 'test' ? 'active' : '' ?>">Style</a></li>
-			<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/client" class="<?php echo ViewModel::param('menu') == 'client' ? 'active' : '' ?>">Client</a></li>
-			<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/server" class="<?php echo ViewModel::param('menu') == 'server' ? 'active' : '' ?>">Server</a></li>
-			<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/download" class="<?php echo ViewModel::param('menu') == 'download' ? 'active' : '' ?>">Download</a></li>
-			<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/test/donate" class="<?php echo ViewModel::param('menu') == 'donate' ? 'active' : '' ?>">Donate</a></li>
-		</ul>
+	<div class="buttonsBar">
+		<span class="btn-group">
+			<a class="btn btn-large <?php echo ViewModel::param('section') == 'client' ? 'btn-orange' : ''?>" href="<?php echo ViewModel::getOption('urlbase') ?>/client/intro">Client</a>
+			<a class="btn btn-large <?php echo ViewModel::param('section') == 'server' ? 'btn-orange' : ''?>" href="<?php echo ViewModel::getOption('urlbase') ?>/server/intro">Server</a>
+		</span>
+		
+		<input type="text" class="search"  />
+		
 	</div>
-
 </header>

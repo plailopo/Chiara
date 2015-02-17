@@ -5,42 +5,38 @@ namespace Chiara\Core;
 
 class Router{
 	
-	private $controllerAccess;
-	private $actionAccess;
-	private $controllerList;
-	private $paramContext;
-	private $paramAction;
-	private $stack;
+	private static $controllerAccess;
+	private static $actionAccess;
+	private static $controllerList;
+	private static $paramContext;
+	private static $paramAction;
+	private static $stack;
 	
-	private $dispatchedFirst;
-	
-	public function __construct(){
-		$this->stack = array();
-		$this->controllerList = array();
-		$this->actionAccess = 'act';
-		$this->controllerAccess = 'ctx';
-		$this->paramAction = '';
-		$this->paramContext = '';
-		$this->dispatchedFirst = false;
-		$this->checkRequest();
+	public static function init(){
+		Router::$stack = array();
+		Router::$controllerList = array();
+		Router::$actionAccess = 'act';
+		Router::$controllerAccess = 'ctx';
+		Router::$paramAction = '';
+		Router::$paramContext = '';
+		Router::checkRequest();
 	}
 	
-	public function addToStack($txt){
-		$this->stack[] = $txt;
+	public static function addToStack($txt){
+		Router::$stack[] = $txt;
 	}
 	
-	public function getStack(){
-		return $this->stack;
+	public static function getStack(){
+		return Router::$stack;
 	}
 	
-	public function checkRequest(){
+	public static function checkRequest(){
 		
-		$ctrl = isset($_GET[$this->controllerAccess]) ? $_GET[$this->controllerAccess] : '/';
-		$act = isset($_GET[$this->actionAccess]) ? $_GET[$this->actionAccess] : 'index';
-		$ctrl = isset($_POST[$this->controllerAccess]) ? $_POST[$this->controllerAccess] : $ctrl;
-		$act = isset($_POST[$this->actionAccess]) ? $_POST[$this->actionAccess] : $act;
+		$ctrl = isset($_GET[Router::$controllerAccess]) ? $_GET[Router::$controllerAccess] : '/';
+		$act = isset($_GET[Router::$actionAccess]) ? $_GET[Router::$actionAccess] : 'index';
+		$ctrl = isset($_POST[Router::$controllerAccess]) ? $_POST[Router::$controllerAccess] : $ctrl;
+		$act = isset($_POST[Router::$actionAccess]) ? $_POST[Router::$actionAccess] : $act;
 		
-		//$length = strlen($_SERVER['SERVER_NAME']);
 		$req = substr(Http::getRequestUri(), strpos(Http::getRequestUri(), Http::getServer('SERVER_NAME')));
 		
 		if(Http::getBaseUrl()!='')
@@ -52,8 +48,8 @@ class Router{
 		if(isset($contextDescriptor[0]) && $contextDescriptor[0]!='') $ctrl = $contextDescriptor[0];
 		if(isset($contextDescriptor[1]) && $contextDescriptor[1]!='') $act = $contextDescriptor[1];
 		
-		$this->paramContext = $ctrl;
-		$this->paramAction  = $act;
+		Router::$paramContext = $ctrl;
+		Router::$paramAction  = $act;
 		
 		if(count($contextDescriptor)>2){
 			for($i=2; $i < count($contextDescriptor); $i++){
@@ -64,58 +60,56 @@ class Router{
 		
 	}
 	
-	public function dispatch(){
+	public static function dispatch(){
 
-		$foundDot = strripos($this->paramAction, '.');
+		$foundDot = strripos(Router::$paramAction, '.');
 		
-		if($foundDot!=false && $foundDot>0) $this->paramAction = substr($this->paramAction, 0, $foundDot );
+		if($foundDot!=false && $foundDot>0) Router::$paramAction = substr(Router::$paramAction, 0, $foundDot );
 		
 		
-		$this->dispatchedFirst = true;
-		$this->addToStack('Dispatch: '.$this->paramAction.', context: '.$this->paramContext);
+		Router::addToStack('Dispatch: '.Router::$paramAction.', context: '.Router::$paramContext);
 		$ctrlObj = null;
-		foreach ($this->controllerList as $c){
+		foreach (Router::$controllerList as $c){
 			$c['context'] = $c['context']!='/' ? trim($c['context'], '/') : $c['context'];
-			if( $c['context'] == $this->paramContext ){
+			if( $c['context'] == Router::$paramContext ){
 				$ctrlObj = new $c['classname']();
 				break;
 			}
 		
-			if( $c['classname'] == $this->paramContext ){
+			if( $c['classname'] == Router::$paramContext ){
 				$ctrlObj = new $c['classname']();
 				break;
 			}
 		}
 		
 		if(!is_object($ctrlObj)) {
-			Globals::getParam('Router')->forward('notFound', 'error');
+			Router::forward('notFound', 'error');
 		}
 		
-		$action = $this->paramAction.'Action';
+		$action = Router::$paramAction.'Action';
 		
 		if(!method_exists($ctrlObj, $action) ) {
-			Globals::getParam('Router')->forward('notFound', 'error');
+			Router::forward('notFound', 'error');
 		}
 		
 		$ctrlObj->$action();
 	}
 	
-	public function forward($action, $context){
+	public static function forward($action, $context){
 		
-		$this->paramContext = $context;
-		$this->paramAction  = $action;
-
-		if($this->dispatchedFirst)
-			$this->dispatch();
+		Router::$paramContext = $context;
+		Router::$paramAction  = $action;
+		
+		Router::dispatch();
 		
 	}
 	
-	public function redirect($action, $context){
-		$url = $this->getUrlFor($action, $context);
+	public static function redirect($action, $context){
+		$url = Router::getUrlFor($action, $context);
 		header('Location: '.$url);
 	}
 	
-	public function getUrlFor($action, $context, $params=array()){
+	public static function getUrlFor($action, $context, $params=array()){
 		
 		$url =  Http::getScheme().'://'. $_SERVER['HTTP_HOST'] . Http::getBaseUrl();
 		
@@ -136,13 +130,13 @@ class Router{
 	}
 	
 	
-	public function closeRequest(){
+	public static function closeRequest(){
 		exit(0);
 	} 
 	
-	public function setControllersList($list){
+	public static function setControllersList($list){
 		
-		$this->controllerList = array();
+		Router::$controllerList = array();
 		
 		$foundMain = false;
 		foreach ($list as $c){
@@ -152,20 +146,20 @@ class Router{
 			if(!isset($c['classname']) || !isset($c['context'])) continue;
 			if( $c['context']=='/' ) $foundMain=true;
 			
-			$this->controllerList[] = $c;
+			Router::$controllerList[] = $c;
 		}
 		
 		if(!$foundMain){
-			$this->controllerList = array_merge(array('classname' => 'IndexController', 'context' => '/'), $this->controllerList);
+			Router::$controllerList = array_merge(array('classname' => 'IndexController', 'context' => '/'), Router::$controllerList);
 		}
 	}
 
-	public function setControllerAccess($param){
-		$this->controllerAccess = $param;
+	public static function setControllerAccess($param){
+		Router::$controllerAccess = $param;
 	}
 	
-	public function setActionAccess($param){
-		$this->actionAccess = $param;
+	public static function setActionAccess($param){
+		Router::$actionAccess = $param;
 	}
 
 }

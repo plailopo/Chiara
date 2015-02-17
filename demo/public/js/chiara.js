@@ -1,7 +1,6 @@
 
 var Chiara = {
 
-
 	req : {
 
 		opt : {
@@ -142,19 +141,6 @@ var Chiara = {
 	},
 
 	msg : {
-
-		/* levels  
-		 * 
-		 * EMERG   = 0;  // Emergency: system is unusable
-		 * ALERT   = 1;  // Alert: action must be taken immediately
-		 * CRIT    = 2;  // Critical: critical conditions
-		 * ERR     = 3;  // Error: error conditions
-		 * WARN    = 4;  // Warning: warning conditions
-		 * NOTICE  = 5;  // Notice: normal but significant condition
-		 * INFO    = 6;  // Informational: informational messages
-		 * DEBUG   = 7;  // Debug: debug messages
-		 * SUCCESS = 8
-		*/
 			
 		opt : {
 			fastLevel : 0,
@@ -178,7 +164,7 @@ var Chiara = {
 			
 			var msgObj = $('<div id="MSG_'+UID+'" class="alert" />');
 			
-			if(e.level==8) msgObj.addClass('alert-green');
+			if(e.level>=8) msgObj.addClass('alert-green');
 			else if(e.level<8 && e.level>=6) msgObj.addClass('alert-info');
 			else if(e.level<6 && e.level>=4) msgObj.addClass('');
 			else if(e.level<4) msgObj.addClass('alert-error');
@@ -248,7 +234,7 @@ var Chiara = {
 		
 	},
 	
-	paginator:function(id, d, fnc){
+	paginator:function(selector, d, fnc){
 		
 		var prev = parseInt(d.currentPage)-1;
 		var next = parseInt(d.currentPage)+1;
@@ -263,20 +249,20 @@ var Chiara = {
 		if(f>parseInt(d.pgTotalPage)) f=parseInt(d.pgTotalPage);
 		if(s>1){
 			ht += '<li><a href="javascript:'+fnc+'(1);">1</a></li>';
-			ht += ' ... ';
+			ht += '<li>...</li>';
 		}
 		for (var i=s; i<= f; i++){
-			ht += '<li class="'+(parseInt(d.currentPage)==i?'disabled':'')+'"><a href="javascript:'+fnc+'('+i+');">'+i+'</a></li>';
+			ht += '<li class="'+(parseInt(d.currentPage)==i?'current':'')+'"><a href="javascript:'+fnc+'('+i+');">'+i+'</a></li>';
 		}
 		if(f<parseInt(d.pgTotalPage)){
-			ht += ' ... ';
+			ht += '<li>...</li>';
 			ht += '<li><a href="javascript:'+fnc+'('+d.pgTotalPage+');">'+d.pgTotalPage+'</a></li>';
 		}
 		
 		ht += '<li class="next '+(parseInt(d.currentPage)>=parseInt(d.pgTotalPage)?'disabled':'')+'"><a href="javascript:'+fnc+'('+next+');">next</a></li>';
 		ht += '<li class="founds">'+d.pgTotalItem+' item found</li>';
 		ht += '</ul>';
-		$('#'+id).html(ht);
+		$(selector).html(ht);
 	},
 	
 	// check if element is offscreen

@@ -5,14 +5,14 @@ namespace Chiara\Core;
 
 class Cache{
 
-	private $defaultTTL = 3600;
+	private static $defaultTTL = 3600;
 	
 	public static function setParam($name, $value, $ttl=0){
 		
 		if (apc_exists($name)) {
 			apc_delete($name);
 		}
-		if($ttl==0) $ttl = $this->defaultTTL;
+		if($ttl==0) $ttl = self::$defaultTTL;
 		apc_store( $name, $value, $ttl);
 	}
 	

@@ -4,7 +4,7 @@ namespace Chiara\Core;
 
 class Exception extends \Exception{
 	
-    protected $message = 'Unknown exception';   // exception message
+    protected $message = 'Generic exception';   // exception message
     private   $string;                          // __toString cache
     protected $code = 0;                        // user defined exception code
     protected $file;                            // source filename of exception

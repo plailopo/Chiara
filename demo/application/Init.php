@@ -14,6 +14,7 @@ use Chiara\Commons\Log;
 use Chiara\Commons\LogFile;
 use Chiara\Commons\LogDB;
 use Chiara\Commons\DBDriver;
+use Chiara\Core\Router;
 
 
 class Init extends InitAbstract{
@@ -21,6 +22,38 @@ class Init extends InitAbstract{
 	
 	public function initError() {
 		
+		set_error_handler ( function ($errno, $errstr, $errfile, $errline) {
+			
+			if (! error_reporting ())
+				return;
+			if (Globals::exist ( 'LOG' ))
+				Globals::getParam ( 'LOG' )->write ( $errstr . " in $errfile:$errline" . $errno, Log::ERR );
+			
+			ViewModel::assign ( 'ERRNO', $errno );
+			ViewModel::assign ( 'ERRSTR', $errstr );
+			ViewModel::assign ( 'ERRFILE', $errfile );
+			ViewModel::assign ( 'ERRLINE', $errline );
+			
+			Router::forward ( 'error', 'error' );
+		} );
+		
+		set_exception_handler ( function ($ex) {
+			
+			ViewModel::assign ( 'SYSTEM_ERR', nl2br ( $ex ) );
+			
+			switch(get_class($ex)){
+				case 'PDOException':
+					Router::forward('dbConnection', 'error');
+					break;
+				default:
+					Router::forward('error', 'error');
+					break;
+			}
+						
+			Router::closeRequest();
+			
+		} );
+		 
 	    
 	}
 	
@@ -41,6 +74,14 @@ class Init extends InitAbstract{
 		//$log->write("Open request", Log::INFO);
 	}
 	
+	public function initInterface(){
+	
+		ViewModel::setLayout('portal');
+	
+		ViewModel::setPreRenderingCallback('App\Init::finalCallBack', array());
+	
+	}
+	
 	public function initDB(){
 		
 		$conf = Globals::getParam('CONF', false);
@@ -52,6 +93,7 @@ class Init extends InitAbstract{
 		
 		$dbn = 1;
 		$adapter = false;
+		
 		while (1){
 			$nameConf = 'db'.$dbn;
 			
@@ -69,20 +111,12 @@ class Init extends InitAbstract{
 			catch (Exception $e) {}
 			
 			$dbn++;
-		}
+		} 	
 		
 		if(!$adapter)
-			Globals::getParam('Router')->forward('dbConnection', 'error');
+			Router::forward('dbConnection', 'error');
 		
 		Globals::setParam('DB', $adapter);
-		
-	}
-	
-	public function initInterface(){
-		
-		ViewModel::setLayout('portal');
-		
-		ViewModel::setPreRenderingCallback('App\Init::finalCallBack', array());
 		
 	}
 	

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Chiara\Core\Globals;
 use Chiara\Core\ViewModel;
 use Chiara\Core\ControllerAbstract;
+use Chiara\Core\Router;
 
 class ErrorCtrl extends ControllerAbstract{
 	
@@ -20,21 +21,21 @@ class ErrorCtrl extends ControllerAbstract{
 	}
 
 	public function notFoundAction(){
-		ViewModel::assign(array('stack' => Globals::getParam('Router')->getStack()));
+		ViewModel::assign(array('stack' => Router::getStack()));
 		ViewModel::renderHTML('error/error404');
-		Globals::getParam('Router')->closeRequest();
+		Router::closeRequest();
 	}
 	
 	public function dbConnectionAction(){
-		ViewModel::assign(array('stack' => Globals::getParam('Router')->getStack()));
+		ViewModel::assign(array('stack' => Router::getStack()));
 		ViewModel::renderHTML('error/errorDB');
-		Globals::getParam('Router')->closeRequest();
+		Router::closeRequest();
 	}
 	
 	public function errorAction(){
-		ViewModel::assign(array('stack' => Globals::getParam('Router')->getStack()));
+		ViewModel::assign(array('stack' => Router::getStack()));
 		ViewModel::renderHTML('error/error');
-		Globals::getParam('Router')->closeRequest();
+		Router::closeRequest();
 	}
 	
 }

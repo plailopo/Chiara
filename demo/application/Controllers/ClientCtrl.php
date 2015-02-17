@@ -6,25 +6,23 @@ use Chiara\Core\Globals;
 use Chiara\Core\ViewModel;
 use Chiara\Core\ControllerAbstract;
 
-class TestCtrl extends ControllerAbstract{
+class ClientCtrl extends ControllerAbstract{
 	
 	private $view;
 	
 	public function init(){
-		ViewModel::assign('menu', 'test');
+		ViewModel::assign('section', 'client');
 	}
 	
 	public function indexAction(){
 		
-		ViewModel::assign('menu', 'style');
-		ViewModel::renderHTML('test/style');
+		
 		
 	}
 	
-	public function clientAction(){
-		
-		ViewModel::assign('menu', 'client');
-		ViewModel::renderHTML('test/client');
+	public function ajaxAction(){
+		ViewModel::assign('menu', 'ajax');
+		ViewModel::renderHTML('client/ajax');
 		
 	}
 	

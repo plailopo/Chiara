@@ -38,7 +38,6 @@ body {
 .span_11_of_11 { width: 100%; }  .span_10_of_11 { width: 90.76%; }  .span_9_of_11 { width: 81.52%; }  .span_8_of_11 { width: 72.29%; }  .span_7_of_11 { width: 63.05%; }.span_6_of_11 { width: 53.81%; }.span_5_of_11 { width: 44.58%; }.span_4_of_11 { width: 35.34%; }.span_3_of_11 { width: 26.1%; }  .span_2_of_11 { width: 16.87%; }.span_1_of_11 { width: 7.63%; }.span_12_of_12 { width: 100%; }  .span_11_of_12 { width: 91.53%; }  .span_10_of_12 { width: 83.06%; }  .span_9_of_12 { width: 74.6%; }  .span_8_of_12 { width: 66.13%; }  .span_7_of_12 { width: 57.66%; }.span_6_of_12 { width: 49.2%; }.span_5_of_12 { width: 40.73%; }.span_4_of_12 { width: 32.26%; }.span_3_of_12 { width: 23.8%; }  .span_2_of_12 { width: 15.33%; }.span_1_of_12 { width: 6.86%; }
 .onlybig{display:block;}
 
-/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 @media only screen and (max-width: 480px) {
 
 	.col { margin: 1% 0 1% 0%;}
@@ -59,6 +58,7 @@ body {
 }
 
 /*********************** SECTIONS *****************/
+p{padding:10px 0;}
 .box{background:#fff;position:relative;}
 .pad{padding:10px;}
 .padl{padding-left:4em;}
@@ -87,6 +87,7 @@ h5{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 4px 0;}
 h6{font-size:1em;line-height:1.2em;font-weight:200;margin: 2px 0;}
 small{font-size:0.9em;}
 strong{font-weight:900;}
+
 .underline{border-bottom:1px solid #ccc;}
 
 
@@ -487,7 +488,7 @@ input[type="submit"].btn.btn-mini {
 
 .btn-group > .btn {
   position: relative;
-  margin-left: -1px;
+  margin-left: -.3em;
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
           border-radius: 0;
@@ -1541,3 +1542,13 @@ input[type="submit"].btn.btn-mini {
 }
 
 
+@media only screen and (max-width: 480px) {
+
+	h1{font-size:1.8em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
+	h2{font-size:1.6em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
+	h3{font-size:1.4em;line-height:1.2em;font-weight:500;margin: 10px 0 10px;}
+	h4{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 6px 0;}
+	h5{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 4px 0;}
+	h6{font-size:1em;line-height:1.2em;font-weight:200;margin: 2px 0;}
+	img{width: 100%;}
+}

@@ -1,0 +1,57 @@
+<?php 
+use Chiara\Core\ViewModel;
+?>
+
+<div class="menu">
+	<h1 class="logo">
+		<a href="<?php echo ViewModel::getOption('urlbase') ?>/">
+			<img height="64px" src="<?php echo ViewModel::getOption('urlbase') ?>/img/logo.png" />
+		</a>
+	</h1>
+	
+	
+	<ul>
+		
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/">Home</a></li>
+		
+		<?php if(ViewModel::param('section') == 'server'):?>
+		<li><h3>Section</h3></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/intro">Introduction</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/folder">Folders tree</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/config">Configuration</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/loader">Index.php / Loader</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/routing">Routing</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/init">Init</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/controller">Controller</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/view">View</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/layout">Layout</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/model">Model</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/session">Session</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/cache">Cache</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/globals">Globals</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/http">Http</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/transf">File transfer</a></li>
+		<li><h3>Utility</h3></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/valid">Validators</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/date">Date helper</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/db">Database driver</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/file">File system</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/log">Log</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/msg">Message</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/server/translator">Translator I18n</a></li>
+		<?php elseif(ViewModel::param('section') == 'client'):?>
+		<li><h3>Section</h3></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/ajax" class="<?php echo ViewModel::param('menu')=='ajax' ? 'current' : ''; ?>">AJAX request</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/link" class="<?php echo ViewModel::param('menu')=='link' ? 'current' : ''; ?>">Link javascript</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/paginator" class="<?php echo ViewModel::param('menu')=='paginator' ? 'current' : ''; ?>">Paginator</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/fast" class="<?php echo ViewModel::param('menu')=='fast' ? 'current' : ''; ?>">Fast messages</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/over" class="<?php echo ViewModel::param('menu')=='over' ? 'current' : ''; ?>">Overlay message</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/modal" class="<?php echo ViewModel::param('menu')=='modal' ? 'current' : ''; ?>">Modal windows</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/scroll" class="<?php echo ViewModel::param('menu')=='scroll' ? 'current' : ''; ?>">Scroll</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/off" class="<?php echo ViewModel::param('menu')=='off' ? 'current' : ''; ?>">isOffScreen</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/check" class="<?php echo ViewModel::param('menu')=='check' ? 'current' : ''; ?>">Checklist</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/search" class="<?php echo ViewModel::param('menu')=='search' ? 'current' : ''; ?>">Seach on List</a></li>
+		<li><a href="<?php echo ViewModel::getOption('urlbase') ?>/client/form" class="<?php echo ViewModel::param('menu')=='form' ? 'current' : ''; ?>">Form utility</a></li>
+		<?php endif;?>
+	</ul>
+</div>

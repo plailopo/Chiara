@@ -5,6 +5,7 @@ namespace Chiara\Core;
 
 use Chiara\Message\UserMessage;
 use Chiara\Message\UserMessageMapper;
+use App\Init;
 class ViewModel{
 	
 	// Accesso statico ai parametri
@@ -66,8 +67,8 @@ class ViewModel{
 		if($asString) ob_start();
 		
 		if(isset(self::$layout) && self::$layout != ''){
-			$file  = Globals::getParam('layoutsDir', '/');
-			$file .= '/' . self::$layout . '.phtml';
+			$file  = Init::$layoutDir;
+			$file .= '/' . self::$layout . '.phtml';			
 			if(file_exists($file))
 				include realpath($file);
 		}
@@ -81,7 +82,7 @@ class ViewModel{
 	
 	public static function getContents($name=false){
 		
-		$file  = Globals::getParam('viewsDir', '/');
+		$file  = Init::$viewDir;
 		if($name) 
 			$file .= '/' . $name . '.phtml';
 		else 

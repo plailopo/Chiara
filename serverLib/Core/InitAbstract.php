@@ -6,8 +6,9 @@ use Chiara\Core\Router;
 
 abstract class InitAbstract{
 	
-	private $routerIstance;
 	private $params;
+	public static $viewDir = '/';
+	public static $layoutDir = '/';
 	
 	public function __construct($indexStart){
 		$this->params = array();
@@ -19,17 +20,15 @@ abstract class InitAbstract{
 	}
 	
 	public function setViewsDir($path){
-		Globals::setParam('viewsDir', $path);
+		self::$viewDir = $path;
 	}
 	
 	public function setLayoutsDir($path){
-		Globals::setParam('layoutsDir', $path);
+		self::$layoutDir = $path;
 	}
 	
 	public function run(){
-		$router = new Router();
-		$this->routerIstance = $router;
-		Globals::setParam('Router', $router);
+		Router::init();
 		
 		// configuration file
 		$this->__loadConf();
@@ -40,7 +39,7 @@ abstract class InitAbstract{
 			if( substr($m, 0, 4) == 'init' ) $this->$m();
 		}
 		
-		$router->dispatch();
+		Router::dispatch();
 	}
 	
 	/****************  Dirty jobs *****************/
@@ -58,9 +57,9 @@ abstract class InitAbstract{
 			$conf = $config['config'];
 		}
 		
-		$this->routerIstance->setControllerAccess( isset($conf['controllerAccess']) ? $conf['controllerAccess'] : 'ctrl');
-		$this->routerIstance->setActionAccess( isset($conf['actionAccess']) ? $conf['actionAccess'] : 'act');
-		$this->routerIstance->setControllersList( isset($conf['controllers']) ? $conf['controllers'] : array());
+		Router::setControllerAccess( isset($conf['controllerAccess']) ? $conf['controllerAccess'] : 'ctrl');
+		Router::setActionAccess( isset($conf['actionAccess']) ? $conf['actionAccess'] : 'act');
+		Router::setControllersList( isset($conf['controllers']) ? $conf['controllers'] : array());
 		
 		if(isset($conf['params']) && is_array($conf['params']) && count($conf['params'])>0 ){
 			foreach ($conf['params'] as $k => $v){

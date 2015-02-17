@@ -3,9 +3,9 @@
 define('BASE_DIR', realpath(dirname(__FILE__) . '/../..'));
 
 
-require_once( BASE_DIR . '/src/NLoader.php');
+require_once( BASE_DIR . '/serverLib/NLoader.php');
 $nLoader = new Chiara\NLoader();
-$nLoader->letsInclude( BASE_DIR . '/demo/application/config/defines.php');
+$nLoader->letsInclude( BASE_DIR . '/demo/application/Config/defines.php');
 $nLoader->addNamespace( 'App',  BASE_DIR . '/demo/application');
 $nLoader->load();
 

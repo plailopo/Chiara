@@ -1,21 +1,9 @@
-<?php use Chiara\Core\ViewModel;
-use App\Models\PhonePrefix;
+<?php use Chiara\Core\ViewModel;?>
 
-ViewModel::getContents('site/header');
-?>
-
-<div class="row">
-	<section id="main">
-		<div class="rowH gridrow">
-			
-			
 			<div style="text-align: center;">
-				<h1 >System Error</h1>
-				Ci scusiamo per l'inconveniente, ma qualcosa &egrave; andato storto :/<br />
-				Ti chiediamo gentilmente di riprovare o di contattarci alla mail info@buonappetito.menu
+				<h1>System Error</h1>
 			</div>
 			
-			<?php if(ViewModel::param("DEBUG")==1): ?>
 			<div style="margin:20px;border:4px solid #ff9900;padding:10px;">
 				<?php foreach(ViewModel::param('stack') as $s){
 					echo $s.'<br />';
@@ -27,15 +15,6 @@ ViewModel::getContents('site/header');
 				<strong>ERR FILE</strong>: <?php echo ViewModel::param("ERRFILE"); ?><br />
 				<strong>ERR LINE</strong>: <?php echo ViewModel::param("ERRLINE"); ?><br />
 			</div>
-			<?php endif;?>
 			
-		</div>
-	</section>
-</div>
-<script type="text/javascript">
-
-</script>
-
-<?php ViewModel::getContents('site/footer');  ?>
 
 
