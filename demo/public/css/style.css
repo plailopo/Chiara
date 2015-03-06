@@ -57,3 +57,7 @@ header{background:#ffffff;padding:10px;color:#111; text-align:center;}
 
 
 footer{font-size:0.9em;text-align:right;padding:0 10px;}
+
+.githublink{position: absolute;
+top: 0;
+right: 0;}
