@@ -7,11 +7,12 @@ abstract class ControllerAbstract{
 	public function __construct(){
 		
 		$methods = get_class_methods($this);
-		if(is_array($methods) && count($methods)>0 ) foreach($methods as $m){
-			if( substr($m, 0, 4) == 'init' ) $this->$m();
-		}
+		
+		$this->init();
 		
 	}
+	
+	public function init(){}
 	
 	public function forward($act, $ctrl=null){
 		Router::forward($act, $ctrl==null ? get_class($this) : $ctrl);

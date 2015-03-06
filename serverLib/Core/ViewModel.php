@@ -71,6 +71,8 @@ class ViewModel{
 			$file .= '/' . self::$layout . '.phtml';			
 			if(file_exists($file))
 				include realpath($file);
+			else
+				throw new Exception("File not found");
 		}
 		else{
 			self::getContents();
