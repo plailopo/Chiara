@@ -45,13 +45,16 @@ class ViewModel{
 		self::$layout = $name;
 	}
 	
-	public static function renderJSON($contentType='application/json'){
+	public static function renderJSON($data = [], $contentType='application/json'){
+		
+		if(is_array($data) && count($data)>0 ) self::assign($data);
 		
 		self::callPreRenderingCallback();
 		
 		header('Content-Type: '.$contentType);
 		header('Access-Control-Allow-Origin: *');
 		$rsp = json_encode(self::$params);
+		if(!$rsp || $rsp=="null") $rsp = "{}";
 		if(isset($_GET['fnc']) && preg_match('/[A-Za-z_.]*/',$_GET['fnc'])!=0){
 			$rsp = $_GET['fnc'] . '(' . $rsp . ')';
 		}
