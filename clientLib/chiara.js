@@ -1,5 +1,71 @@
+/*
+ * Chiara
+ */
+$(document).ready(function(){
+	Chiara.init();
+});
 
+// Configurazioni di base e init dei moduli trovati
 var Chiara = {
+
+	BaseUrl : 	'',
+	
+	initFunctions : [],
+	
+	init : function(){
+		if(typeof Chiara.menu != 'undefined') Chiara.menu.init();
+		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
+		if(typeof Chiara.dialog != 'undefined') Chiara.dialog.init();
+		Chiara.loader.init();
+		
+	}
+};
+
+/************ LOADER  ************/
+$.extend( Chiara, {
+	
+	loader : {
+		ImageSrc :'/loading.gif',
+		operations: 0,
+		init: function(){
+			$(document).ajaxComplete(Chiara.loader.close);
+		},
+		open:function(){
+			if(!Chiara.UserLoader) return;
+			Chiara.loader.operations++;
+			if(Chiara.loader.operations>1) return;
+			
+			if ($('.C-LoaderContainer').length <= 0){
+				
+				$('<div class="C-LoaderContainer" />')
+				.append('<img src="'+Chiara.ImageUrl+ Chiara.loader.ImageSrc + '">')
+				.append('<div class="text">'+CTlabel.loader.caricamento+'</div>')
+				.appendTo('body');
+				
+				if ($('.C-LoaderMask').length <= 0) $('<div class="C-LoaderMask" />').appendTo('body');
+			}
+			
+			$('.C-LoaderContainer').show();
+			$('.C-LoaderMask').show();
+			
+		},
+		
+		close:function(){
+			if(!Chiara.UserLoader) return;
+			Chiara.loader.operations--;
+			if(Chiara.loader.operations>0){
+				return;
+			}
+			$('.C-LoaderContainer').stop().hide('fade', 200);
+			$('.C-LoaderMask').hide();
+			Chiara.loader.operations = 0;
+		}
+	}
+});
+
+
+/********** REQUEST **********/
+$.extend( Chiara, {
 
 	req : {
 
@@ -68,7 +134,125 @@ var Chiara = {
 		link : function(a){// action
 			window.location.href = Chiara.req.opt.baseUrl + a;
 		}
-	},
+	}
+});
+
+/******** DIALOG *******/
+$.extend( Chiara, {
+	dialog : {
+		
+		sequence : [],
+		
+		init: function(){
+			
+		},
+		
+		open: function(id){
+			
+			if($.isArray(id)){
+				var tmpId = id[0];
+				Chiara.dialog.sequence = id.slice(1);
+				id=tmpId;
+			}else{
+				if($('.ct-dialog:visible').length>0){
+					Chiara.dialog.sequence.push(id);
+					return;
+				}
+			}
+			if( $(id).length==0 )return;
+			if( $('#C-DialogMask').length <= 0 ) $('<div id="C-DialogMask" />').appendTo('body');
+			if( $(id+' .ct-body').length <= 0 ){$(id).wrapInner('<div class="ct-body" />');}
+			if( $(id+' .ct-head').length <= 0 ){$(id).prepend('<div class="ct-head" />');}
+			if( $(id+' > a.ct-close').length <= 0 ){
+				$(id).prepend('<a href="javascript:void(0);" class="ct-close" onclick="Chiara.dialog.close()">x</a>');
+			}
+			if( $(id+' .ct-foot').length <= 0 ){$(id).append('<div class="ct-foot" />');}
+			$('#C-DialogMask:hidden').show().on('click', Chiara.dialog.close);
+			var onOpen = $(id).data('ct-open');
+			$(id).css({
+				left: (($(window).width()/2) - ($(id).width()/2)) + 'px'
+			}).show({
+				effect: 'drop', 
+				direction: 'up', 
+				duration:500, 
+				easing: 'easeOutQuint',
+				complete: function(){
+					if(onOpen != null && onOpen.length>0){
+						var d = $(id);
+						eval( onOpen + "(d);" );
+					}
+				}
+			}).draggable({handle: '.ct-head'});
+			
+			$(window).resize(function(){
+				$(id).css({left: (($(window).width()/2) - ($(id).width()/2)) + 'px'});
+			});
+			
+			$(document).on('keyup', Chiara.dialog.checkEscPress);
+			
+		},
+		
+		close: function(){
+			$('.ct-dialog:visible').hide({
+				effect: 'drop', 
+				direction: 'up', 
+				duration:300,
+				complete: function(){
+					if(Chiara.dialog.sequence.length==0){
+						$('#C-DialogMask:visible').fadeOut(100).off('click', Chiara.dialog.close);
+					}
+					var onClose = $(this).data('ct-close');
+					if(onClose != null && onClose.length>0){
+						var d = $(this);
+						eval( onClose + "(d);" );
+					}
+					
+					if(Chiara.dialog.sequence.length>0){
+						var id2 = Chiara.dialog.sequence[0];
+						Chiara.dialog.sequence = Chiara.dialog.sequence.slice(1);
+						Chiara.dialog.open(id2);
+					}
+				}
+			});
+			$(document).off('keyup', Chiara.dialog.checkEscPress);
+		},
+		
+		checkEscPress: function(e){
+			if(e.which == 27) Chiara.dialog.close();
+		},
+		
+		openEdit: function(data, title, cb){
+			if($('#C-Dialog-EditDialog').length>0) $('#C-Dialog-EditDialog').remove();
+			var html='<div class="ct-dialog" id="C-Dialog-EditDialog">';
+			html += '<div class="ct-head"><h3>'+title+'</h3></div>';
+			html += '<div class="ct-body"><form class="form-horizontal"></form></div>';
+			html += '<div class="ct-foot">';
+			html += '<button onclick="Chiara.dialog.close()">Close</button>';
+			html += '<button onclick="Chiara.dialog.saveEdit()">Save</button>';
+			html += '</div>';
+			html += '</div>';
+			var wnd = $(html).appendTo('body');
+			if(cb!=null) wnd.data('ct-save-cb', cb);
+			$.each(data, function(k,v){
+				$(wnd).find('form').append('<div class="form-group"><label class="col-sm-2 control-label">'+k+'</label><div class="col-sm-10"><input name="'+k+'" type="text" value="'+v+'" /></div></div>');
+			});
+			
+			Chiara.dialog.open('#C-Dialog-EditDialog');
+		},
+		
+		saveEdit: function(){
+			Chiara.dialog.close();
+			console.log($('#C-Dialog-EditDialog form').serializeObject());
+			if($('#C-Dialog-EditDialog').data('ct-save-cb') != null){
+				var cb = $('#C-Dialog-EditDialog').data('ct-save-cb');
+				cb($('#C-Dialog-EditDialog form').serializeObject());
+			}
+		}
+	}
+});
+
+/*********** MODAL **********/
+Chiara.prototype = {
 
 	modal : {
 
@@ -138,8 +322,11 @@ var Chiara = {
 			});
 		}
 		
-	},
+	}
+}
 
+/************* MESSAGES *************/
+Chiara.prototype = {
 	msg : {
 			
 		opt : {
@@ -230,9 +417,221 @@ var Chiara = {
 			Chiara.modal.showMask();
 			$(msgObj).hide().appendTo('body').fadeIn();
 		}
+	}
+}
+
+/********* MENU ******/
+$.extend( Chiara, {
+	menu : {
 		
+		init: function(){
+			
+			$('.ct-menu-spastic').each(function(){
+				Chiara.menu.create(this, 'spastic');
+			});
+			
+			$('.ct-menu').each(function(){
+				Chiara.menu.create(this);
+			});
+			
+			$('.ct-menu-page').each(function(){
+				Chiara.menu.create(this, 'page');				
+			});
+			
+		},
 		
-	},
+		create: function(s, type){
+			if(type!=null && type=='spastic'){
+				
+				$(s).find('li').css({ width: ( 100 / $(s).find('li').length ) + '%'});
+				$(s).spasticNav({
+					overlap: 0,
+					easing : 'easeOutExpo'
+				});
+				
+			}else if(type!=null && type=='page'){
+				
+				var cls = 'ct-menu-page-' + (Math.random()*10 + '').replace('.', '');
+				var that = $(s).addClass(cls);
+				
+				var aIdx = 0
+				that.find('a').each(function(){
+					$(this).addClass('ct-menu-page-item-' + (aIdx++));
+				})
+				
+				that.prepend($(that).find(' > ul').attr('id', 'C-MENU-PAGE-ONVIEW').clone().fadeIn().attr('id', 'C-MENU-PAGE-VIEW'));
+				
+				Chiara.menu.page.refresh(that);
+				
+			}else{
+				
+				$(s).find('a').click(function(){
+					
+					if($(this).hasClass('selected')) return;
+					
+					$(this).closest('.ct-menu').find('a, li').removeClass('selected');
+					if( $(this).parent().hasClass('cat') ){
+						$(this).closest('.ct-menu').find('li.cat ul').hide('blink');
+						$(this).next().show('blink');
+					}
+					$(this).addClass('selected');
+					
+				});
+				
+			}
+		},
+		
+		page:{
+			next:function(obj, e){
+				
+				var cls = $(e).attr('class');
+				var clss = cls.match(/ct-menu-page-item[a-z-\d]+/ig);
+				
+				if( $(e).next().prop("tagName").toLowerCase()=='ul' && clss.length==1 ){
+					
+					$(e).addClass('selected');
+					cls = clss[0];
+					$('#C-MENU-PAGE-VIEW').hide({
+						effect: 'slide',
+						duration: 300,
+						direction: 'left',
+						complete: function(){
+							$(this).remove();
+							
+							$(obj).prepend($('#C-MENU-PAGE-ONVIEW').attr('id', '')
+											.find('a.'+cls).next()
+											.attr('id', 'C-MENU-PAGE-ONVIEW')
+											.clone(true, true)
+											.attr('id', 'C-MENU-PAGE-VIEW').
+											show()
+											);
+							Chiara.menu.page.refresh(obj);
+						}
+					});
+					
+				}
+				
+			},
+			prev:function(obj){
+				if( $('#C-MENU-PAGE-ONVIEW').closest('ul').length > 0){
+					$('#C-MENU-PAGE-VIEW').hide({
+						effect: 'slide',
+						duration: 300,
+						direction: 'right',
+						complete: function(){
+							$(this).remove();
+							$(obj).prepend($('#C-MENU-PAGE-ONVIEW')
+											.attr('id', '')
+											.parent()
+											.closest('ul')
+											.attr('id', 'C-MENU-PAGE-ONVIEW')
+											.clone(true, true)
+											.attr('id', 'C-MENU-PAGE-VIEW').
+											show());
+							Chiara.menu.page.refresh(obj);
+						}
+					});
+				}
+			
+			},
+			refresh: function(obj){
+				$(obj).find('a').click(function(){
+					
+					if( $(this).hasClass('cat') ){
+						Chiara.menu.page.next(obj, this);
+					}if( $(this).hasClass('back') ){
+						Chiara.menu.page.prev(obj);
+					}
+					
+				});
+			}
+		}
+	}
+});
+
+/*********** LEFT PANEL ******/
+$.extend( Chiara, {
+	
+	panel : {
+		
+		hBind : null,
+		loaded: false,
+		opened: false,
+		
+		init: function(){
+			
+			if($(window).width() <= 992){
+				Chiara.panel.binder();
+			}
+			
+			$(window).resize(function(){
+				if($(window).width() <= 992){
+					Chiara.panel.binder();
+				}else{
+					Chiara.panel.unbinder();
+				}
+			});
+		},
+		
+		binder: function(){
+			if(Chiara.panel.loaded) return;
+			
+			Chiara.panel.loaded = true;
+			var elm = $('body').get(0);
+			Chiara.panel.hBind = new Hammer(elm);
+			
+			Chiara.panel.hBind.get('pan').set({ threshold: 20 });
+			
+			Chiara.panel.hBind.on("panright", function(ev) {
+				Chiara.panel.open('.ct-panel');
+			});
+			
+			Chiara.panel.hBind.on("panleft", function(ev) {
+				Chiara.panel.close('.ct-panel');
+			});
+			
+		},
+		
+		unbinder: function(){
+			if(!Chiara.panel.loaded) return;
+			
+			Chiara.panel.loaded = false;
+			Chiara.panel.hBind.destroy();
+		},
+		
+		open: function(id){
+			if(Chiara.panel.opened) return;
+			Chiara.panel.opened = true;
+			//$(id).css({opacity:1}).show().animate({width:'400px'}, {duration:600, easing: 'easeOutQuint'});
+			$(id).addClass('opened', 600, 'easeOutQuint');
+			$('#MobileMenuLink').addClass('opened');
+		},
+		
+		close: function(id){
+			
+			if(!Chiara.panel.opened) return;
+			Chiara.panel.opened = false;
+			
+			if(typeof id != 'string'){
+				id = '.ct-panel';
+			}
+			//$(id).animate({width:'0px', opacity:0}, {duration:300, easing: 'easeOutQuint', complete:function(){$(id).hide();}});
+			$(id).removeClass('opened', 600, 'easeOutQuint');
+			setTimeout(function(){$('#MobileMenuLink').removeClass('opened')}, 400);
+		},
+		
+		toggle: function(id){
+			if(Chiara.panel.opened){
+				Chiara.panel.close(id);
+			}else{
+				Chiara.panel.open(id);
+			}
+		}
+	}
+});
+
+// Utils
+$.extend( Chiara, {
 	
 	paginator:function(selector, d, fnc){
 		
@@ -279,77 +678,7 @@ var Chiara = {
 		$('html,body').animate({scrollTop: $(id).offset().top},'slow');
 	}
 
-};
-
-
-
-/******** CHECKLIST *********/
-(function($){
-	
-	var methods = {
-			
-			init : function( options ) {
-
-				return this.each(function(){
-					
-					var set = {
-							onCheck : function(){},
-							onUncheck : function(){}
-					};
-					$.extend(set, options);
-					$(this).data('checklist', set);
-					
-					$(this).click(function(){
-						$(this).checklist('toggle');
-					});
-					if($(this).hasClass('checked')) $(this).checklist('check');
-				});
-			},
-			
-			destroy : function( ) {
-
-				return this.each(function(){
-					$(this).removeData('checklist');
-				});
-			},
-			
-			toggle : function(){
-				return this.each(function(){
-					if($(this).hasClass('checked')) $(this).checklist('uncheck');
-					else $(this).checklist('check');
-				});
-			},
-			
-			check : function(){
-				return this.each(function(){
-					$(this).removeClass('unchecked').addClass('checked');
-					var set = $(this).data('checklist');
-					if(set.onCheck!=null) set.onCheck(this);
-				});
-			},
-			
-			uncheck : function(){
-				return this.each(function(){
-					$(this).removeClass('checked').addClass('unchecked');
-					var set = $(this).data('checklist');
-					if(set.onUncheck!=null) set.onUncheck(this);
-				});
-			}
-	};
-
-	$.fn.checklist = function( method ) {
-
-		if ( methods[method] ) {
-			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		} else if ( typeof method === 'object' || ! method ) {
-			return methods.init.apply( this, arguments );
-		} else {
-			$.error( 'Method ' +  method + ' does not exist on jQuery.checklist' );
-		}    
-
-	};
-
-})( jQuery );
+});
 
 
 /******** SEARCH on LIST *********/
@@ -420,6 +749,139 @@ var Chiara = {
 
 })( jQuery );
 
+/********************* JQUERY SPASTIC NAV PLUGIN *****************/
+(function($) {
+
+	$.fn.spasticNav = function(options) {
+	
+		options = $.extend({
+			overlap : 20,
+			speed : 500,
+			reset : 500,
+			easing : 'easeOutExpo',
+			selectedClass: 'selected',
+			blobClass: 'blob'
+		}, options);
+	
+		return this.each(function() {
+		
+		 	var nav = $(this),
+		 		currentPageItem = $('.'+options.selectedClass, nav),
+		 		blob,
+		 		reset;
+		 	
+		 	$('<li class="'+options.blobClass+'"></li>').css({
+		 		width : currentPageItem.outerWidth(),
+		 		height : currentPageItem.outerHeight() + options.overlap,
+		 		left : currentPageItem.position().left,
+		 		top : currentPageItem.position().top - options.overlap / 2	 		
+		 	}).appendTo(this);
+		 	
+		 	blob = $('.'+options.blobClass, nav);
+		 	
+			$('li:not(.'+options.blobClass+')', nav).hover(function() {
+				// mouse over
+				clearTimeout(reset);
+				blob.animate(
+					{
+						left : $(this).position().left,
+						width : $(this).outerWidth()
+					},
+					{
+						duration : options.speed,
+						easing : options.easing,
+						queue : false
+					}
+				);
+			}, function() {
+				// mouse out	
+				reset = setTimeout(function() {
+					blob.animate({
+						width : currentPageItem.outerWidth(),
+						left : currentPageItem.position().left
+					}, options.speed)
+				}, options.reset);
+	
+			}).click(function(){
+				$(this).closest('ul').find('li').removeClass('selected');
+				$(this).addClass('selected');
+				currentPageItem = $('.'+options.selectedClass, nav);
+			});
+		}); // end each
+	
+	};
+
+})(jQuery);
+
+/******************** CHECKLIST PLUGIN *******/
+(function($){
+	
+	var methods = {
+			
+			init : function( options ) {
+
+				return this.each(function(){
+					
+					var set = {
+						onCheck : function(){},
+						onUncheck : function(){}
+					};
+					$.extend(set, options);
+					$(this).data('checklist', set);
+					
+					$(this).click(function(){
+						$(this).checklist('toggle');
+					});
+					if($(this).hasClass('checked')) $(this).checklist('check');
+				});
+			},
+			
+			destroy : function( ) {
+
+				return this.each(function(){
+					$(this).removeData('checklist');
+				});
+			},
+			
+			toggle : function(){
+				return this.each(function(){
+					if($(this).hasClass('checked')) $(this).checklist('uncheck');
+					else $(this).checklist('check');
+				});
+			},
+			
+			check : function(){
+				return this.each(function(){
+					$(this).removeClass('unchecked').addClass('checked');
+					var set = $(this).data('checklist');
+					if(set.onCheck!=null) set.onCheck(this);
+				});
+			},
+			
+			uncheck : function(){
+				return this.each(function(){
+					$(this).removeClass('checked').addClass('unchecked');
+					var set = $(this).data('checklist');
+					if(set.onUncheck!=null) set.onUncheck(this);
+				});
+			}
+	};
+
+	$.fn.checklist = function( method ) {
+
+		if ( methods[method] ) {
+			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+			return methods.init.apply( this, arguments );
+		} else {
+			$.error( 'Method ' +  method + ' does not exist on jQuery.checklist' );
+		}    
+
+	};
+
+})( jQuery );
+
+
 /************** FORM UTILITY *********/
 (function($){
 
@@ -460,13 +922,3 @@ var Chiara = {
 	};
 
 })( jQuery );
-
-
-/*! jquery-dateFormat 05-10-2014 */
-var DateFormat={};!function(a){var b=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],c=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],d=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],e=["January","February","March","April","May","June","July","August","September","October","November","December"],f={Jan:"01",Feb:"02",Mar:"03",Apr:"04",May:"05",Jun:"06",Jul:"07",Aug:"08",Sep:"09",Oct:"10",Nov:"11",Dec:"12"},g=/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.?\d{0,3}[Z\-+]?(\d{2}:?\d{2})?/;a.format=function(){function a(a){return b[parseInt(a,10)]||a}function h(a){return c[parseInt(a,10)]||a}function i(a){var b=parseInt(a,10)-1;return d[b]||a}function j(a){var b=parseInt(a,10)-1;return e[b]||a}function k(a){return f[a]||a}function l(a){var b,c,d,e,f,g=a,h="";return-1!==g.indexOf(".")&&(e=g.split("."),g=e[0],h=e[1]),f=g.split(":"),3===f.length?(b=f[0],c=f[1],d=f[2].replace(/\s.+/,"").replace(/[a-z]/gi,""),g=g.replace(/\s.+/,"").replace(/[a-z]/gi,""),{time:g,hour:b,minute:c,second:d,millis:h}):{time:"",hour:"",minute:"",second:"",millis:""}}function m(a,b){for(var c=b-String(a).length,d=0;c>d;d++)a="0"+a;return a}return{parseDate:function(a){var b={date:null,year:null,month:null,dayOfMonth:null,dayOfWeek:null,time:null};if("number"==typeof a)return this.parseDate(new Date(a));if("function"==typeof a.getFullYear)b.year=String(a.getFullYear()),b.month=String(a.getMonth()+1),b.dayOfMonth=String(a.getDate()),b.time=l(a.toTimeString()+"."+a.getMilliseconds());else if(-1!=a.search(g))values=a.split(/[T\+-]/),b.year=values[0],b.month=values[1],b.dayOfMonth=values[2],b.time=l(values[3].split(".")[0]);else switch(values=a.split(" "),6===values.length&&isNaN(values[5])&&(values[values.length]="()"),values.length){case 6:b.year=values[5],b.month=k(values[1]),b.dayOfMonth=values[2],b.time=l(values[3]);break;case 2:subValues=values[0].split("-"),b.year=subValues[0],b.month=subValues[1],b.dayOfMonth=subValues[2],b.time=l(values[1]);break;case 7:case 9:case 10:b.year=values[3],b.month=k(values[1]),b.dayOfMonth=values[2],b.time=l(values[4]);break;case 1:subValues=values[0].split(""),b.year=subValues[0]+subValues[1]+subValues[2]+subValues[3],b.month=subValues[5]+subValues[6],b.dayOfMonth=subValues[8]+subValues[9],b.time=l(subValues[13]+subValues[14]+subValues[15]+subValues[16]+subValues[17]+subValues[18]+subValues[19]+subValues[20]);break;default:return null}return b.date=new Date(b.year,b.month-1,b.dayOfMonth),b.dayOfWeek=String(b.date.getDay()),b},date:function(b,c){try{var d=this.parseDate(b);if(null===d)return b;for(var e=(d.date,d.year),f=d.month,g=d.dayOfMonth,k=d.dayOfWeek,l=d.time,n="",o="",p="",q=!1,r=0;r<c.length;r++){var s=c.charAt(r),t=c.charAt(r+1);if(q)"'"==s?(o+=""===n?"'":n,n="",q=!1):n+=s;else switch(n+=s,p="",n){case"ddd":o+=a(k),n="";break;case"dd":if("d"===t)break;o+=m(g,2),n="";break;case"d":if("d"===t)break;o+=parseInt(g,10),n="";break;case"D":g=1==g||21==g||31==g?parseInt(g,10)+"st":2==g||22==g?parseInt(g,10)+"nd":3==g||23==g?parseInt(g,10)+"rd":parseInt(g,10)+"th",o+=g,n="";break;case"MMMM":o+=j(f),n="";break;case"MMM":if("M"===t)break;o+=i(f),n="";break;case"MM":if("M"===t)break;o+=m(f,2),n="";break;case"M":if("M"===t)break;o+=parseInt(f,10),n="";break;case"y":case"yyy":if("y"===t)break;o+=n,n="";break;case"yy":if("y"===t)break;o+=String(e).slice(-2),n="";break;case"yyyy":o+=e,n="";break;case"HH":o+=m(l.hour,2),n="";break;case"H":if("H"===t)break;o+=parseInt(l.hour,10),n="";break;case"hh":hour=0===parseInt(l.hour,10)?12:l.hour<13?l.hour:l.hour-12,o+=m(hour,2),n="";break;case"h":if("h"===t)break;hour=0===parseInt(l.hour,10)?12:l.hour<13?l.hour:l.hour-12,o+=parseInt(hour,10),n="";break;case"mm":o+=m(l.minute,2),n="";break;case"m":if("m"===t)break;o+=l.minute,n="";break;case"ss":o+=m(l.second.substring(0,2),2),n="";break;case"s":if("s"===t)break;o+=l.second,n="";break;case"S":case"SS":if("S"===t)break;o+=n,n="";break;case"SSS":o+=l.millis.substring(0,3),n="";break;case"a":o+=l.hour>=12?"PM":"AM",n="";break;case"p":o+=l.hour>=12?"p.m.":"a.m.",n="";break;case"E":o+=h(k),n="";break;case"'":n="",q=!0;break;default:o+=s,n=""}}return o+=p}catch(u){return console&&console.log&&console.log(u),b}},prettyDate:function(a){var b,c,d;return("string"==typeof a||"number"==typeof a)&&(b=new Date(a)),"object"==typeof a&&(b=new Date(a.toString())),c=((new Date).getTime()-b.getTime())/1e3,d=Math.floor(c/86400),isNaN(d)||0>d?void 0:60>c?"just now":120>c?"1 minute ago":3600>c?Math.floor(c/60)+" minutes ago":7200>c?"1 hour ago":86400>c?Math.floor(c/3600)+" hours ago":1===d?"Yesterday":7>d?d+" days ago":31>d?Math.ceil(d/7)+" weeks ago":d>=31?"more than 5 weeks ago":void 0},toBrowserTimeZone:function(a,b){return this.date(new Date(a),b||"MM/dd/yyyy HH:mm:ss")}}}()}(DateFormat),function(a){a.format=DateFormat.format}(jQuery);
-
-
-var labels = {
-		weekdays : ['Luned&igrave;', 'Marted&igrave;', 'Mercoled&igrave;', 'Gioved&igrave;', 'Venerd&igrave;', 'Sabato', 'Domenica'],
-		months : ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre']
-}
