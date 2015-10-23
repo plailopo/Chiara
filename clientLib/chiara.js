@@ -25,39 +25,39 @@ var Chiara = {
 $.extend( Chiara, {
 	
 	loader : {
-		ImageSrc :'/loading.gif',
 		operations: 0,
+		content: 'Loading...',
 		init: function(){
 			$(document).ajaxComplete(Chiara.loader.close);
 		},
 		open:function(){
-			if(!Chiara.UserLoader) return;
+
 			Chiara.loader.operations++;
 			if(Chiara.loader.operations>1) return;
 			
-			if ($('.C-LoaderContainer').length <= 0){
+			if ($('#C-LoaderContainer').length <= 0){
 				
-				$('<div class="C-LoaderContainer" />')
-				.append('<img src="'+Chiara.ImageUrl+ Chiara.loader.ImageSrc + '">')
-				.append('<div class="text">'+CTlabel.loader.caricamento+'</div>')
+				$('<div id="C-LoaderContainer" />')
+				.append('<div class="image" />')
+				.append('<div class="text">'+Chiara.loader.content+'</div>')
 				.appendTo('body');
 				
-				if ($('.C-LoaderMask').length <= 0) $('<div class="C-LoaderMask" />').appendTo('body');
+				if ($('#C-LoaderMask').length <= 0) $('<div id="C-LoaderMask" />').appendTo('body');
 			}
 			
-			$('.C-LoaderContainer').show();
-			$('.C-LoaderMask').show();
+			$('#C-LoaderContainer').show({effect:'fade', duration:200});
+			$('#C-LoaderMask').show();
 			
 		},
 		
 		close:function(){
-			if(!Chiara.UserLoader) return;
+
 			Chiara.loader.operations--;
 			if(Chiara.loader.operations>0){
 				return;
 			}
-			$('.C-LoaderContainer').stop().hide('fade', 200);
-			$('.C-LoaderMask').hide();
+			$('#C-LoaderContainer').stop().hide({effect:'fade', duration:200});
+			$('#C-LoaderMask').hide();
 			Chiara.loader.operations = 0;
 		}
 	}

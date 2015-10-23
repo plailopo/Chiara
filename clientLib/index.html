@@ -11,52 +11,262 @@
 	
 	<style>
 		.CBox{background-color:#ddd;padding:4px;border:1px solid #aaa;}
+		.banner{background:#d5c67a;}
+		.CodeBox{background-color:#eee;padding:4px;border:1px solid #ccc;}
 	</style>
 
 </HEAD>
 
 
-<BODY>	
+<BODY>
 	
-	<h1>Grid</h1>
-	<div class="row fluid pad">
-		<div class="col-1 CBox">.col-1</div>
-		<div class="col-4 CBox">.col-4</div>
-		<div class="col-3 CBox">.col-3</div>
-		<div class="col-2 CBox">.col-2</div>
-		<div class="col-2 CBox">.col-2</div>
+	<div class="container fluid banner big center">
+		<h1>Ciao</h1>
 	</div>
 	
-	<div class="row pad">
-		<div class="col-1 CBox">.col-1</div>
-		<div class="col-5 CBox">.col-5</div>
-		<div class="col-5 CBox">.col-5</div>
-		<div class="col-1 CBox">.col-1</div>
+	<div class="container">
+		<h1 class="title">Grid</h1>
+		<p>Only another Grid, not the best, but simple and versatile</p>
+		
+		<h4>Width reference</h4>
+		
+		<div class="row">
+			<div class="col-6 unpad">
+				<table class="line">
+					<thead>
+						<tr>
+							<th>Format</th><th>width</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>XLarge</strong> - Big Desktop</td><td>&gt; 1200px</td>
+						</tr>
+						<tr>
+							<td><strong>Large</strong> - Desktop</td><td>&lt; 1200px</td>
+						</tr>
+						<tr>
+							<td><strong>Medium</strong> - Tablet</td><td>width &lt; 992px</td>
+						</tr>
+						<tr>
+							<td><strong>Small</strong> - smartphone</td><td>width &lt; 768px</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<h4>Base tutorial</h4>
+		<p>
+			<code>.container</code> - Is the container class, responsive by the Width reference<br />
+			<code>.container.fluid</code> - All page width
+			<strong>The grid</strong>
+			Every grid is inset on <code>.row</code> class and divided until 12 column with <code>.col-</code> class.
+		</p>
+		
+		
+		<h4>First view</h4>
+		
+		<div class="row">
+			<div class="col-1 CBox">.col-1</div>
+			<div class="col-4 CBox">.col-4</div>
+			<div class="col-3 CBox">.col-3</div>
+			<div class="col-2 CBox">.col-2</div>
+			<div class="col-2 CBox">.col-2</div>
+		</div>
+		
+		<div class="CodeBox pad">
+			
+			<button class="btn" onclick="$('#GridEx1').toggle('slide')">View source</button>
+			
+			<div id="GridEx1" class="hidden">
+				<code>
+					&lt;div class=&quot;row&quot;&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-1 CBox&quot;&gt;.col-1&lt;/div&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4 CBox&quot;&gt;.col-4&lt;/div&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
+					&lt;/div&gt;
+				</code>
+			</div>
+		</div>
+		
+			
+		<h3>Fix columns</h3>
+		<div class="row fixed">
+			<div class="col-1 CBox">.col-1</div>
+			<div class="col-4 CBox">.col-4</div>
+			<div class="col-3 CBox">.col-3</div>
+			<div class="col-2 CBox">.col-2</div>
+			<div class="col-2 CBox">.col-2</div>
+		</div>
+		
+		<div class="CodeBox pad">
+			
+			<button class="btn" onclick="$('#GridEx2').toggle('slide')">View source</button>
+			
+			<div id="GridEx2" class="hidden">
+				<code>
+					&lt;div class=&quot;row fixed&quot;&gt;<br />
+					&nbsp;&nbsp;&nbsp;...<br />
+					&lt;/div&gt;
+				</code>
+			</div>
+		</div>
+		
+		<h4>Offset column</h4>
+		
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-3 CBox">.col-3</div>
+		</div>
+		
+		<div class="CodeBox pad">
+			
+			<button class="btn" onclick="$('#GridEx3').toggle('slide')">View source</button>
+			
+			<div id="GridEx3" class="hidden">
+				<code>
+					&lt;div class=&quot;row&quot;&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4&quot;&gt;&lt;/div&gt;<br />
+					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
+					&lt;/div&gt;
+				</code>
+			</div>
+		</div>
+
+		<h1 class="title">Sections</h1>
+		<p>Same utils classes</p>
+		<p>
+			<code>.pad</code> - Add padding<br />
+			<code>.mrg</code> - Add margin<br />
+			<code>.rnd</code> - Add round box<br />
+			<code>.separe</code> - A line break<br />
+			<code>.hidden</code> - Hide the object on page load<br />
+		</p>
+		
+		<h1 class="title">Typografy</h1>
+		<p>
+			This is normal text
+		</p>
+		<h1>Heading 1</h1>
+		<h2>Heading 2</h2>
+		<h3>Heading 3</h3>
+		<h4>Heading 4</h4>
+		<h5>Heading 5</h5>
+		<h6>Heading 6</h6>
+		<small>Small text</small><br />
+		<strong>Strong text</strong><br />
+		<p>
+			<code>.big</code> class make all more big :)
+		</p>
+		<div class="big">
+			
+			<h1>Heading 1</h1>
+			<h2>Heading 2</h2>
+			<p>
+				This is normal big text
+			</p>
+		</div>
+		
+		
+		<h1 class="title">Table style</h1>
+		<p>
+			Normal table is styling like this on header and body<br />
+			<code>table.line</code> class add a light line<br />
+			<code>table.hover</code> Allow line background on mousover<br />
+		</p>
+		<table class="hover line">
+			<thead>
+				<tr>
+					<th>Title 1</th><th>Title 2</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>value 1</td><td>value2</td>
+				</tr>
+				<tr>
+					<td>value 1</td><td>value2</td>
+				</tr>
+				<tr>
+					<td>value 1</td><td>value2</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+				
+		<h1 class="title">Forms style</h1>
+		<p>
+			Normal input <input type="text" />
+		</p>
+		
+		
+		<h1 class="title">Buttons</h1>
+		<p>
+			<code>.btn</code> class enhances visibility of your bottuns, link, launcher....<br />
+			<code>.btn-orange</code> color it, and <code>.btn-blue</code>, <code>.btn-red</code>, <code>.btn-celeste</code>, <code>.btn-green</code> and <code>.btn-black</code><br />
+		</p>
+
+		<button class="btn">button</button>
+		<button class="btn btn-orange">button</button>
+		<button class="btn btn-red">button</button>
+		<button class="btn btn-green">button</button>
+		<button class="btn btn-celeste">button</button>
+		<button class="btn btn-blue">button</button>
+		<button class="btn btn-black">button</button>
+		
+		<p>
+			<code>.btn-mini</code> for mini button and <code>.btn-small</code> and <code>.btn-large</code><br />
+		</p>
+
+		<button class="btn btn-mini">button</button>
+		<button class="btn btn-small">button</button>
+		<button class="btn btn-large">button</button>
+		
+		<h3>Group buttons</h3>
+		
+		<h3>Rounded buttons</h3>
+		
+		<h3>Corner buttons</h3>
+		
+		<h1 class="title">Dropdown</h1>
+		<p>
+			bla bla
+		</p>
+		
+		<h1 class="title">Paginator</h1>
+		<p>
+			bla bla
+		</p>
+		
+		<h1 class="title">Alert</h1>
+		<p>
+			bla bla
+		</p>
+		
+		<h1 class="title">Tags</h1>
+		<p>
+			bla bla
+		</p>
+		
+		<h1 class="title">Loader</h1>
+		<p>
+			<code>Chiara.loader.open()</code> open the loader<br />
+			<button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
+		</p>
+		
+		<h1 class="title">Modal</h1>
+		<p>
+			bla bla
+		</p>
+		
+		
 	</div>
 	
-	<div class="row fix pad">
-		<div class="col-1 CBox">.col-1</div>
-		<div class="col-4 CBox">.col-4</div>
-		<div class="col-3 CBox">.col-3</div>
-		<div class="col-2 CBox">.col-2</div>
-		<div class="col-2 CBox">.col-2</div>
-	</div>
-	
-	<h1>Colors</h1>
-	<div class="row pad">
-		<div class="col-1 CBox bg-a">.col-1</div>
-		<div class="col-1 CBox bg-b">.col-1</div>
-		<div class="col-1 CBox bg-c">.col-1</div>
-		<div class="col-1 CBox bg-d">.col-1</div>
-		<div class="col-1 CBox bg-e">.col-1</div>
-		<div class="col-1 CBox bg-f">.col-1</div>
-		<div class="col-1 CBox bg-g">.col-1</div>
-		<div class="col-1 CBox bg-h">.col-1</div>
-		<div class="col-1 CBox bg-i">.col-1</div>
-		<div class="col-1 CBox bg-l">.col-1</div>
-		<div class="col-1 CBox bg-m">.col-1</div>
-		<div class="col-1 CBox bg-n">.col-1</div>
-	</div>
+
 	
 </BODY>
 </HTML>

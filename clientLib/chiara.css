@@ -23,13 +23,13 @@ body {
 }
 
 /*********************** GRIDS *****************/
-.row{clear: both;padding: 0px;margin: 0px auto;position:relative; width:1200px;}
-.row.fluid{width:auto;}
-.row:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
-
-
-.row [class^=col-]{float:left;min-height: 1px;position:relative;}
+.container{clear: both;padding: 10px;margin: 0px auto;position:relative; width:1200px;}
+.container.fluid{width:auto;}
+.row{clear: both;padding: 0;margin: 0px auto;position:relative;}
+.row:after {content: ".";display: block;clear: both;visibility: hidden;}
+.row [class^=col-]{float:left;min-height: 1px;position:relative;padding:10px;margin:0;}
 .col-12 { width: 100%; } .col-11 { width: 91.63%; } .col-10 { width: 83.3%; } .col-9 { width: 74.97%; } .col-8 { width: 66.64%; } .col-7 { width: 58.31%; } .col-6 { width: 49.98%; } .col-5 { width: 41.65%; } .col-4 { width: 33.32%; } .col-3 { width: 24.99%; } .col-2 { width: 16.66%; } .col-1 { width: 8.33%; }
+.row [class^=col-].unpad{padding:0px;}
 
 .only-s{display:none;}
 .only-m{display:none;}
@@ -43,14 +43,19 @@ body {
 
 /*********************** SECTIONS *****************/
 p{padding:10px 0;}
-.box{background:#fff;position:relative;}
 .pad{padding:10px;}
 .separe{padding:5px 0;clear:both;}
 .mrg{margin:10px;}
-.brd{border:1px solid #aaa;}
 .rnd{border-radius:6px;}
 .hidden{display:none;}
 
+/*********************** CODING *****************/
+code{
+	color:#045FB4;
+	font-family: 'Courier New';
+	font-size:1.1em;
+	vertical-align:baseline;
+}
 
 /*********************** TYPOGRAPHY *****************/
 h1{font-size:2.4em;line-height:1.2em;font-weight:500;padding: 20px 0 10px;}
@@ -63,7 +68,7 @@ h6{font-size:1em;line-height:1.2em;font-weight:200;padding: 2px 0;}
 small{font-size:0.85em;}
 strong{font-weight:900;}
 .underline{border-bottom:1px solid #ccc;}
-.title{border-bottom:1px solid #cccccc;line-height:2.0em;padding:0 10px;font-weight:bold;}
+.title{border-bottom:1px solid #cccccc;padding-top:2em;font-weight:bold;}
 
 .left{text-align:left;}
 .right{text-align:right;}
@@ -72,7 +77,7 @@ strong{font-weight:900;}
 /*********************** TABLES *****************/
 table{width:100%;border-collapse: collapse;}
 table tr th{font-weight:bold;}
-table tr td, table tr th{padding:2px;}
+table tr td, table tr th{padding:0.4em 0.4em;}
 table tr td.top{vertical-align:top;}
 table tr td.right{text-align:right;}
 
@@ -82,12 +87,12 @@ table.line tr td:first-child, table.line tr th:first-child{border-left:0px;}
 table.hover tr:hover td{background:#ddd;}
 
 /*********************** FORM *****************/
-input, select, textarea, checkbox{padding: 2px 4px;line-height: 1.6em;border:1px solid #bbbbbb;}
+input, select, textarea, checkbox{padding: 0.4em;line-height: 1.6em;border:1px solid #bbbbbb;}
 
 textarea:focus, input:focus {
     outline: none !important;
-    border:1px solid dddddd;
-    box-shadow: 0 0 1px #aaaaaa;
+    border:1px solid 888888;
+    box-shadow: 0 0 10px #aaaaaa;
 }
 
 /*********************** BUTTONS *****************/
@@ -95,19 +100,17 @@ textarea:focus, input:focus {
 .btn {
   display: inline-block;
   *display: inline;
-  padding: 4px 6px;
+  padding: 0.4em 0.8em;
   margin-bottom: 0;
   *margin-left: .3em;
   font-size: 1em;
-  line-height: 18px;
-  *line-height: 20px;
   color: #333333;
   text-align: center;
   font-family:Arial;
   cursor: pointer;
-  border: 1px solid #eee;
-  border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
   vertical-align: middle;
   -webkit-border-radius: 1px;
      -moz-border-radius: 1px;
@@ -117,15 +120,8 @@ textarea:focus, input:focus {
      -moz-box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f7f7f7+100 */
-background: #ffffff; /* Old browsers */
-background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #ffffff 0%,#f7f7f7 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #ffffff 0%,#f7f7f7 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 100%); /* IE10+ */
-background: linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f7f7f7',GradientType=0 ); /* IE6-9 */
+	background: #eeeeee; /* Old browsers */
+	background: linear-gradient(to bottom, #f7f7f7f7 0%,#eeeeee 100%); /* W3C */
 
 
 }
@@ -141,11 +137,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   /* Buttons in IE7 don't get borders, so darken on hover */
 
   background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-     -moz-transition: background-position 0.1s linear;
-      -ms-transition: background-position 0.1s linear;
-       -o-transition: background-position 0.1s linear;
-          transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
 }
 
 .btn:focus {
@@ -160,9 +152,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   background-color: #d9d9d9 \9;
   background-image: none;
   outline: 0;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn.disabled,
@@ -172,9 +162,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   background-image: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 
 .btn-large {
@@ -257,19 +245,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0073d1', end
 }
 
 .btn-orange {
-  background-color: #faa732;
-  *background-color: #f89406;
-  background-image: -ms-linear-gradient(top, #fbb450, #f89406);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#f89406));
-  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
-  background-image: -o-linear-gradient(top, #fbb450, #f89406);
-  background-image: -moz-linear-gradient(top, #fbb450, #f89406);
-  background-image: linear-gradient(top, #fbb450, #f89406);
-  background-repeat: repeat-x;
-  border-color: #f89406 #f89406 #ad6704;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fbb450', endColorstr='#f89406', GradientType=0);
-  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+	background: #ff9900; /* Old browsers */
+	background: linear-gradient(to bottom, #ff9900 0%,#ffaa33 100%); /* W3C */
+	border: 1px solid #dd8800;
 }
 
 .btn-orange:hover,
@@ -1052,75 +1030,45 @@ input[type="submit"].btn.btn-mini {
 .panel.opened{margin-left:0px;}
 .panel.right{left: auto;right: 0;}
 
-/*********************** BASE COLORS *****************/
-.text-a{}
-.text-b{}
-.text-c{}
-.text-d{}
-.text-e{}
-.text-f{}
-.text-g{}
-.text-h{}
-.text-i{}
-.text-l{}
-.text-m{}
-.text-n{}
 
-.bg-a{background: #5FB404;}
-.bg-b{background: #ff9900;}
-.bg-c{background: #DF0101;color:#fff;}
-.bg-d{background: #04B4AE;}
-.bg-e{}
-.bg-f{}
-.bg-g{}
-.bg-h{}
-.bg-i{}
-.bg-l{}
-.bg-m{background: #111111;color:#fff;}
-.bg-n{background: #000000;color:#fff;}
-
+/*************** LOADER ****/
+#C-LoaderContainer{display:none; width:300px;position:fixed;top:40%;left:50%;margin-left:-150px;background:#ffffff;border:1px solid #000000;padding:20px;z-index:100001;} 
+#C-LoaderContainer .image{display: block; float:left;background: url(loader.gif);width:24px; height:24px;vertical-align: middle;}
+#C-LoaderContainer .text{display: block; vertical-align: middle;margin:0 0 0 3em;}
+#C-LoaderMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#ffffff;opacity:0.4}
 
 /************* TODO */
-.C-LoaderContainer{display:none; width:300px;position:fixed;top:40%;left:50%;margin-left:-150px;background:#ffffff;border:1px solid #000000;padding:20px;z-index:100001;} 
-.C-LoaderContainer img{display: inline; vertical-align: middle;}
-.C-LoaderContainer .text{display: inline; vertical-align: middle;}
-.C-LoaderMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#ffffff;opacity:0.4}
+
 .C-DialogMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#000000;opacity:0.4}
 
 
 @media only screen and (max-width: 1200px) { /* Large */
-	
 	.only-l{display:block;}
 	.only-xl{display:hide;}
 	.hide-l{display:hide;}
 	.hide-xl{display:block;}
-	.row{width:992px;}
-	
+	.container{width:992px;}
 }
 @media only screen and (max-width: 992px) { /* Medium */
-	
 	.only-m{display:block;}
 	.only-xl{display:hide;}
 	.hide-m{display:hide;}
 	.hide-xl{display:block;}
-	.row{width:768px;}
-	
+	.container{width:768px;}
 }
 @media only screen and (max-width: 768px) { /* Small */
-	
 	.only-s{display:block;}
 	.only-xl{display:hide;}
 	.hide-s{display:hide;}
 	.hide-xl{display:block;}
-	.row{width:auto;}
-	.row:not(.fix) > [class^=col-]{width:100%;}
-	
+	.container{width:auto;}
+	.row:not(.fixed) > [class^=col-]{width:100%;margin: 0; float:none; display:block;}
+	.row {margin: 0;}
 	h1{font-size:1.8em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
 	h2{font-size:1.6em;line-height:1.2em;font-weight:500;margin: 20px 0 10px;}
 	h3{font-size:1.4em;line-height:1.2em;font-weight:500;margin: 10px 0 10px;}
 	h4{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 6px 0;}
 	h5{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 4px 0;}
 	h6{font-size:1em;line-height:1.2em;font-weight:200;margin: 2px 0;}
-	img{width: 100%;}
-	
+	img:not(.fixed){width: 100%;}
 }
