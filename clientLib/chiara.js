@@ -16,6 +16,7 @@ var Chiara = {
 		if(typeof Chiara.menu != 'undefined') Chiara.menu.init();
 		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
 		if(typeof Chiara.dialog != 'undefined') Chiara.dialog.init();
+		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
 		Chiara.loader.init();
 		
 	}
@@ -629,6 +630,88 @@ $.extend( Chiara, {
 		}
 	}
 });
+
+
+/*********** MULTIPAGE ******/
+$.extend( Chiara, {
+	
+	multipage : {
+		
+		transition: '',
+		
+		init: function(){
+			
+			int zI = 1000;
+			for(int i=0; i < $('.page').length(); i++){
+				$('.page').eq(i).css('z-index', zI);
+				zI++;
+			}
+		
+			if( $('.page.first').length>0 ) Chiara.multipage.open($('.page.first'));
+			else Chiara.multipage.open($('.page:eq(0)'));
+		}
+		
+		open: function(e, transition){
+			
+			if(transition == null) var transition = Chiara.multipage.transition;
+			var eEnd = $('.page:visible');
+			
+			if( typeof transition === 'string' && transition.length>0){
+				Chiara.live.swap($(e), eEnd, transition);
+			}else{
+				Chiara.live.swap($(e), eEnd);
+			}
+			
+			
+		}
+	}
+}
+
+/*********** LIVE ******/
+$.extend( Chiara, {
+
+	/**
+	 * From a list of effects, you can show, hide or transition one or two box
+	 */
+
+	live : {
+		_effects : {
+			blind: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'blind'}))},
+			bounce: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'bounce'}))},
+			clip: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'clip'}))},
+			drop: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'drop'}))},
+			explode: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'explode'}))},
+			fade: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'fade'}))},
+			fold: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'fold'}))},
+			highlight: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'highlight'}))},
+			puff: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'puff'}))},
+			pulsate: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'scale'}))},
+			scale: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'shake'}))},
+			shake: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'size'}))},
+			size: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'size'}))},
+			slide: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'slide'}))},
+			transfer: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'transfer'}))},
+			_jqueryEffect: function(e, opt){
+				if( $(e).is(':visible') ) $(e).hide(opt);
+				else $(e).show(opt);
+			}
+		},
+		show: function(e, opt){
+			Chiara.live._effects[opt.effect](e, $.extend(opt, {effect:'transfer'}))},
+		},
+		hide: function(e, opt){
+		},
+		swap: function(e1, e2, effect){
+			if(effect==null){
+				Chiara.live.hide(e1);
+				Chiara.live.show(e2);
+			}else{
+			}
+		}
+		
+	}
+}
+
 
 // Utils
 $.extend( Chiara, {
