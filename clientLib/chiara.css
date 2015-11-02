@@ -861,62 +861,13 @@ position: fixed;
 
 
 /***************************************** MODAL */
-
-#ModalLoading{
-	position:fixed;
-	top:50%;
-	left:50%;
-	z-index:11000;
-	background: url(../img/loading.gif) 10px 10px no-repeat;
-	width:80px;
-	height:80px;
-	margin-left:-40px;
-	margin-top:-40px;
-}
-
-.modal{
-	position:fixed;
-	top:40px;
-	z-index:10001;
-	background:#ffffff;
-	display:none;
-	width:500px;
-	left:50%;
-	margin-left:-250px;
-	border:1px solid #bbb;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	overflow:auto;
-}
-.modal-head{
-	padding:4px 10px;
-	border-bottom:1px solid #eee;
-}
-
-.modal-head .close{
-	position:absolute;
-	top:6px;
-	right:6px;
-	cursor:pointer;
-	font-size:1.4em;
-	background: transparent;
-	border:none;
-}
-.modal-head .close:hover{
-	background:#eee;
-}
-
-.modal-body{
-	padding:10px;
-	background:#fff;
-}
-
-.modal-foot{
-	padding:10px;
-	border-top:1px solid #eee;
-	text-align:right;
-}
+.modal{display:none;position:fixed;z-index:100001;background-color:#ffffff;border-radius:2px;width:500px;box-shadow:0 0 6px #555555;top:80px;}
+.modal  a.close{position:absolute;top:0;right:10px;font-size:1.6em;font-weight:bold;display:block;z-index:100;text-decoration:none;}
+.modal  a.close:hover{color:#000;text-decoration: none;}
+.modal-head{padding:10px 20px;position:relative;cursor:default;}
+.modal-head h3{margin:10px 0;}
+.modal-body{position:relative;padding:10px 20px;}
+.modal-foot{padding:10px 20px 20px;position:relative;text-align:right;}
 
 .modal.dark{
 	width:100%;
@@ -929,6 +880,7 @@ position: fixed;
 .modal.dark .modal-head, .modal.dark .modal-foot{border:none; text-align:center;}
 .modal.dark .modal-head h2{color:#fff;font-size:1.4em;text-align:center;}
 .modal.dark .modal-head .close{position:absolute;top:10px;right:20px;color:#fff;background:transparent;border:none;}
+#C-ModalMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#000000;opacity:0.4}
 
 /***************************************** TAGS */
 
@@ -1036,10 +988,6 @@ position: fixed;
 #C-LoaderContainer .image{display: block; float:left;background: url(loader.gif);width:24px; height:24px;vertical-align: middle;}
 #C-LoaderContainer .text{display: block; vertical-align: middle;margin:0 0 0 3em;}
 #C-LoaderMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#ffffff;opacity:0.4}
-
-/************* TODO */
-
-.C-DialogMask{display:none;height:100%;width:100%;position:fixed;top:0;left:0;z-index:100000;background:#000000;opacity:0.4}
 
 
 @media only screen and (max-width: 1200px) { /* Large */

@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="chiara.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
 	<script src="chiara.js"></script>
 	
@@ -260,13 +261,43 @@
 		
 		<h1 class="title">Modal</h1>
 		<p>
-			bla bla
+			<code>Chiara.modal.open()</code> open the loader<br />
+			<p>
+			Modal with simple message<br />
+			<button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
+			</p>
+			<p>
+			Finestra completa con header, body e footer<br />
+			Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
+			<button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
+			</p>
+			<p>
+			Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
+			<button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
+			</p>
 		</p>
 		
 		
 	</div>
 	
 
+	
+<div class="modal" id="Dialog1">
+
+	Ciao,<br /> questo è un messaggio di esempio
+	<br /><br />
+	<div class="right">Saluti</div>
+	
+</div>
+
+<div class="modal" id="Dialog2" data-ct-open="pf.dialogOpen" data-ct-close="pf.dialogClose">
+
+	<div class="head"><h3>Titolo della dialog</h3></div>
+	<div class="body">Corpo della dialog</div>
+	<div class="foot">
+		<button class="btn" onclick="Chiara.modal.close()">Close</button>
+	</div>
+</div>
 	
 </BODY>
 </HTML>

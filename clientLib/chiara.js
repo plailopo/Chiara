@@ -11,7 +11,7 @@ var Chiara = {
 	init : function(){
 		if(typeof Chiara.menu != 'undefined') Chiara.menu.init();
 		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
-		if(typeof Chiara.dialog != 'undefined') Chiara.dialog.init();
+		if(typeof Chiara.modal != 'undefined') Chiara.modal.init();
 		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
 		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
 		Chiara.loader.init();
@@ -136,9 +136,9 @@ $.extend( Chiara, {
 	}
 });
 
-/******** DIALOG *******/
+/******** MODAL *******/
 $.extend( Chiara, {
-	dialog : {
+	modal : {
 		
 		sequence : [],
 		
@@ -150,24 +150,24 @@ $.extend( Chiara, {
 			
 			if($.isArray(id)){
 				var tmpId = id[0];
-				Chiara.dialog.sequence = id.slice(1);
+				Chiara.modal.sequence = id.slice(1);
 				id=tmpId;
 			}else{
-				if($('.ct-dialog:visible').length>0){
-					Chiara.dialog.sequence.push(id);
+				if($('.modal:visible').length>0){
+					Chiara.modal.sequence.push(id);
 					return;
 				}
 			}
 			if( $(id).length==0 )return;
-			if( $('#C-DialogMask').length <= 0 ) $('<div id="C-DialogMask" />').appendTo('body');
-			if( $(id+' .ct-body').length <= 0 ){$(id).wrapInner('<div class="ct-body" />');}
-			if( $(id+' .ct-head').length <= 0 ){$(id).prepend('<div class="ct-head" />');}
-			if( $(id+' > a.ct-close').length <= 0 ){
-				$(id).prepend('<a href="javascript:void(0);" class="ct-close" onclick="Chiara.dialog.close()">x</a>');
+			if( $('#C-ModalMask').length <= 0 ) $('<div id="C-ModalMask" />').appendTo('body');
+			if( $(id+' .modal-body').length <= 0 ){$(id).wrapInner('<div class="modal-body" />');}
+			if( $(id+' .modal-head').length <= 0 ){$(id).prepend('<div class="modal-head" />');}
+			if( $(id+' > a.close').length <= 0 ){
+				$(id).prepend('<a href="javascript:void(0);" class="close" onclick="Chiara.modal.close()">x</a>');
 			}
-			if( $(id+' .ct-foot').length <= 0 ){$(id).append('<div class="ct-foot" />');}
-			$('#C-DialogMask:hidden').show().on('click', Chiara.dialog.close);
-			var onOpen = $(id).data('ct-open');
+			if( $(id+' .modal-foot').length <= 0 ){$(id).append('<div class="modal-foot" />');}
+			$('#C-ModalMask:hidden').show().on('click', Chiara.modal.close);
+			var onOpen = $(id).data('c-open');
 			$(id).css({
 				left: (($(window).width()/2) - ($(id).width()/2)) + 'px'
 			}).show({
@@ -181,148 +181,75 @@ $.extend( Chiara, {
 						eval( onOpen + "(d);" );
 					}
 				}
-			}).draggable({handle: '.ct-head'});
+			}).draggable({handle: '.modal-head'});
 			
 			$(window).resize(function(){
 				$(id).css({left: (($(window).width()/2) - ($(id).width()/2)) + 'px'});
 			});
 			
-			$(document).on('keyup', Chiara.dialog.checkEscPress);
+			$(document).on('keyup', Chiara.modal.checkEscPress);
 			
 		},
 		
 		close: function(){
-			$('.ct-dialog:visible').hide({
+			$('.modal:visible').hide({
 				effect: 'drop', 
 				direction: 'up', 
 				duration:300,
 				complete: function(){
-					if(Chiara.dialog.sequence.length==0){
-						$('#C-DialogMask:visible').fadeOut(100).off('click', Chiara.dialog.close);
+					if(Chiara.modal.sequence.length==0){
+						$('#C-ModalMask:visible').fadeOut(100).off('click', Chiara.modal.close);
 					}
-					var onClose = $(this).data('ct-close');
+					var onClose = $(this).data('c-close');
 					if(onClose != null && onClose.length>0){
 						var d = $(this);
 						eval( onClose + "(d);" );
 					}
 					
-					if(Chiara.dialog.sequence.length>0){
-						var id2 = Chiara.dialog.sequence[0];
-						Chiara.dialog.sequence = Chiara.dialog.sequence.slice(1);
-						Chiara.dialog.open(id2);
+					if(Chiara.modal.sequence.length>0){
+						var id2 = Chiara.modal.sequence[0];
+						Chiara.modal.sequence = Chiara.modal.sequence.slice(1);
+						Chiara.modal.open(id2);
 					}
 				}
 			});
-			$(document).off('keyup', Chiara.dialog.checkEscPress);
+			$(document).off('keyup', Chiara.modal.checkEscPress);
 		},
 		
 		checkEscPress: function(e){
-			if(e.which == 27) Chiara.dialog.close();
+			if(e.which == 27) Chiara.modal.close();
 		},
 		
 		openEdit: function(data, title, cb){
-			if($('#C-Dialog-EditDialog').length>0) $('#C-Dialog-EditDialog').remove();
-			var html='<div class="ct-dialog" id="C-Dialog-EditDialog">';
-			html += '<div class="ct-head"><h3>'+title+'</h3></div>';
-			html += '<div class="ct-body"><form class="form-horizontal"></form></div>';
-			html += '<div class="ct-foot">';
-			html += '<button onclick="Chiara.dialog.close()">Close</button>';
-			html += '<button onclick="Chiara.dialog.saveEdit()">Save</button>';
+			if($('#C-Modal-EditModal').length>0) $('#C-Modal-EditModal').remove();
+			var html='<div class="c-modal" id="C-Modal-EditModal">';
+			html += '<div class="modal-head"><h3>'+title+'</h3></div>';
+			html += '<div class="modal-body"><form class="form-horizontal"></form></div>';
+			html += '<div class="modal-foot">';
+			html += '<button onclick="Chiara.modal.close()">Close</button>';
+			html += '<button onclick="Chiara.modal.saveEdit()">Save</button>';
 			html += '</div>';
 			html += '</div>';
 			var wnd = $(html).appendTo('body');
-			if(cb!=null) wnd.data('ct-save-cb', cb);
+			if(cb!=null) wnd.data('c-save-cb', cb);
 			$.each(data, function(k,v){
 				$(wnd).find('form').append('<div class="form-group"><label class="col-sm-2 control-label">'+k+'</label><div class="col-sm-10"><input name="'+k+'" type="text" value="'+v+'" /></div></div>');
 			});
 			
-			Chiara.dialog.open('#C-Dialog-EditDialog');
+			Chiara.modal.open('#C-Modal-EditModal');
 		},
 		
 		saveEdit: function(){
-			Chiara.dialog.close();
-			console.log($('#C-Dialog-EditDialog form').serializeObject());
-			if($('#C-Dialog-EditDialog').data('ct-save-cb') != null){
-				var cb = $('#C-Dialog-EditDialog').data('ct-save-cb');
-				cb($('#C-Dialog-EditDialog form').serializeObject());
+			Chiara.modal.close();
+			console.log($('#C-Modal-EditModal form').serializeObject());
+			if($('#C-Modal-EditModal').data('c-save-cb') != null){
+				var cb = $('#C-Modal-EditModal').data('c-save-cb');
+				cb($('#C-Modal-EditModal form').serializeObject());
 			}
 		}
 	}
 });
 
-/*********** MODAL **********/
-Chiara.prototype = {
-
-	modal : {
-
-		opt : {
-			idModalMask : 'ModalMask',
-			opened: false
-		},
-
-		open : function(id, cOpen, loader){
-			if(Chiara.modal.opt.opened)return;
-			Chiara.modal.close();
-			Chiara.modal.showMask();
-			if(loader!=null && loader){
-				$(id).appendTo('body');
-				Chiara.modal.showLoading(id);
-			}else{
-				$(id).appendTo('body').slideDown();
-			}
-			$(window).keydown(function(e){
-				if(e.keyCode==27 ) Chiara.modal.close();
-			});
-			Chiara.modal.opt.opened = true;
-		},
-		
-		close : function(){
-			$('.modal').slideUp();
-			$('.modal-msg').remove();
-			Chiara.modal.destroyMask();
-			Chiara.modal.opt.opened = false;
-		},
-		
-		showLoading: function(id){
-			$(id).hide();
-			$('<div id="ModalLoading" />').hide().appendTo('body').fadeIn(1000);
-		},
-		
-		hideLoading: function(id){
-			$(id).slideDown();
-			$('#ModalLoading').stop().fadeOut(function(){$(this).remove();});
-		},
-		
-		showMask: function(){
-			if($('#'+Chiara.modal.opt.idModalMask).length>0)return;
-			var h = $(window).height() > $('body').height() ? $(document).height() : $('body').height();
-			$('<div id="'+Chiara.modal.opt.idModalMask+'" />').css({
-				'position': 'fixed',
-				'top': '0',
-				'left': '0',
-				'width': '100%',
-				'height': '100%',
-				'background': '#000',
-				'opacity':'0.7',
-				'z-index':'10000',
-				'display':'none'
-			}).appendTo('body')
-			.show()
-			.click(function(){Chiara.modal.close();})
-			
-		},
-		
-		destroyMask: function(id){
-			if(id!=null){
-				$(id).remove();
-			}
-			$('#'+Chiara.modal.opt.idModalMask).clearQueue().stop().fadeOut(function(){
-				$(this).remove();
-			});
-		}
-		
-	}
-}
 
 /************* MESSAGES *************/
 $.extend( Chiara, {
@@ -433,15 +360,15 @@ $.extend( Chiara, {
 		
 		init: function(){
 			
-			$('.ct-menu-spastic').each(function(){
+			$('.c-menu-spastic').each(function(){
 				Chiara.menu.create(this, 'spastic');
 			});
 			
-			$('.ct-menu').each(function(){
+			$('.c-menu').each(function(){
 				Chiara.menu.create(this);
 			});
 			
-			$('.ct-menu-page').each(function(){
+			$('.c-menu-page').each(function(){
 				Chiara.menu.create(this, 'page');				
 			});
 			
@@ -458,12 +385,12 @@ $.extend( Chiara, {
 				
 			}else if(type!=null && type=='page'){
 				
-				var cls = 'ct-menu-page-' + (Math.random()*10 + '').replace('.', '');
+				var cls = 'c-menu-page-' + (Math.random()*10 + '').replace('.', '');
 				var that = $(s).addClass(cls);
 				
 				var aIdx = 0
 				that.find('a').each(function(){
-					$(this).addClass('ct-menu-page-item-' + (aIdx++));
+					$(this).addClass('c-menu-page-item-' + (aIdx++));
 				})
 				
 				that.prepend($(that).find(' > ul').attr('id', 'C-MENU-PAGE-ONVIEW').clone().fadeIn().attr('id', 'C-MENU-PAGE-VIEW'));
@@ -476,9 +403,9 @@ $.extend( Chiara, {
 					
 					if($(this).hasClass('selected')) return;
 					
-					$(this).closest('.ct-menu').find('a, li').removeClass('selected');
+					$(this).closest('.c-menu').find('a, li').removeClass('selected');
 					if( $(this).parent().hasClass('cat') ){
-						$(this).closest('.ct-menu').find('li.cat ul').hide('blink');
+						$(this).closest('.c-menu').find('li.cat ul').hide('blink');
 						$(this).next().show('blink');
 					}
 					$(this).addClass('selected');
@@ -492,7 +419,7 @@ $.extend( Chiara, {
 			next:function(obj, e){
 				
 				var cls = $(e).attr('class');
-				var clss = cls.match(/ct-menu-page-item[a-z-\d]+/ig);
+				var clss = cls.match(/c-menu-page-item[a-z-\d]+/ig);
 				
 				if( $(e).next().prop("tagName").toLowerCase()=='ul' && clss.length==1 ){
 					
@@ -590,11 +517,11 @@ $.extend( Chiara, {
 			Chiara.panel.hBind.get('pan').set({ threshold: 20 });
 			
 			Chiara.panel.hBind.on("panright", function(ev) {
-				Chiara.panel.open('.ct-panel');
+				Chiara.panel.open('.c-panel');
 			});
 			
 			Chiara.panel.hBind.on("panleft", function(ev) {
-				Chiara.panel.close('.ct-panel');
+				Chiara.panel.close('.c-panel');
 			});
 			
 		},
@@ -620,7 +547,7 @@ $.extend( Chiara, {
 			Chiara.panel.opened = false;
 			
 			if(typeof id != 'string'){
-				id = '.ct-panel';
+				id = '.c-panel';
 			}
 			//$(id).animate({width:'0px', opacity:0}, {duration:300, easing: 'easeOutQuint', complete:function(){$(id).hide();}});
 			$(id).removeClass('opened', 600, 'easeOutQuint');
@@ -669,8 +596,10 @@ $.extend( Chiara, {
 					$(this).attr('placeholder', l);
 				})
 			});
-			
-			
+		},
+		
+		getTranslate: function(l){
+			return eval(l);
 		}
 	}
 });
@@ -716,43 +645,45 @@ $.extend( Chiara, {
 /*********** LIVE ******/
 $.extend( Chiara, {
 
-	/**
-	 * From a list of effects, you can show, hide or transition one or two box
-	 */
-
 	live : {
 		_effects : {
-			blind: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'blind'}))},
-			bounce: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'bounce'}))},
-			clip: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'clip'}))},
-			drop: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'drop'}))},
-			explode: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'explode'}))},
-			fade: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'fade'}))},
-			fold: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'fold'}))},
-			highlight: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'highlight'}))},
-			puff: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'puff'}))},
-			pulsate: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'scale'}))},
-			scale: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'shake'}))},
-			shake: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'size'}))},
-			size: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'size'}))},
-			slide: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'slide'}))},
-			transfer: function(e, opt){Chiara.live._effects._jqueryEffect(e, $.extend(opt, {effect:'transfer'}))},
-			_jqueryEffect: function(e, opt){
-				if( $(e).is(':visible') ) $(e).hide(opt);
-				else $(e).show(opt);
+			test : function(){
 			}
 		},
-		show: function(e, opt){
-			//Chiara.live._effects[opt.effect](e, $.extend(opt, {effect:'transfer'}));
-		},
-		hide: function(e, opt){
-		},
-		swap: function(e1, e2, effect){
-			if(effect==null){
-				Chiara.live.hide(e1);
-				Chiara.live.show(e2);
-			}else{
+		
+		run: function(opt){
+			
+			opt = $.extend({
+				selector: '',
+				effect: '',
+				duration: ''
+			}, opt);
+			
+			var jQeffects = ["blind", "bounce", "clip", "drop", "explode", "fade", "fold", "highlight", "puff", "pulsate", "scale", "shake", "size", "slide", "transfer"];
+			if(opt.effect == ''){
+				
+			}else if($.inArray(opt.effect, jQeffects) >= 0){
+				$(opt.selector).effect(opt);
+			}else if(typeof Chiara.live._effects[opt.effect] == 'function'){
+				
 			}
+			
+		},
+		
+		show: function(opt){
+			if( $(opt.selector).is(':visible') ) return;
+			Chiara.live.run(opt);
+		},
+		
+		hide: function(opt){
+			if( $(opt.selector).is(':visible') ) Chiara.live.run(opt);
+		},
+		
+		swap: function(e1, e2, opt){
+			opt = $.extend(opt, {selector: e1});
+			Chiara.live.hide(opt);
+			opt = $.extend(opt, {selector: e2});
+			Chiara.live.show(opt);
 		}
 	}
 });
