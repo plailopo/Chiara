@@ -1,14 +1,10 @@
 /*
  * Chiara
  */
-$(document).ready(function(){
-	Chiara.init();
-});
+
 
 // Configurazioni di base e init dei moduli trovati
 var Chiara = {
-
-	BaseUrl : 	'',
 	
 	initFunctions : [],
 	
@@ -17,8 +13,8 @@ var Chiara = {
 		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
 		if(typeof Chiara.dialog != 'undefined') Chiara.dialog.init();
 		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
+		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
 		Chiara.loader.init();
-		
 	}
 };
 
@@ -69,18 +65,20 @@ $.extend( Chiara, {
 $.extend( Chiara, {
 
 	req : {
-
-		opt : {
-			timeout : 30000,
-			baseUrl : ''
-		},
+		
+		beforePost: null,
+		timeout : 30000,
+		baseUrl : '',
 
 		post : function(a,dt,cb,t){ // Action, data, callback, timeout
+			
+			if(typeof Chiara.req.beforePost == 'function') dt = Chiara.req.beforePost(dt);
+			
 			return $.ajax({
-				url: Chiara.req.opt.baseUrl+a,
+				url: Chiara.req.baseUrl+a,
 				type: 'post',
 				data: dt,
-				timeout: t?t:Chiara.req.opt.timeout,
+				timeout: t?t:Chiara.req.timeout,
 				success: function(rsp){
 					Chiara.msg.parse(rsp);
 					if(cb!=null)cb(rsp);
@@ -101,18 +99,18 @@ $.extend( Chiara, {
 		
 		postP : function(a,dt,cb,t){ // Action, data, callbackname, timeout
 			return $.ajax({
-				url: Chiara.req.opt.baseUrl+a+'?fnc='+cb,
+				url: Chiara.req.baseUrl+a+'?fnc='+cb,
 				type: 'post',
 				dataType: 'jsonp',
 				data: dt,
-				timeout: t?t:Chiara.req.opt.timeout,
+				timeout: t?t:Chiara.req.timeout,
 				error:function(j,e){return false;}
 			});
 		},
 		
 		linkPost : function(a,d,b){// action, data, blank
 			
-			var html = '<form action="'+Chiara.req.opt.baseUrl+a+'" method="post" ';
+			var html = '<form action="'+Chiara.req.baseUrl+a+'" method="post" ';
 			if(a=='') html = '<form action="" method="post" ';
 			if(b) html += 'target="_blank" ';
 			html += '>';
@@ -133,7 +131,7 @@ $.extend( Chiara, {
 		},
 		
 		link : function(a){// action
-			window.location.href = Chiara.req.opt.baseUrl + a;
+			window.location.href = Chiara.req.baseUrl + a;
 		}
 	}
 });
@@ -327,12 +325,12 @@ Chiara.prototype = {
 }
 
 /************* MESSAGES *************/
-Chiara.prototype = {
+$.extend( Chiara, {
 	msg : {
 			
 		opt : {
 			fastLevel : 0,
-			fastContainerId : 'UserMessageBox',
+			fastContainer : '#UserMessageBox',
 			fastTimeout : 10000
 		},
 		
@@ -341,9 +339,17 @@ Chiara.prototype = {
 			if(e.messages.length > 0) for( i in e.messages){
 				if(e.messages[i].type == 'overlay')
 					Chiara.msg.showOverlay(e.messages[i]);
+				else if(e.messages[i].type == 'field')
+					Chiara.msg.showField(e.messages[i]);
 				else
 					Chiara.msg.showFast(e.messages[i]);
 			}
+		},
+		
+		showField : function(e){
+			if(typeof e.text == 'undefined' ) return;
+			if(typeof e.field == 'undefined' ) return;
+			$('<span class="msgfield" />').addClass(e.level).text(e.text).insertAfter(e.field);
 		},
 		
 		showFast : function(e){
@@ -376,7 +382,7 @@ Chiara.prototype = {
 				}
 				msgObj.append(btnsCont);
 			}
-			$('#'+Chiara.msg.opt.fastContainerId).append(msgObj);
+			$(Chiara.msg.opt.fastContainer).append(msgObj);
 			$(msgObj).hide().slideDown().fadeIn();
 			setTimeout('$("#MSG_'+UID+'").fadeOut(function(){$(this).remove();});', Chiara.msg.opt.fastTimeout);
 		},
@@ -419,7 +425,7 @@ Chiara.prototype = {
 			$(msgObj).hide().appendTo('body').fadeIn();
 		}
 	}
-}
+});
 
 /********* MENU ******/
 $.extend( Chiara, {
@@ -550,7 +556,7 @@ $.extend( Chiara, {
 	}
 });
 
-/*********** LEFT PANEL ******/
+/*********** LEFT PANEL ******
 $.extend( Chiara, {
 	
 	panel : {
@@ -564,7 +570,6 @@ $.extend( Chiara, {
 			if($(window).width() <= 992){
 				Chiara.panel.binder();
 			}
-			
 			$(window).resize(function(){
 				if($(window).width() <= 992){
 					Chiara.panel.binder();
@@ -572,6 +577,7 @@ $.extend( Chiara, {
 					Chiara.panel.unbinder();
 				}
 			});
+			
 		},
 		
 		binder: function(){
@@ -630,7 +636,44 @@ $.extend( Chiara, {
 		}
 	}
 });
+*/
 
+/*********** TRANSLATOR ******/
+$.extend( Chiara, {
+	
+	translator : {
+		init: function(){
+			
+			
+		},
+		
+		loadLang: function(url){
+			
+			$.getScript(url, function(){
+				
+				$('[data-c-translator]').each(function(){
+					var l = eval($(this).data('c-translator'));
+					if(l==null) l = '???_'+$(this).data('c-translator')+'_???';
+					$(this).html(l);
+				})
+				
+				$('[data-c-translatorval]').each(function(){
+					var l = eval($(this).data('c-translatorval'));
+					if(l==null) l = '???_'+$(this).data('c-translatorval')+'_???';
+					$(this).val(l);
+				})
+				
+				$('[data-c-translatorplace]').each(function(){
+					var l = eval($(this).data('c-translatorplace'));
+					if(l==null) l = '???_'+$(this).data('c-translatorplace')+'_???';
+					$(this).attr('placeholder', l);
+				})
+			});
+			
+			
+		}
+	}
+});
 
 /*********** MULTIPAGE ******/
 $.extend( Chiara, {
@@ -641,31 +684,34 @@ $.extend( Chiara, {
 		
 		init: function(){
 			
-			int zI = 1000;
-			for(int i=0; i < $('.page').length(); i++){
+			var zI = 1000;
+			for(var i=0; i < $('.page').length; i++){
 				$('.page').eq(i).css('z-index', zI);
 				zI++;
 			}
 		
-			if( $('.page.first').length>0 ) Chiara.multipage.open($('.page.first'));
-			else Chiara.multipage.open($('.page:eq(0)'));
-		}
+			if( $('.page.first').length>0 ) $('.page.first').fadeIn() ;
+			else $('.page:eq(0)').fadeIn();
+		},
 		
-		open: function(e, transition){
+		open: function(e, transition, cb){
 			
 			if(transition == null) var transition = Chiara.multipage.transition;
 			var eEnd = $('.page:visible');
 			
 			if( typeof transition === 'string' && transition.length>0){
-				Chiara.live.swap($(e), eEnd, transition);
+				$(e).fadeIn();
+				$(eEnd).fadeOut();
 			}else{
-				Chiara.live.swap($(e), eEnd);
+				$(e).fadeIn();
+				$(eEnd).fadeOut();
 			}
 			
+			if(typeof cb == 'function') cb();
 			
 		}
 	}
-}
+});
 
 /*********** LIVE ******/
 $.extend( Chiara, {
@@ -697,7 +743,7 @@ $.extend( Chiara, {
 			}
 		},
 		show: function(e, opt){
-			Chiara.live._effects[opt.effect](e, $.extend(opt, {effect:'transfer'}))},
+			//Chiara.live._effects[opt.effect](e, $.extend(opt, {effect:'transfer'}));
 		},
 		hide: function(e, opt){
 		},
@@ -708,9 +754,8 @@ $.extend( Chiara, {
 			}else{
 			}
 		}
-		
 	}
-}
+});
 
 
 // Utils

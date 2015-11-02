@@ -14,9 +14,8 @@ class MessageMapper{
     	}
     }
     
-    public static function push($text, $level=Message::INFO, $type='fast', $description='', $buttons=array()){
-    	$msg = new Message($text, $level, $type, $description, $buttons);
-    	
+    public static function push($text, $level=Message::INFO, $type=Message::TYPE_FAST, $description='', $buttons=array(), $field=null){
+    	$msg = new Message($text, $level, $type, $description, $buttons, $field);
     	array_push(self::$list, $msg);
     }
 
@@ -44,6 +43,7 @@ class MessageMapper{
     						'type' => $m->getType(),
     						'text' => $m->getText(),
 		    				'level' => $m->getLevel(),
+		    				'field' => $m->getField(),
 		    				'description' => $m->getDescription(),
 		    				'buttons' => self::buttonsToArray($m->getButtons()),
 		    				'timestamp' => $m->getTimestamp()

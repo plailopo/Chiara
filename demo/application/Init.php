@@ -82,6 +82,7 @@ class Init extends InitAbstract{
 	
 	}
 	
+	/*
 	public function initDB(){
 		
 		$conf = Globals::getParam('CONF', false);
@@ -119,6 +120,7 @@ class Init extends InitAbstract{
 		Globals::setParam('DB', $adapter);
 		
 	}
+	*/
 	
 	public static function finalCallBack(){
 		

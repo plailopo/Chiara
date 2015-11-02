@@ -9,6 +9,7 @@ class Message{
 	private $level;
 	private $description;
 	private $buttons;
+	private $field;
 	private $timestamp;
 	
 	const EMERG   = 0;  // Emergency: system is unusable
@@ -21,17 +22,22 @@ class Message{
 	const DEBUG   = 7;  // Debug: debug messages
 	const SUCCESS = 8;  // Debug: debug messages
 	
-    public function __construct($text, $level, $type, $description, $buttons){
+	const TYPE_FAST		= 'fast';
+	const TYPE_FIELD	= 'field';
+	const TYPE_OVERLAY	= 'overlay';
+	
+    public function __construct($text, $level, $type, $description, $buttons, $field){
     	$this->type  		= $type;
         $this->text  		= $text;
         $this->level	 	= $level;
         $this->description 	= $description;
         $this->buttons 		= $buttons;
+        $this->field		= $field;
         $this->timestamp 	= time();
     }
 
- 	public function create($text, $level=UserMessage::INFO, $type='fast', $description='', $buttons=array()){
-    	return new Message($text, $level, $type, $description, $buttons);
+ 	public function create($text, $level=UserMessage::INFO, $type=self::TYPE_FAST, $description='', $buttons=array(), $field=null){
+    	return new Message($text, $level, $type, $description, $buttons, $field);
     }
     
     
@@ -77,6 +83,14 @@ class Message{
     
     public function setType($value){
     	$this->type = $value;
+    }
+    
+    public function getField(){
+    	return $this->field;
+    }
+    
+    public function setField($value){
+    	$this->field = $value;
     }
     
     
