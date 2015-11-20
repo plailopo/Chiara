@@ -739,6 +739,69 @@ $.extend( Chiara, {
 
 });
 
+// Swipe
+$.extend( Chiara, {
+	swipedetect :function(e, opt){
+	  
+		var e = $(e);
+		opt = $.extend({
+			threshold : 30, //required min distance traveled to be considered swipe
+			restraint : 1000, // maximum distance allowed at the same time in perpendicular direction
+			allowedTime : 500, // maximum time allowed to travel that distance
+			mouseSimulation : false,
+			onStart : function(){},
+			onMove : function(){},
+			onComplete : function(swipedir){}
+		}, opt);
+		
+		var swipedir,startX,startY,distX,distY,elapsedTime,startTime;
+		
+		e.on('touchstart'+(opt.mouseSimulation ? ' mousedown' : ''), {}, function(ev){
+			if(ev.type == "mousedown"){
+				startX = ev.pageX
+				startY = ev.pageY
+			}else{
+				startX = ev.originalEvent.touches[0].pageX;
+				startY = ev.originalEvent.touches[0].pageY;
+			}
+			//console.log('start', startX, startY);
+			swipedir = 'none'
+			startTime = new Date().getTime() // record time when finger first makes contact with surface
+			opt.onStart(this)
+			ev.preventDefault()
+		})
+	  
+		e.on('touchmove'+(opt.mouseSimulation ? ' mousemove' : ''), function(ev){
+			if(ev.type == "touchmove"){
+				distX = ev.originalEvent.touches[0].pageX - startX // get horizontal dist traveled by finger while in contact with surface
+				distY = ev.originalEvent.touches[0].pageY - startY // get vertical dist traveled by finger while in contact with surface
+			}
+			opt.onMove(this)
+			ev.preventDefault() // prevent scrolling when inside DIV
+		})
+	  
+		e.on('touchend'+(opt.mouseSimulation ? ' mouseup' : ''), function(ev){
+			
+			if(ev.type == "mouseup"){
+				distX = ev.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+				distY = ev.pageY - startY // get vertical dist traveled by finger while in contact with surface
+			}
+			//console.log('end', distX, distY);
+			elapsedTime = new Date().getTime() - startTime // get time elapsed
+			
+			if (elapsedTime <= opt.allowedTime){ // first condition for awipe met
+				if (Math.abs(distX) >= opt.threshold && Math.abs(distY) <= opt.restraint){ // 2nd condition for horizontal swipe met
+					swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+				}
+				else if (Math.abs(distY) >= opt.threshold && Math.abs(distX) <= opt.restraint){ // 2nd condition for vertical swipe met
+					swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+				}
+			}
+			opt.onComplete(this, swipedir)
+			ev.preventDefault()
+		})
+	}
+});
 
 /******** SEARCH on LIST *********/
 (function($){

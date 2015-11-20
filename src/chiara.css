@@ -862,7 +862,7 @@ position: fixed;
 
 /***************************************** MODAL */
 .modal{display:none;position:fixed;z-index:100001;background-color:#ffffff;border-radius:2px;width:500px;box-shadow:0 0 6px #555555;top:80px;}
-.modal  a.close{position:absolute;top:0;right:10px;font-size:1.6em;font-weight:bold;display:block;z-index:100;text-decoration:none;}
+.modal  a.close{position:absolute;top:10px;right:14px;font-size:1.6em;font-weight:bold;display:block;z-index:100;text-decoration:none;padding:0 4px;}
 .modal  a.close:hover{color:#000;text-decoration: none;}
 .modal-head{padding:10px 20px;position:relative;cursor:default;}
 .modal-head h3{margin:10px 0;}

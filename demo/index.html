@@ -3,12 +3,12 @@
 <HEAD>
 	<TITLE>Chiara</TITLE>
 
-	<link rel="stylesheet" type="text/css" href="chiara.css">
+	<link rel="stylesheet" type="text/css" href="../src/chiara.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
-	<script src="chiara.js"></script>
+	<script src="../src/chiara.js"></script>
 	
 	<style>
 		.CBox{background-color:#ddd;padding:4px;border:1px solid #aaa;}
@@ -278,6 +278,32 @@
 		</p>
 		
 		
+		<h1 class="title">Swipe detection</h1>
+		<p>
+			<code>
+				Chiara.swipedetect('#SwipeBoxDetect', {<br />
+				&nbsp;&nbsp;threshold : 50, //required min distance traveled to be considered swipe<br />
+				&nbsp;&nbsp;restraint : 1000, // maximum distance allowed at the same time in perpendicular direction<br />
+				&nbsp;&nbsp;allowedTime : 1000, // maximum time allowed to travel that distance<br />
+				&nbsp;&nbsp;mouseSimulation : false,<br />
+				&nbsp;&nbsp;onStart : function(element){},<br />
+				&nbsp;&nbsp;onMove : function(element){},<br />
+				&nbsp;&nbsp;onComplete : function(element, swipedir){}<br />
+				});
+			</code>
+		</p>
+		
+		
+		<div class="row">
+			<div class="col-6">Touch the box and enjoy (mouse simulation)</div>
+			<div class="col-6 right"></div>
+		</div>
+		
+		<div id="SwipeBoxDetect" style="border:1px solid #aaaaaa; background:#dddddd; height:160px;font-size:3em;font-weight:bold;color:#bbb;text-align:center;padding-top:70px">
+			Swipe me<br /><span id="SwipeDetectMonitor" style="font-size:0.5em;line-height:2em;"></span>
+		</div>
+		
+		
 	</div>
 	
 
@@ -298,7 +324,27 @@
 		<button class="btn" onclick="Chiara.modal.close()">Close</button>
 	</div>
 </div>
-	
+
+<script>
+$(document).ready(function(){
+
+	Chiara.swipedetect('#SwipeBoxDetect', {
+		mouseSimulation : true,
+		onStart : function(e){
+			console.log(e)
+			$(e).css({color:'#555555'});
+		},
+		onMove : function(e){},
+		onComplete : function(e, swipedir){
+			$('#SwipeDetectMonitor').text('Swipe direction: ' + swipedir);
+			$(e).css({color:'#bbbbbb'});
+		}
+	});
+
+});
+
+</script>
+
 </BODY>
 </HTML>
 
