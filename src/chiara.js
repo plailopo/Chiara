@@ -13,6 +13,7 @@ var Chiara = {
 		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
 		if(typeof Chiara.modal != 'undefined') Chiara.modal.init();
 		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
+		if(typeof Chiara.wizard != 'undefined') Chiara.wizard.init();
 		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
 		Chiara.loader.init();
 	}
@@ -65,54 +66,64 @@ $.extend( Chiara, {
 $.extend( Chiara, {
 
 	req : {
-		
-		beforePost: null,
+		afterReq: false,
+		beforeReq: false,
 		timeout : 30000,
 		baseUrl : '',
-
-		post : function(a,dt,cb,t){ // Action, data, callback, timeout
+		
+		ajax : function(tp,a,dt,cb,t){ // Type, Action, data, callback, timeout
 			
-			if(typeof Chiara.req.beforePost == 'function') dt = Chiara.req.beforePost(dt);
-			
+			if(typeof Chiara.req.beforeReq === 'function') dt = Chiara.req.beforeReq(dt);
+			var cBack = cb;
 			return $.ajax({
-				url: Chiara.req.baseUrl+a,
-				type: 'post',
+				url: Chiara.req.baseUrl + a,
+				type: tp == 'postp' ? 'post' : tp,
+				dataType : tp == 'postp' ? 'jsonp' : 'json',
 				data: dt,
 				timeout: t?t:Chiara.req.timeout,
 				success: function(rsp){
+					if(typeof Chiara.req.afterReq === 'function'){
+						rsp = Chiara.req.afterReq(rsp);
+						if(rsp === false) return;
+					}
 					Chiara.msg.parse(rsp);
-					if(cb!=null)cb(rsp);
+					if( typeof cBack == 'function') cBack(rsp);
 				},
 				error:function(j,e){
-					if(e=='timeout')
-						Chiara.msg.showFast({level: 2, message:'Request timeout!'});
+					if(e == 'timeout')
+						Chiara.msg.showOverlay({level: 2, text:'Errore', description:'Il server non ripsponde.'});
 					else{
 						try{
-							Chiara.msg.parse(eval('('+j.responseText+')'));
+							Chiara.msg.showOverlay({level: 2, text:'Errore', description:'Il server ha ritornato: '+j.responseText});
 						}catch(e){
-							Chiara.msg.showFast({type: 2, message:'Server error! Re-try'});
+							Chiara.msg.showOverlay({level: 2, text:'Errore', description:'In connessione con il server'});
 						}
 					}
 				}
 			});
 		},
-		
-		postP : function(a,dt,cb,t){ // Action, data, callbackname, timeout
-			return $.ajax({
-				url: Chiara.req.baseUrl+a+'?fnc='+cb,
-				type: 'post',
-				dataType: 'jsonp',
-				data: dt,
-				timeout: t?t:Chiara.req.timeout,
-				error:function(j,e){return false;}
-			});
+
+		post : function(a,dt,cb,t){ // Action, data, callback, timeout
+			return Chiara.req.ajax('post',a,dt,cb,t);
 		},
 		
-		linkPost : function(a,d,b){// action, data, blank
+		put : function(a,dt,cb,t){ // Action, data, callback, timeout
+			return Chiara.req.ajax('put',a,dt,cb,t);
+		},
+		
+		get : function(a,dt,cb,t){ // Action, data, callback, timeout
+			return Chiara.req.ajax('get',a,dt,cb,t);
+		},
+		
+		postP : function(a,dt,cb,t){ // Action, data, callback, timeout
+			return Chiara.req.ajax('postp',a,dt,cb,t);
+		},
+		
+		linkPost : function(a,d,t){// action, data, target
 			
 			var html = '<form action="'+Chiara.req.baseUrl+a+'" method="post" ';
 			if(a=='') html = '<form action="" method="post" ';
-			if(b) html += 'target="_blank" ';
+			if(t) html += 'target="' + t + '" ';
 			html += '>';
 			if(typeof(d)=='object') for(var i=0;i<d.length;i++){
 				if($.isArray(d[i].value)){
@@ -126,6 +137,16 @@ $.extend( Chiara, {
 				}
 			}
 			html += '</form>';
+			$(html).appendTo('body').submit();
+			
+		},
+		
+		linkGet : function(a,t){// action, target
+			
+			var html = '<form action="'+Chiara.req.baseUrl+a+'" method="get" ';
+			if(a=='') html = '<form action="" method="get" ';
+			if(t) html += 'target="' + t + '" ';
+			html += '></form>';
 			$(html).appendTo('body').submit();
 			
 		},
@@ -146,6 +167,15 @@ $.extend( Chiara, {
 			
 		},
 		
+		showMask: function(){
+			if( $('#C-ModalMask').length <= 0 ) $('<div id="C-ModalMask" />').appendTo('body');
+			$('#C-ModalMask:hidden').show().on('click', Chiara.modal.close);
+		},
+		
+		hideMask: function(){
+			$('#C-ModalMask:visible').fadeOut(100).off('click', Chiara.modal.close);
+		},
+		
 		open: function(id){
 			
 			if($.isArray(id)){
@@ -159,14 +189,14 @@ $.extend( Chiara, {
 				}
 			}
 			if( $(id).length==0 )return;
-			if( $('#C-ModalMask').length <= 0 ) $('<div id="C-ModalMask" />').appendTo('body');
+			Chiara.modal.showMask();
 			if( $(id+' .modal-body').length <= 0 ){$(id).wrapInner('<div class="modal-body" />');}
 			if( $(id+' .modal-head').length <= 0 ){$(id).prepend('<div class="modal-head" />');}
 			if( $(id+' > a.close').length <= 0 ){
 				$(id).prepend('<a href="javascript:void(0);" class="close" onclick="Chiara.modal.close()">x</a>');
 			}
 			if( $(id+' .modal-foot').length <= 0 ){$(id).append('<div class="modal-foot" />');}
-			$('#C-ModalMask:hidden').show().on('click', Chiara.modal.close);
+			
 			var onOpen = $(id).data('c-open');
 			$(id).css({
 				left: (($(window).width()/2) - ($(id).width()/2)) + 'px'
@@ -198,7 +228,7 @@ $.extend( Chiara, {
 				duration:300,
 				complete: function(){
 					if(Chiara.modal.sequence.length==0){
-						$('#C-ModalMask:visible').fadeOut(100).off('click', Chiara.modal.close);
+						Chiara.modal.hideMask();
 					}
 					var onClose = $(this).data('c-close');
 					if(onClose != null && onClose.length>0){
@@ -262,7 +292,7 @@ $.extend( Chiara, {
 		},
 		
 		parse : function(e){
-			if(e.messages==null) return true;
+			if(typeof e == 'undefined' || typeof e.messages !== 'string') return true;
 			if(e.messages.length > 0) for( i in e.messages){
 				if(e.messages[i].type == 'overlay')
 					Chiara.msg.showOverlay(e.messages[i]);
@@ -315,7 +345,7 @@ $.extend( Chiara, {
 		},
 		
 		showOverlay : function(e){
-			if(typeof e.text == 'undefined' ) return;
+			
 			UID = new Date().getTime();
 			
 			var msgObj = $('<div id="MSG_'+UID+'" class="modal" />');
@@ -347,9 +377,8 @@ $.extend( Chiara, {
 				}
 				msgObj.append(btnsCont);
 			}
-			
-			Chiara.modal.showMask();
-			$(msgObj).hide().appendTo('body').fadeIn();
+			$(msgObj).appendTo('body');
+			Chiara.modal.open('#MSG_'+UID);
 		}
 	}
 });
@@ -628,6 +657,8 @@ $.extend( Chiara, {
 			if(transition == null) var transition = Chiara.multipage.transition;
 			var eEnd = $('.page:visible');
 			
+			if($(e)[0] === eEnd[0]) return;
+			
 			if( typeof transition === 'string' && transition.length>0){
 				$(e).fadeIn();
 				$(eEnd).fadeOut();
@@ -685,6 +716,105 @@ $.extend( Chiara, {
 			opt = $.extend(opt, {selector: e2});
 			Chiara.live.show(opt);
 		}
+	}
+});
+
+/*
+ * WIZARD
+ * Modulo con funzioni per la gestione dell'interfaccia
+ */
+$.extend( Chiara, {
+	
+	wizard : {
+		
+		opt: {},
+		
+		init: function(){
+			$('.ct-wizard').each(function(){Chiara.wizard.create(this);})
+		},
+		
+		create: function(id, opt){
+			
+			var wzr = $(id);
+			var cfg = {
+				currentBox : 0,
+				boxWidth: wzr.width(),
+				speed: 500,
+				boxNumber: wzr.find('.ct-wizard-box').length,
+				beforeMove: function(d){return true;},
+				afterMove: function(d){return true;},
+			}
+			
+			cfg = $.extend(cfg, opt);
+			
+			var tmpattr = wzr.data('ct-beforemove');
+			if(tmpattr){
+				cfg.beforeMove = tmpattr;
+			}
+			
+			var tmpattr = wzr.data('ct-aftermove');
+			if(tmpattr){
+				cfg.afterMove = tmpattr;
+			}
+			
+			if(wzr.find('.ct-wizard-container').length != 1){
+				wzr.find('.ct-wizard-box').wrapAll('<div class="ct-wizard-container" />')
+			}
+			
+			wzr.find('.ct-wizard-container').width( (cfg.boxWidth * cfg.boxNumber) + 10);
+			wzr.find('.ct-wizard-box').width(cfg.boxWidth);
+			wzr.data('ct-wizard', cfg);
+		},
+		
+		getStep: function(id){
+			var cfg = $(id).data('ct-wizard');
+			return cfg.currentBox;
+		},
+		
+        prev: function(id) {
+        	var cfg = $(id).data('ct-wizard');
+        	if(typeof cfg.beforeMove === 'function'){
+        		if(!cfg.beforeMove(cfg)) return;
+        	}else if(typeof cfg.beforeMove === 'string'){
+        		if( eval( cfg.beforeMove + '(cfg)') === false ) return;
+        	}
+        	cfg.currentBox = Math.max(cfg.currentBox - 1, 0);
+            Chiara.wizard.scrollBox(id, cfg.boxWidth * cfg.currentBox, cfg.speed);
+            $(id).data('ct-wizard', cfg);
+        },
+
+        next: function(id) {
+        	var cfg = $(id).data('ct-wizard');
+        	if(typeof cfg.beforeMove === 'function'){
+        		if(!cfg.beforeMove(cfg)) return;
+        	}else if(typeof cfg.beforeMove === 'string'){
+        		if( eval( cfg.beforeMove + '(cfg)') === false ) return;
+        	}
+        	cfg.currentBox = Math.min(cfg.currentBox + 1, cfg.boxNumber - 1);
+            Chiara.wizard.scrollBox(id, cfg.boxWidth * cfg.currentBox, cfg.speed);
+            $(id).data('ct-wizard', cfg);
+        },
+        
+        scrollBox: function(id, distance, duration) {
+        	
+        	var wzr = $(id);
+        	var cfg = $(id).data('ct-wizard');
+        	wzr.find('.ct-wizard-box').css("transition-duration", (duration / 1000).toFixed(1) + "s");
+
+            //inverse the number we set in the css
+            var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
+            wzr.find('.ct-wizard-box').css("transform", "translate(" + value + "px,0)");
+            if(wzr.find('.ct-wizard-steps').length>0){
+            	wzr.find('.ct-wizard-steps li').removeClass('active');
+            	wzr.find('.ct-wizard-steps li:eq('+cfg.currentBox+')').addClass('active')
+            }
+            
+            if(typeof cfg.afterMove === 'function'){
+        		cfg.afterMove(cfg);
+        	}else if(typeof cfg.afterMove === 'string'){
+        		eval( cfg.afterMove + '(cfg)');
+        	}
+        }
 	}
 });
 

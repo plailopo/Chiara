@@ -653,7 +653,7 @@ input[type="submit"].btn.btn-mini {
 
 .btn.btn-corner{
 position: fixed;
-    z-index: 10000;
+    z-index: 1000000;
     width: 50px;
     height: 50px;
     padding: .6em 0 0 .6em;
@@ -939,7 +939,7 @@ position: fixed;
 /******************************************** MOBILE NAVIGATION BAR */
 .navbar{
     padding: 0 0.6em;
-    font-size: 1.4em;
+    font-size: 1.6em;
     line-height: 2.2em;
 }
 .navbar.fixed{
@@ -953,8 +953,7 @@ position: fixed;
 	font-size: 1em;
     text-align: center;
     border: none;
-    margin: 0 6em;
-    padding: 0.6em 0 0 0;
+    padding: 0;
 }
 .navbar .left{float:left;text-align:left;}
 .navbar .right{float:right;text-align:right;}
@@ -962,7 +961,7 @@ position: fixed;
 
 .navbar .menu{display:none;}
 
-.navpad{margin-top:3em;}
+.navpad{margin-top:3.6em;}
 
 /************** PANEL ***************/
 .panel{
@@ -982,6 +981,36 @@ position: fixed;
 .panel.opened{margin-left:0px;}
 .panel.right{left: auto;right: 0;}
 
+/************** WIZARD *******************/
+.ct-wizard{
+	position:relative;
+	overflow:hidden;
+	height:300px;
+}
+.ct-wizard-steps{}
+.ct-wizard-steps:after{content:' ';clear:both;display:block;}
+.ct-wizard-steps li{float:left;}
+.ct-wizard-steps li a{display:block;padding:4px 10px;}
+.ct-wizard-steps li.active a{background:#ffbb33;}
+.ct-wizard-boxes{border:1px solid #aaa;height:200px;}
+.ct-wizard-container{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	transition-property: transform;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+	transform: translate(0, 0);
+}
+.ct-wizard-box{
+	padding: 0;
+	margin: 0;
+	overflow:auto;
+	float:left;
+	transform: translate(0, 0);
+	position:relative;
+}
 
 /*************** LOADER ****/
 #C-LoaderContainer{display:none; width:300px;position:fixed;top:40%;left:50%;margin-left:-150px;background:#ffffff;border:1px solid #000000;padding:20px;z-index:100001;} 
@@ -1019,4 +1048,5 @@ position: fixed;
 	h5{font-size:1.2em;line-height:1.2em;font-weight:200;margin: 4px 0;}
 	h6{font-size:1em;line-height:1.2em;font-weight:200;margin: 2px 0;}
 	img:not(.fixed){width: 100%;}
+	.modal{width:94%;}
 }
