@@ -9,6 +9,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  outline: 0;
 }
 
 body {
@@ -88,7 +89,7 @@ table.line tr td:first-child, table.line tr th:first-child{border-left:0px;}
 table.hover tr:hover td{background:#ddd;}
 
 /*********************** FORM *****************/
-input, select, textarea, checkbox{padding: 0.4em;line-height: 1.6em;border:1px solid #bbbbbb;}
+input, select, textarea, checkbox{padding: 0.4em;line-height: 1em;border:1px solid #bbbbbb;}
 
 textarea:focus, input:focus {
     outline: none !important;
@@ -939,7 +940,7 @@ position: fixed;
 /******************************************** MOBILE NAVIGATION BAR */
 .navbar{
     padding: 0 0.6em;
-    font-size: 1.6em;
+    font-size: 1.4em;
     line-height: 2.2em;
 }
 .navbar.fixed{
