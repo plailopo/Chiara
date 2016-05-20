@@ -10,6 +10,6 @@ It is jQuery based.
 
 for more information visit:
 
-http://www.chiarafw.com
+http://www.marcolonghin.it/chiara-framework
 
 ... or contact us to collaborate ;)
