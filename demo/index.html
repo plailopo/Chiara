@@ -1,25 +1,24 @@
 <!DOCUMENT HTML>
 <HTML>
 <HEAD>
-	<TITLE>Chiara</TITLE>
+	<TITLE>Chiara framework</TITLE>
 
 	<link rel="stylesheet" type="text/css" href="../src/chiara.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/default.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
 	<script src="../src/chiara.js"></script>
-	
-	<style>
-		.CBox{background-color:#ddd;padding:4px;border:1px solid #aaa;}
-		.banner{background:#d5c67a;}
-		.CodeBox{background-color:#eee;padding:4px;border:1px solid #ccc;}
-	</style>
+	<script src="app.js"></script>
 
 </HEAD>
 
-
 <BODY>
+
+	<button class="btn btn-corner btn-bottom-right">X</button>
 	
 	<div class="container fluid banner big center">
 		<h1>Chiara Framework</h1>
@@ -243,9 +242,12 @@
 		
 				
 		<h1 class="title">Forms style</h1>
-		<p>
-			Normal input <input type="text" />
-		</p>
+		
+		<div class="row">
+			<div class="col-3"><label>Normal input</label></div>
+			<div class="col-4"><input type="text" /></div>
+		</div>
+		
 		
 		
 		<h1 class="title">Buttons</h1>
@@ -271,20 +273,61 @@
 		<button class="btn btn-large">button</button>
 		
 		<h3>Group buttons</h3>
+		<p>
+			<code class="css">
+				.btn-group
+			</code>
+		</p>
+		<div class="btn-group">
+			<button class="btn">button 1</button>
+			<button class="btn">button 2</button>
+			<button class="btn">button 3</button>
+		</div>
 		
 		<h3>Rounded buttons</h3>
+		<p>
+			<code class="css">
+				.btn-round
+			</code>
+		</p>
+		<button class="btn btn-round">X</button>
 		
 		<h3>Corner buttons</h3>
+		<p>
+			<code class="css">
+				.btn-corner
+			</code>
+		</p>
 		
-		<h1 class="title">Dropdown</h1>
+		
+		<h1 class="title">Datatable</h1>
 		<p>
 			bla bla
 		</p>
+			<table id="DataTable" class="line datatable"
+					data-c-requestdelay="800" data-c-editdata="app.editData"
+					data-c-editrow="editRow"
+					data-c-service="data.json">
+				<thead>
+					<tr>
+						<th data-c-check-column="true">&nbsp;</th>
+						<th style="width:6em">data1</th>
+						<th style="width:6em">data2</th>
+						<th style="width:7em">data3</th>
+						<th style="width:2em">data4</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td data-c-check-column="true"></td>
+						<td ><a href="javascript:void(0);" onclick="alert('Click me');" data-c-param="param1"></a></td>
+						<td data-c-param="param2" ></td>
+						<td data-c-param="param3"></td>
+						<td data-c-param="param4" data-c-orderable="false"></td>
+					</tr>
+				</tbody>
+			</table>
 		
-		<h1 class="title">Paginator</h1>
-		<p>
-			bla bla
-		</p>
 		
 		<h1 class="title">Alert</h1>
 		<p>
@@ -298,54 +341,29 @@
 		
 		<h1 class="title">Loader</h1>
 		<p>
-			<code>Chiara.loader.open()</code> open the loader<br />
-			<button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
+		<code>Chiara.loader.open()</code> open the loader
 		</p>
+		<button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
+		
 		
 		<h1 class="title">Modal</h1>
+
+		<code>Chiara.modal.open()</code> open the loader<br />
 		<p>
-			<code>Chiara.modal.open()</code> open the loader<br />
-			<p>
-			Modal with simple message<br />
-			<button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
-			</p>
-			<p>
-			Finestra completa con header, body e footer<br />
-			Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
-			<button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
-			</p>
-			<p>
-			Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
-			<button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
-			</p>
+		Modal with simple message
 		</p>
+		<button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
 		
-		
-		<h1 class="title">Swipe detection</h1>
 		<p>
-			<code>
-				Chiara.swipedetect('#SwipeBoxDetect', {<br />
-				&nbsp;&nbsp;threshold : 50, //required min distance traveled to be considered swipe<br />
-				&nbsp;&nbsp;restraint : 1000, // maximum distance allowed at the same time in perpendicular direction<br />
-				&nbsp;&nbsp;allowedTime : 1000, // maximum time allowed to travel that distance<br />
-				&nbsp;&nbsp;mouseSimulation : false,<br />
-				&nbsp;&nbsp;onStart : function(element){},<br />
-				&nbsp;&nbsp;onMove : function(element){},<br />
-				&nbsp;&nbsp;onComplete : function(element, swipedir){}<br />
-				});
-			</code>
+		Finestra completa con header, body e footer<br />
+		Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
 		</p>
+		<button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
 		
-		
-		<div class="row">
-			<div class="col-6">Touch the box and enjoy (mouse simulation)</div>
-			<div class="col-6 right"></div>
-		</div>
-		
-		<div id="SwipeBoxDetect" style="border:1px solid #aaaaaa; background:#dddddd; height:160px;font-size:3em;font-weight:bold;color:#bbb;text-align:center;padding-top:70px">
-			Swipe me<br /><span id="SwipeDetectMonitor" style="font-size:0.5em;line-height:2em;"></span>
-		</div>
-		
+		<p>
+		Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
+		</p>
+		<button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
 		
 	</div>
 	
@@ -359,7 +377,7 @@
 	
 </div>
 
-<div class="modal" id="Dialog2" data-ct-open="pf.dialogOpen" data-ct-close="pf.dialogClose">
+<div class="modal" id="Dialog2" data-c-open="pf.dialogOpen" data-c-close="pf.dialogClose">
 
 	<div class="head"><h3>Titolo della dialog</h3></div>
 	<div class="body">Corpo della dialog</div>
@@ -368,25 +386,7 @@
 	</div>
 </div>
 
-<script>
-$(document).ready(function(){
 
-	Chiara.swipedetect('#SwipeBoxDetect', {
-		mouseSimulation : true,
-		onStart : function(e){
-			console.log(e)
-			$(e).css({color:'#555555'});
-		},
-		onMove : function(e){},
-		onComplete : function(e, swipedir){
-			$('#SwipeDetectMonitor').text('Swipe direction: ' + swipedir);
-			$(e).css({color:'#bbbbbb'});
-		}
-	});
-
-});
-
-</script>
 
 </BODY>
 </HTML>

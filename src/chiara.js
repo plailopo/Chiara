@@ -1,7 +1,9 @@
 /*
+/*
  * Chiara
  */
 
+ $(document).ready(function(){Chiara.init()});
 
 // Configurazioni di base e init dei moduli trovati
 var Chiara = {
@@ -15,6 +17,7 @@ var Chiara = {
 		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
 		if(typeof Chiara.wizard != 'undefined') Chiara.wizard.init();
 		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
+		if(typeof Chiara.datatable != 'undefined') Chiara.datatable.init();
 		Chiara.loader.init();
 	}
 };
@@ -730,7 +733,7 @@ $.extend( Chiara, {
 		opt: {},
 		
 		init: function(){
-			$('.ct-wizard').each(function(){Chiara.wizard.create(this);})
+			$('.c-wizard').each(function(){Chiara.wizard.create(this);})
 		},
 		
 		create: function(id, opt){
@@ -740,39 +743,39 @@ $.extend( Chiara, {
 				currentBox : 0,
 				boxWidth: wzr.width(),
 				speed: 500,
-				boxNumber: wzr.find('.ct-wizard-box').length,
+				boxNumber: wzr.find('.c-wizard-box').length,
 				beforeMove: function(d){return true;},
 				afterMove: function(d){return true;},
 			}
 			
 			cfg = $.extend(cfg, opt);
 			
-			var tmpattr = wzr.data('ct-beforemove');
+			var tmpattr = wzr.data('c-beforemove');
 			if(tmpattr){
 				cfg.beforeMove = tmpattr;
 			}
 			
-			var tmpattr = wzr.data('ct-aftermove');
+			var tmpattr = wzr.data('c-aftermove');
 			if(tmpattr){
 				cfg.afterMove = tmpattr;
 			}
 			
-			if(wzr.find('.ct-wizard-container').length != 1){
-				wzr.find('.ct-wizard-box').wrapAll('<div class="ct-wizard-container" />')
+			if(wzr.find('.c-wizard-container').length != 1){
+				wzr.find('.c-wizard-box').wrapAll('<div class="c-wizard-container" />')
 			}
 			
-			wzr.find('.ct-wizard-container').width( (cfg.boxWidth * cfg.boxNumber) + 10);
-			wzr.find('.ct-wizard-box').width(cfg.boxWidth);
-			wzr.data('ct-wizard', cfg);
+			wzr.find('.c-wizard-container').width( (cfg.boxWidth * cfg.boxNumber) + 10);
+			wzr.find('.c-wizard-box').width(cfg.boxWidth);
+			wzr.data('c-wizard', cfg);
 		},
 		
 		getStep: function(id){
-			var cfg = $(id).data('ct-wizard');
+			var cfg = $(id).data('c-wizard');
 			return cfg.currentBox;
 		},
 		
         prev: function(id) {
-        	var cfg = $(id).data('ct-wizard');
+        	var cfg = $(id).data('c-wizard');
         	if(typeof cfg.beforeMove === 'function'){
         		if(!cfg.beforeMove(cfg)) return;
         	}else if(typeof cfg.beforeMove === 'string'){
@@ -780,11 +783,11 @@ $.extend( Chiara, {
         	}
         	cfg.currentBox = Math.max(cfg.currentBox - 1, 0);
             Chiara.wizard.scrollBox(id, cfg.boxWidth * cfg.currentBox, cfg.speed);
-            $(id).data('ct-wizard', cfg);
+            $(id).data('c-wizard', cfg);
         },
 
         next: function(id) {
-        	var cfg = $(id).data('ct-wizard');
+        	var cfg = $(id).data('c-wizard');
         	if(typeof cfg.beforeMove === 'function'){
         		if(!cfg.beforeMove(cfg)) return;
         	}else if(typeof cfg.beforeMove === 'string'){
@@ -792,21 +795,21 @@ $.extend( Chiara, {
         	}
         	cfg.currentBox = Math.min(cfg.currentBox + 1, cfg.boxNumber - 1);
             Chiara.wizard.scrollBox(id, cfg.boxWidth * cfg.currentBox, cfg.speed);
-            $(id).data('ct-wizard', cfg);
+            $(id).data('c-wizard', cfg);
         },
         
         scrollBox: function(id, distance, duration) {
         	
         	var wzr = $(id);
-        	var cfg = $(id).data('ct-wizard');
-        	wzr.find('.ct-wizard-box').css("transition-duration", (duration / 1000).toFixed(1) + "s");
+        	var cfg = $(id).data('c-wizard');
+        	wzr.find('.c-wizard-box').css("transition-duration", (duration / 1000).toFixed(1) + "s");
 
             //inverse the number we set in the css
             var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
-            wzr.find('.ct-wizard-box').css("transform", "translate(" + value + "px,0)");
-            if(wzr.find('.ct-wizard-steps').length>0){
-            	wzr.find('.ct-wizard-steps li').removeClass('active');
-            	wzr.find('.ct-wizard-steps li:eq('+cfg.currentBox+')').addClass('active')
+            wzr.find('.c-wizard-box').css("transform", "translate(" + value + "px,0)");
+            if(wzr.find('.c-wizard-steps').length>0){
+            	wzr.find('.c-wizard-steps li').removeClass('active');
+            	wzr.find('.c-wizard-steps li:eq('+cfg.currentBox+')').addClass('active')
             }
             
             if(typeof cfg.afterMove === 'function'){
@@ -869,69 +872,512 @@ $.extend( Chiara, {
 
 });
 
-// Swipe
+
+// DATATABLE
 $.extend( Chiara, {
-	swipedetect :function(e, opt){
-	  
-		var e = $(e);
-		opt = $.extend({
-			threshold : 30, //required min distance traveled to be considered swipe
-			restraint : 1000, // maximum distance allowed at the same time in perpendicular direction
-			allowedTime : 500, // maximum time allowed to travel that distance
-			mouseSimulation : false,
-			onStart : function(){},
-			onMove : function(){},
-			onComplete : function(swipedir){}
-		}, opt);
+		datatable : {
 		
-		var swipedir,startX,startY,distX,distY,elapsedTime,startTime;
+		setting : {
+			selector: '.datatable'
+		},
 		
-		e.on('touchstart'+(opt.mouseSimulation ? ' mousedown' : ''), {}, function(ev){
-			if(ev.type == "mousedown"){
-				startX = ev.pageX
-				startY = ev.pageY
+		init: function(){
+			
+			$(Chiara.datatable.setting.selector).each(function(){
+				Chiara.datatable.create(this);
+			});
+		},
+		
+		create: function(obj){
+			
+			var obj = $(obj);
+
+			var opt = {
+				
+				// params
+				id : obj.attr('id'),
+				url: '',
+				requestDelay : 500,
+				rowLengthSelector: '',
+				rowsLength: [ 10, 25, 50, 100 ],
+				showRowsLength: true,
+				columns: [], // list of: {n: 0, name: 'param name', sort: true, direction: 'up'}
+				
+				// support
+				totalItems: 0,
+				totalPages: 0,
+				currentPage: 0,
+				trClassName: '',
+				headRow: false,
+				
+				// method
+				requestData: false,
+				returnedData: false,
+				drawRow: false,
+				clickRow: false
+			};
+			
+			opt.url = obj.data('c-service');
+			
+			// set pagesize
+			var tmpattr = obj.data('c-pagesize');
+			if(tmpattr && tmpattr.length>0){
+				var ary = tmpattr.split(",");
+				for(i in ary) ary[i] = parseInt(ary[i]);
+				opt.rowsLength = ary;
+			}
+			
+			// Show or not rows lengthselect 
+			var tmpattr = obj.data('c-pagesizeshow');
+			opt.showRowsLength = (tmpattr === false) ? false : true;
+			
+			// request delay
+			var tmpattr = obj.data('c-pagesizecontainer');
+			if(tmpattr){
+				opt.pageSizeContainer = tmpattr;
+			}
+			
+			// request delay
+			var tmpattr = obj.data('c-requestdelay');
+			if(tmpattr){
+				opt.requestDelay = tmpattr;
+			}
+			
+			// request delay
+			var tmpattr = obj.data('c-clickable');
+			if(tmpattr){
+				opt.clickRow = tmpattr;
+			}
+			
+			// Edit data on request
+			var tmpattr = obj.data('c-editdata');
+			if(tmpattr){
+				opt.requestData = tmpattr;
+			}
+			
+			// Edit data on request
+			var tmpattr = obj.data('c-editreturneddata');
+			if(tmpattr){
+				opt.returnedData = tmpattr;
+			}
+			
+			// Edit row
+			var tmpattr = obj.data('c-editrow');
+			if(tmpattr){
+				opt.drawRow = tmpattr;
+			}
+			
+			// tabella totali
+			var tmpattr = obj.data('c-totalsbox');
+			if(tmpattr){
+				opt.totalsBox = tmpattr;
+			}
+			
+			// TR class
+			opt.trClassName = obj.find('tbody tr').attr('class');
+						
+			var columns = [];
+			for(var i = 0; i < obj.find('tbody td').length; i++){
+				var tmpObj = {	n: i, 
+								name: false, 
+								sorted: true,
+								valuecolumn: false,
+								direction: 'ASC', 
+								sort:false, 
+								checkCol: false, 
+								html: '', 
+								className: obj.find('tbody td').eq(i).attr('class') };
+				
+				var prm = obj.find('tbody td').eq(i).data('c-check-column');
+				if(prm === true){
+					tmpObj.checkCol = true;
+				}
+				
+				prm = obj.find('tbody td').eq(i).data('c-param');
+				if(typeof prm == 'string'){
+					tmpObj.name = prm;
+				}
+				
+				prm = obj.find('tbody td').eq(i).data('c-orderable');
+				tmpObj.sorted = prm===false ? false : true;
+
+				prm = obj.find('tbody td').eq(i).data('c-valuecolumn');
+				tmpObj.valuecolumn = (prm === true) ? true : false;
+				
+				tmpObj.html = obj.find('tbody td').eq(i).html();
+				
+				columns.push(tmpObj);
+			}
+			opt.columns = columns;
+			
+			// Sorting
+			opt.headRow = obj.find('thead tr:eq(0)');
+			if( obj.find('thead tr.sortrow').length > 0 ){
+				opt.headRow = obj.find('thead tr.sortrow');
 			}else{
-				startX = ev.originalEvent.touches[0].pageX;
-				startY = ev.originalEvent.touches[0].pageY;
+				opt.headRow.addClass('sortrow');
 			}
-			//console.log('start', startX, startY);
-			swipedir = 'none'
-			startTime = new Date().getTime() // record time when finger first makes contact with surface
-			opt.onStart(this)
-			ev.preventDefault()
-		})
-	  
-		e.on('touchmove'+(opt.mouseSimulation ? ' mousemove' : ''), function(ev){
-			if(ev.type == "touchmove"){
-				distX = ev.originalEvent.touches[0].pageX - startX // get horizontal dist traveled by finger while in contact with surface
-				distY = ev.originalEvent.touches[0].pageY - startY // get vertical dist traveled by finger while in contact with surface
-			}
-			opt.onMove(this)
-			ev.preventDefault() // prevent scrolling when inside DIV
-		})
-	  
-		e.on('touchend'+(opt.mouseSimulation ? ' mouseup' : ''), function(ev){
-			
-			if(ev.type == "mouseup"){
-				distX = ev.pageX - startX // get horizontal dist traveled by finger while in contact with surface
-				distY = ev.pageY - startY // get vertical dist traveled by finger while in contact with surface
-			}
-			//console.log('end', distX, distY);
-			elapsedTime = new Date().getTime() - startTime // get time elapsed
-			
-			if (elapsedTime <= opt.allowedTime){ // first condition for awipe met
-				if (Math.abs(distX) >= opt.threshold && Math.abs(distY) <= opt.restraint){ // 2nd condition for horizontal swipe met
-					swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+			opt.headRow.find('th').each(function(i) {
+				
+				if(opt.columns[i].sorted && opt.columns[i].name){
+					$(this).append(
+						$('<span class="sortIcon fa fa-sort-amount-asc disabled"></span>').click(function(){
+							eval('(Chiara.datatable.sort("#'+opt.id+'", "'+opt.columns[i].name+'"))');
+						})
+					).addClass('column-name-' + opt.columns[i].name)
+					.data('column-name', opt.columns[i].name)
+					.data('column-sort', false)
+					.data('column-sort-direction', 'ASC');
 				}
-				else if (Math.abs(distY) >= opt.threshold && Math.abs(distX) <= opt.restraint){ // 2nd condition for vertical swipe met
-					swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+				
+				if($(this).data('c-check-column')){
+					$(this).addClass('nopad').css({width: '30px'})
+					.html($('<input type="checkbox" /">').click(function(){
+						if($(this).is(':checked'))
+							Chiara.datatable.selectAllRow($(this).closest('.Chiara.datatable'))
+						else
+							Chiara.datatable.deselectAllRow($(this).closest('.Chiara.datatable'))
+					}));
+				}
+			});
+			
+			opt.rowLengthSelector = opt.id + 'RowSelector';
+			obj.data('Chiara.datatable', opt);
+			
+			//HEADER
+			var header = $('<div id="'+opt.id+'HEADER" class="Chiara.datatable_header" />');
+			if(opt.pageSizeContainer){
+				$(opt.pageSizeContainer).append( Chiara.datatable.getSizeSelector(obj) );
+			}else if(opt.showRowsLength){
+			    header.append( Chiara.datatable.getSizeSelector(obj) );
+			}
+			header.insertBefore(obj);
+			
+			//FOOTER
+			var footer = $('<div id="'+opt.id+'FOOTER" class="Chiara.datatable_footer" />');
+			footer.append('<div class="totals" />');
+			footer.append('<div class="navigator" />');
+		    footer.insertAfter(obj);
+			
+			Chiara.datatable.search(obj);
+		},
+		
+		search: function(obj){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			
+			if(opt.currentPage>=opt.totalPages) opt.currentPage = opt.totalPages-1;
+			if(opt.currentPage<0) opt.currentPage = 0;
+			var length = $('#'+opt.rowLengthSelector).val();
+			
+			var dt = {
+				page: opt.currentPage,
+				size: length ? length : 10,
+				columns: opt.columns
+			}
+			if(typeof opt.requestData == 'string') dt = eval(opt.requestData+'(dt)');
+			
+			Chiara.req.post(opt.url, dt, function(d){
+				
+				if(typeof opt.returnedData == 'string') d = eval(opt.returnedData+'(d)');
+				opt.totalItems = d.paginator.totalElements;
+				opt.totalPages = d.paginator.totalPages;
+				
+				obj.data('Chiara.datatable-data', d);
+				
+				var tb = obj.find('tbody');
+				tb.css({height: tb.height()+'px'}).html('');
+				if(d.paginator.list == null || d.paginator.list.length==0){
+					tb.append($('<tr class="emptyData" />')
+									.append($('<td colspan="'+opt.columns.length+'" />')
+											.text(Chiara.getLabel('datatable.zeroRecords'))));
+				}else{
+					for(r in d.paginator.list){
+						var rowData = d.paginator.list[r];
+						var row = $('<tr />').data('c-row', rowData).attr('class', opt.trClassName)
+						.click(function(){$(this).toggleClass('c-active')})
+						.hover(function(){$(this).addClass('c-hover')}, function(){$(this).removeClass('c-hover')});
+						for(c in opt.columns){
+							var td = $('<td />').attr('class', opt.columns[c].className);
+							if(opt.columns[c].valuecolumn) td.addClass('column-value');
+							if(opt.columns[c].checkCol){
+								td.html($('<input type="checkbox" />').click(function(){
+									if($(this).closest('tr').hasClass('c-selected')){
+										$(this).closest('tr').removeClass('c-selected');
+									}else{
+										$(this).closest('tr').addClass('c-selected');
+									}
+									Chiara.datatable.refreshDataShowed($(this).closest('table'));
+								})).addClass('checkable-cell')
+							}else if(opt.columns[c].html != ''){
+								var tmpHtml = $('<div>'+opt.columns[c].html+'</div>');
+								for(l in tmpHtml.find('[data-c-param]')){
+									var div = tmpHtml.find('[data-c-param]');
+									div.eq(l).text(rowData[div.data('c-param')]);
+								}
+								td.html(tmpHtml);
+							}else if(opt.columns[c].name){
+								td.html(rowData[opt.columns[c].name]);
+							}
+							row.append(td);
+						}
+						
+						if(typeof opt.clickRow == 'string' && opt.clickRow.length>0){
+							row.find('td:not(.checkable-cell)').click(function(){
+								var opt = $(this).closest('table.Chiara.datatable').data('Chiara.datatable');
+								eval(opt.clickRow+'($(this).data(\'c-row\'))');
+							}).addClass('clickable');
+						}
+						
+						if(typeof opt.drawRow == 'string') row = eval(opt.drawRow+'(row, rowData)');
+						tb.append(row);
+					}
+				}
+				tb.css({height: 'auto'});
+				
+				Chiara.datatable.pagination(obj);
+				Chiara.datatable.refreshDataShowed(obj);
+				Chiara.intf.ridimensionaPagina();
+			})
+		},
+		
+		pagination : function(obj){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			var lastData = obj.data('Chiara.datatable-data');
+			
+		    var htPg = '<nav><ul class="pagination">';
+		    htPg += '<li class="prev'+(opt.currentPage==0 ? ' disabled' : '')+'">';
+		    htPg += '<a href="#" '+(opt.currentPage!=0 ? 'data-c-goto="'+(opt.currentPage-1)+'"' : '')+'>'+Chiara.getLabel('datatables.previus')+'</a>';
+		    htPg += '</li>';
+		    htPg += '<li class="'+(opt.currentPage==0 ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=0 ? 'data-c-goto="0"' : '')+'>1</a></li>';
+		    
+		    if(opt.totalPages<7){
+		    	for(var i=1; i<opt.totalPages-1; i++){
+		    		htPg += '<li class="'+(opt.currentPage==i ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=i ? 'data-c-goto="'+(i)+'"' : '')+'>'+(i+1)+'</a></li>';
+		    	}
+		    }else{
+		    	if(opt.currentPage>2){
+			    	htPg += '<li class="disabled"><a href="#">...</a></li>';
+		    	}else{
+		    		htPg += '<li class="'+(opt.currentPage==1 ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=1 ? 'data-c-goto="1"' : '')+'>2</a></li>';
+		    		htPg += '<li class="'+(opt.currentPage==2 ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=2 ? 'data-c-goto="2"' : '')+'>3</a></li>';
+			    	htPg += '<li class="'+(opt.currentPage==3 ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=3 ? 'data-c-goto="3"' : '')+'>4</a></li>';
+		    	}
+			    if(opt.currentPage>2 && opt.currentPage<opt.totalPages-3){
+			    	htPg += '<li><a href="#" '+(opt.currentPage!=opt.currentPage-1 ? 'data-c-goto="'+(opt.currentPage-1)+'"' : '')+'>'+ (opt.currentPage) +'</a></li>';
+			    	htPg += '<li class="active"><a href="#" '+(opt.currentPage!=opt.currentPage ? 'data-c-goto="'+(opt.currentPage)+'"' : '')+'>'+ (opt.currentPage+1) +'</a></li>';
+			    	htPg += '<li><a href="#" '+(opt.currentPage!=opt.currentPage+1 ? 'data-c-goto="'+(opt.currentPage+1)+'"' : '')+'>'+ (opt.currentPage+2) +'</a></li>';
+			    }
+		    	if(opt.currentPage<opt.totalPages-3){
+		    		htPg += '<li class="disabled"><a href="#">...</a></li>';
+		    	}else{
+		    		htPg += '<li class="'+(opt.currentPage==(opt.totalPages-4) ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=opt.totalPages-4 ? 'data-c-goto="'+(opt.totalPages-4)+'"' : '')+'>'+ (opt.totalPages-3) +'</a></li>';
+			    	htPg += '<li class="'+(opt.currentPage==(opt.totalPages-3) ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=opt.totalPages-3 ? 'data-c-goto="'+(opt.totalPages-3)+'"' : '')+'>'+ (opt.totalPages-2) +'</a></li>';
+			    	htPg += '<li class="'+(opt.currentPage==(opt.totalPages-2) ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=opt.totalPages-2 ? 'data-c-goto="'+(opt.totalPages-2)+'"' : '')+'>'+ (opt.totalPages-1) +'</a></li>';
+		    	}
+		    }
+		    
+		    if(opt.totalPages>1) htPg += '<li class="'+(opt.currentPage==(opt.totalPages-1) ? 'active' : '')+'"><a href="#" '+(opt.currentPage!=opt.totalPages-1 ? 'data-c-goto="'+(opt.totalPages-1)+'"' : '')+'>'+opt.totalPages+'</a></li>';
+		    htPg += '<li class="next'+(opt.currentPage==opt.totalPages-1 || opt.totalPages==0  ? ' disabled' : '')+'"><a href="#" '+(opt.currentPage!=opt.totalPages-1 || opt.totalPages==0 ? 'data-c-goto="'+(opt.currentPage+1)+'"' : '')+'>'+Chiara.getLabel('datatables.next')+'</a></li></ul></nav>';		    
+		    
+		    $('#'+opt.id+'FOOTER .totals').html(Chiara.datatable.getTotalsTables(obj));
+		    $('#'+opt.id+'FOOTER .navigator').html(htPg).find('li a').click(function(){
+		    	if( typeof $(this).data('c-goto') != 'number' ) return;
+		    	Chiara.datatable.goToPage('#'+obj.attr('id'), $(this).data('c-goto'));
+		    });
+		    
+		    Chiara.intf.ridimensionaPagina();
+		},
+		
+		sort: function(obj, name){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			
+			var thObj = obj.find('thead tr.sortrow th.column-name-'+name);
+			var sortObj = thObj.find('.sortIcon');
+			
+			var col = 0;
+			for(var i=0; i<obj.find('thead tr.sortrow th').length; i++ ){
+				if(obj.find('thead tr.sortrow th:eq('+i+')').data('column-name') == name){
+					col = i; break;
 				}
 			}
-			opt.onComplete(this, swipedir)
-			ev.preventDefault()
-		})
+			
+			if(sortObj.hasClass('disabled')){
+				sortObj.removeClass('disabled');
+				opt.columns[col].sort = true;
+			}else if( sortObj.hasClass('fa-sort-amount-asc') ){
+				sortObj.removeClass('fa-sort-amount-asc').addClass('fa-sort-amount-desc');
+				opt.columns[col].direction = 'DESC';
+			}else if( sortObj.hasClass('fa-sort-amount-desc') ){
+				sortObj.addClass('disabled')
+				sortObj.removeClass('fa-sort-amount-desc').addClass('fa-sort-amount-asc');
+				opt.columns[col].sort = false;
+				opt.columns[col].direction = 'ASC';
+			}else{
+				sortObj.removeClass('fa-sort-amount-desc').addClass('fa-sort-amount-asc');
+				opt.columns[col].direction = 'ASC';
+			}
+			
+			Chiara.datatable.search(obj);
+		},
+		
+		getSizeSelector : function(obj){
+			
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			
+			var htCont = '<select id="'+opt.rowLengthSelector+'">';
+		    for(i in opt.rowsLength){
+		    	htCont += '<option value="'+opt.rowsLength[i]+'">'+opt.rowsLength[i]+'</option>';
+		    }
+		    htCont += '</select>';
+			return $(htCont).data('table-rif', obj).change(function(){
+				Chiara.datatable.search($(this).data('table-rif'));
+		    });
+			
+		},
+		
+		getTotalsTables: function(obj){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			var data = obj.data('Chiara.datatable-data');
+			return $('<div name="'+opt.id+'TotalsTable" id="'+opt.id+'TotalsTable" class="totals" />')
+			.append($('<a class="toggler" href="javascript:void(0);">'+Chiara.getLabel('datatables.totali.mostraTotali')+'</a>')
+						.click(function(){
+							$(this).next().toggle('slide', function(){
+								if( $(this).is(':visible') ){
+									$(this).prev().text(Chiara.getLabel('datatables.totali.nascondiTotali'));
+								}else{
+									$(this).prev().text(Chiara.getLabel('datatables.totali.mostraTotali'));
+								}
+							})
+						}))
+			.append($('<table />').hide()
+					.append($('<thead />')
+							.append($('<tr />').append('<th>&nbsp;</th>')
+								.append('<th>'+Chiara.getLabel('datatables.totali.totalsNElements')+'</th>')
+								.append('<th>'+Chiara.getLabel('datatables.totali.dare')+'</th>')
+								.append('<th>'+Chiara.getLabel('datatables.totali.avere')+'</th>')
+								.append('<th>'+Chiara.getLabel('datatables.totali.saldo')+'</th>'))
+					).append($('<tbody />')
+							.append($('<tr />').append('<td>'+Chiara.getLabel('datatables.totali.totSelezione')+'</td>')
+								.append('<td class="elemSelected">0</td>')
+								.append('<td class="dareSelected">0</td>')
+								.append('<td class="avereSelected">0</td>')
+								.append('<td class="saldoSelected">0</td>'))
+							.append($('<tr />').append('<td>'+Chiara.getLabel('datatables.totali.totPagina')+'</td>')
+								.append('<td class="elemPage">'+data.paginator.size+'</td>')
+								.append('<td class="darePage">0</td>')
+								.append('<td class="averePage">0</td>')
+								.append('<td class="saldoPage">0</td>'))
+							.append($('<tr />').append('<td>'+Chiara.getLabel('datatables.totali.totElenco')+'</td>')
+								.append('<td class="elemList">'+data.paginator.totalElements+'</td>')
+								.append('<td class="dareList">0</td>')
+								.append('<td class="avereList">0</td>')
+								.append('<td class="saldoList">0</td>'))
+			));
+		},
+		
+		nextPage: function(obj){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			opt.currentPage++;
+			Chiara.datatable.search(obj);
+		},
+		
+		prevPage: function(obj){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			opt.currentPage--;
+			Chiara.datatable.search(obj);
+		},
+		
+		goToPage: function(obj, p){
+			var obj = $(obj);
+			var opt = obj.data('Chiara.datatable');
+			opt.currentPage = p;
+			Chiara.datatable.search(obj);
+		},
+		
+		getSelectedData: function(obj){
+			var obj = $(obj);
+			var list = [];
+			for(var i=0; i<obj.find('tr.c-selected').length; i++) 
+				list.push(obj.find('tr.c-selected').eq(i).data('c-row'));
+			return list;
+		},
+		
+		getDataRow: function(r){
+			return $(r).data('c-row');
+		},
+		
+		deselectAllRow: function(tbl){
+			var tbl = $(tbl);
+			tbl.find('tr').removeClass('c-selected')
+			.find('td:first-child input[type=checkbox]').prop('checked', false);
+			Chiara.datatable.refreshDataShowed(tbl);
+		},
+		
+		selectAllRow: function(tbl){
+			var tbl = $(tbl);
+			tbl.find('tr').addClass('c-selected')
+			.find('td:first-child input[type=checkbox]').prop('checked', true);
+			Chiara.datatable.refreshDataShowed(tbl);
+		},
+		
+		removeSelected: function(tbl){
+			var tbl = $(tbl);
+			if(tbl.find('tr.c-selected').length<=0) return;
+			setTimeout(function(){Chiara.datatable.search(tbl)}, 700)
+			tbl.find('tr.c-selected').effect( 'fade', {}, 800);
+			Chiara.datatable.refreshDataShowed(tbl);
+		},
+		
+		refreshDataShowed: function(tbl){
+			var tbl = $(tbl);
+			var opt = tbl.data('Chiara.datatable');
+			var data = tbl.data('Chiara.datatable-data');
+			if($(tbl).hasClass('buttonsBarHandled'))
+				Chiara.buttonsBar.refreshButtons( $(tbl).data('buttonsBarHandle') );
+			
+			var dare = 0;
+			var avere = 0;
+			var saldo = 0;
+			var rowsList = $('td.column-value', tbl);
+			for(var i = 0; i < rowsList.length; i++){
+				var tmpVal = parseFloat(rowsList.eq(i).text().replace('.', '').replace(',', '.'));
+				saldo += tmpVal;
+				if(tmpVal>0) avere += tmpVal;
+				else  dare += tmpVal;
+			}
+			$('#'+opt.id+'TotalsTable').find('td.darePage').html(Chiara.utils.formattaValuta(dare));
+			$('#'+opt.id+'TotalsTable').find('td.averePage').html(Chiara.utils.formattaValuta(avere));
+			$('#'+opt.id+'TotalsTable').find('td.saldoPage').html(Chiara.utils.formattaValuta(saldo));
+			
+			dare = avere = saldo = 0;
+			rowsList = tbl.find('td.checkable-cell input:checked').closest('tr');
+			for(var i = 0; i < rowsList.length; i++){
+				var tmpVal = parseFloat( rowsList.eq(i).find('td.column-value').text().replace('.', '').replace(',', '.'));
+				saldo += tmpVal;
+				if(tmpVal>0) avere += tmpVal;
+				else  dare += tmpVal;
+			}
+			$('#'+opt.id+'TotalsTable').find('td.dareSelected').html(Chiara.utils.formattaValuta(dare));
+			$('#'+opt.id+'TotalsTable').find('td.avereSelected').html(Chiara.utils.formattaValuta(avere));
+			$('#'+opt.id+'TotalsTable').find('td.saldoSelected').html(Chiara.utils.formattaValuta(saldo));
+			
+			$('#'+opt.id+'TotalsTable').find('td.elemSelected').html($(tbl).find('td.checkable-cell input:checked').length);
+			
+			$('#'+opt.id+'TotalsTable').find('td.dareList').html( Chiara.utils.formattaValuta(data.totali.dare));
+			$('#'+opt.id+'TotalsTable').find('td.avereList').html( Chiara.utils.formattaValuta(data.totali.avere));
+			$('#'+opt.id+'TotalsTable').find('td.saldoList').html( Chiara.utils.formattaValuta(data.totali.dare + data.totali.avere) );
+			
+		}
 	}
 });
+
 
 /******** SEARCH on LIST *********/
 (function($){
