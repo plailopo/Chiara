@@ -73,6 +73,7 @@ $.extend( Chiara, {
 		beforeReq: false,
 		timeout : 30000,
 		baseUrl : '',
+        onError: function(){},
 		
 		ajax : function(tp,a,dt,cb,t){ // Type, Action, data, callback, timeout
 			
@@ -94,12 +95,12 @@ $.extend( Chiara, {
 				},
 				error:function(j,e){
 					if(e == 'timeout')
-						Chiara.msg.showOverlay({level: 2, text:'Errore', description:'Il server non ripsponde.'});
+						Chiara.req.onError({level: 2, text:'Error', description:'Service unvailable.'});
 					else{
 						try{
-							Chiara.msg.showOverlay({level: 2, text:'Errore', description:'Il server ha ritornato: '+j.responseText});
+							Chiara.req.onError({level: 2, text:'Error', description:j.responseText});
 						}catch(e){
-							Chiara.msg.showOverlay({level: 2, text:'Errore', description:'In connessione con il server'});
+							Chiara.req.onError({level: 2, text:'Error', description:'Error on server connection'});
 						}
 					}
 				}
@@ -515,7 +516,7 @@ $.extend( Chiara, {
 	}
 });
 
-/*********** LEFT PANEL ******
+/*********** LEFT PANEL ******/
 $.extend( Chiara, {
 	
 	panel : {
@@ -595,7 +596,7 @@ $.extend( Chiara, {
 		}
 	}
 });
-*/
+
 
 /*********** TRANSLATOR ******/
 $.extend( Chiara, {

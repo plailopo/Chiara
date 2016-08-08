@@ -1,5 +1,11 @@
 
+a{color:#ff9900;text-decoration:none;}
+a:hover{text-decoration:underline;}
 
 .CBox{background-color:#eeeeee;padding:4px;border:1px solid #cccccc;}
-.banner{background:#FF922E;padding:20em;color:#000000;}
+.banner{background:#FF922E;padding:2em;color:#000000;}
 .CodeBox{background-color:#eee;padding:4px;border:1px solid #ccc;}
+.btn .fa{width:1.4em;}
+
+#RightMenu ul li{font-weight:bold;font-size:1.2em;}
+#RightMenu ul li ul li{font-weight:normal;font-size:0.9em;}

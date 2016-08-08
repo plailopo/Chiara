@@ -617,12 +617,16 @@ input[type="submit"].btn.btn-mini {
 	overflow: hidden;
 }
 
+.btn-fix{
+    position: fixed;
+    z-index: 1000000;
+}
+
 .btn-round.btn-large{width:6em;height:6em;}
+.btn-round.btn-fix{margin:1.4em;}
 
 .btn-bar{text-align:right;clear:both;}
 .btn-bar .left{float:left; text-align:left;}
-
-.btn .fa{width:1.4em;}
 
 .btn.btn-top-right{
 	top:0;
@@ -923,7 +927,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 
-/******************************************** MOBILE NAVIGATION BAR */
+/******************************************** NAVIGATION BAR */
 .navbar{
     padding: 0 0.6em;
     font-size: 1.4em;

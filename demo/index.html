@@ -18,353 +18,398 @@
 
 <BODY>
 
-	<button class="btn btn-corner btn-bottom-right">X</button>
+	<button class="btn btn-round btn-fix btn-bottom-right">X</button>
 	
 	<div class="container fluid banner big center">
 		<h1>Chiara Framework</h1>
 	</div>
 	
 	<div class="container">
-		<h1 class="title">Grid</h1>
-		<p>Only another Grid, not the best, but simple and versatile</p>
-		
-		<h4>Width reference</h4>
-		
-		<div class="row">
-			<div class="col-6 unpad">
-				<table class="line">
-					<thead>
-						<tr>
-							<th>Format</th><th>width</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><strong>XLarge</strong> - Big Desktop</td><td>&gt; 1200px</td>
-						</tr>
-						<tr>
-							<td><strong>Large</strong> - Desktop</td><td>&lt; 1200px</td>
-						</tr>
-						<tr>
-							<td><strong>Medium</strong> - Tablet</td><td>width &lt; 992px</td>
-						</tr>
-						<tr>
-							<td><strong>Small</strong> - smartphone</td><td>width &lt; 768px</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-		<h4>All modes</h4>
-		<div class="row">
-			<div class="col-6 CBox">.col-6</div>
-			<div class="col-6 CBox">.col-6</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-4 CBox">.col-4</div>
-			<div class="col-4 CBox">.col-4</div>
-			<div class="col-4 CBox">.col-4</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-3 CBox">.col-3</div>
-			<div class="col-3 CBox">.col-3</div>
-			<div class="col-3 CBox">.col-3</div>
-			<div class="col-3 CBox">.col-3</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-1 CBox">.col-1</div>
-		</div>
-		
-		<h4>Base tutorial</h4>
-		<p>
-			<code>.container</code> - Is the container class, responsive by the Width reference<br />
-			<code>.container.fluid</code> - All page width
-			<strong>The grid</strong>
-			Every grid is inset on <code>.row</code> class and divided until 12 column with <code>.col-</code> class.
-		</p>
-		
-		
-		<h4>First view</h4>
-		
-		<div class="row">
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-4 CBox">.col-4</div>
-			<div class="col-3 CBox">.col-3</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-		</div>
-		
-		<div class="CodeBox pad">
-			
-			<button class="btn" onclick="$('#GridEx1').toggle('slide')">View source</button>
-			
-			<div id="GridEx1" class="hidden">
-				<code>
-					&lt;div class=&quot;row&quot;&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-1 CBox&quot;&gt;.col-1&lt;/div&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4 CBox&quot;&gt;.col-4&lt;/div&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
-					&lt;/div&gt;
-				</code>
-			</div>
-		</div>
-		
-			
-		<h3>Fix columns</h3>
-		<div class="row fixed">
-			<div class="col-1 CBox">.col-1</div>
-			<div class="col-4 CBox">.col-4</div>
-			<div class="col-3 CBox">.col-3</div>
-			<div class="col-2 CBox">.col-2</div>
-			<div class="col-2 CBox">.col-2</div>
-		</div>
-		
-		<div class="CodeBox pad">
-			
-			<button class="btn" onclick="$('#GridEx2').toggle('slide')">View source</button>
-			
-			<div id="GridEx2" class="hidden">
-				<code>
-					&lt;div class=&quot;row fixed&quot;&gt;<br />
-					&nbsp;&nbsp;&nbsp;...<br />
-					&lt;/div&gt;
-				</code>
-			</div>
-		</div>
-		
-		<h4>Offset column</h4>
-		
-		<div class="row">
-			<div class="col-4"></div>
-			<div class="col-3 CBox">.col-3</div>
-		</div>
-		
-		<div class="CodeBox pad">
-			
-			<button class="btn" onclick="$('#GridEx3').toggle('slide')">View source</button>
-			
-			<div id="GridEx3" class="hidden">
-				<code>
-					&lt;div class=&quot;row&quot;&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4&quot;&gt;&lt;/div&gt;<br />
-					&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
-					&lt;/div&gt;
-				</code>
-			</div>
-		</div>
+        <div class="row">
+            <div class="col-10">
+                <h1 class="title" id="grid">Grid</h1>
+                <p>Only another Grid, not the best, but simple and versatile</p>
 
-		<h1 class="title">Sections</h1>
-		<p>Same utils classes</p>
-		<p>
-			<code>.pad</code> - Add padding<br />
-			<code>.mrg</code> - Add margin<br />
-			<code>.rnd</code> - Add round box<br />
-			<code>.separe</code> - A line break<br />
-			<code>.hidden</code> - Hide the object on page load<br />
-		</p>
-		
-		<h1 class="title">Typografy</h1>
-		<p>
-			This is normal text
-		</p>
-		<h1>Heading 1</h1>
-		<h2>Heading 2</h2>
-		<h3>Heading 3</h3>
-		<h4>Heading 4</h4>
-		<h5>Heading 5</h5>
-		<h6>Heading 6</h6>
-		<small>Small text</small><br />
-		<strong>Strong text</strong><br />
-		<p>
-			<code>.big</code> class make all more big :)
-		</p>
-		<div class="big">
-			
-			<h1>Heading 1</h1>
-			<h2>Heading 2</h2>
-			<p>
-				This is normal big text
-			</p>
-		</div>
-		
-		
-		<h1 class="title">Table style</h1>
-		<p>
-			Normal table is styling like this on header and body<br />
-			<code>table.line</code> class add a light line<br />
-			<code>table.hover</code> Allow line background on mousover<br />
-		</p>
-		<table class="hover line">
-			<thead>
-				<tr>
-					<th>Title 1</th><th>Title 2</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>value 1</td><td>value2</td>
-				</tr>
-				<tr>
-					<td>value 1</td><td>value2</td>
-				</tr>
-				<tr>
-					<td>value 1</td><td>value2</td>
-				</tr>
-			</tbody>
-		</table>
-		
-		
-				
-		<h1 class="title">Forms style</h1>
-		
-		<div class="row">
-			<div class="col-3"><label>Normal input</label></div>
-			<div class="col-4"><input type="text" /></div>
-		</div>
-		
-		
-		
-		<h1 class="title">Buttons</h1>
-		<p>
-			<code>.btn</code> class enhances visibility of your bottuns, link, launcher....<br />
-			<code>.btn-orange</code> color it, and <code>.btn-blue</code>, <code>.btn-red</code>, <code>.btn-celeste</code>, <code>.btn-green</code> and <code>.btn-black</code><br />
-		</p>
+                <h4>Width reference</h4>
 
-		<button class="btn">button</button>
-		<button class="btn btn-orange">button</button>
-		<button class="btn btn-red">button</button>
-		<button class="btn btn-green">button</button>
-		<button class="btn btn-celeste">button</button>
-		<button class="btn btn-blue">button</button>
-		<button class="btn btn-black">button</button>
-		
-		<p>
-			<code>.btn-mini</code> for mini button and <code>.btn-small</code> and <code>.btn-large</code><br />
-		</p>
+                <div class="row">
+                    <div class="col-6 unpad">
+                        <table class="line">
+                            <thead>
+                                <tr>
+                                    <th>Format</th><th>width</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>XLarge</strong> - Big Desktop</td><td>&gt; 1200px</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Large</strong> - Desktop</td><td>&lt; 1200px</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Medium</strong> - Tablet</td><td>width &lt; 992px</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Small</strong> - smartphone</td><td>width &lt; 768px</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-		<button class="btn btn-mini">button</button>
-		<button class="btn btn-small">button</button>
-		<button class="btn btn-large">button</button>
-		
-		<h3>Group buttons</h3>
-		<p>
-			<code class="css">
-				.btn-group
-			</code>
-		</p>
-		<div class="btn-group">
-			<button class="btn">button 1</button>
-			<button class="btn">button 2</button>
-			<button class="btn">button 3</button>
-		</div>
-		
-		<h3>Rounded buttons</h3>
-		<p>
-			<code class="css">
-				.btn-round
-			</code>
-		</p>
-		<button class="btn btn-round">X</button>
-		
-		<h3>Corner buttons</h3>
-		<p>
-			<code class="css">
-				.btn-corner
-			</code>
-		</p>
-		
-		
-		<h1 class="title">Datatable</h1>
-		<p>
-			bla bla
-		</p>
-			<table id="DataTable" class="line datatable"
-					data-c-requestdelay="800" data-c-editdata="app.editData"
-					data-c-editrow="editRow"
-					data-c-service="data.json">
-				<thead>
-					<tr>
-						<th data-c-check-column="true">&nbsp;</th>
-						<th style="width:6em">data1</th>
-						<th style="width:6em">data2</th>
-						<th style="width:7em">data3</th>
-						<th style="width:2em">data4</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td data-c-check-column="true"></td>
-						<td ><a href="javascript:void(0);" onclick="alert('Click me');" data-c-param="param1"></a></td>
-						<td data-c-param="param2" ></td>
-						<td data-c-param="param3"></td>
-						<td data-c-param="param4" data-c-orderable="false"></td>
-					</tr>
-				</tbody>
-			</table>
-		
-		
-		<h1 class="title">Alert</h1>
-		<p>
-			bla bla
-		</p>
-		
-		<h1 class="title">Tags</h1>
-		<p>
-			bla bla
-		</p>
-		
-		<h1 class="title">Loader</h1>
-		<p>
-		<code>Chiara.loader.open()</code> open the loader
-		</p>
-		<button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
-		
-		
-		<h1 class="title">Modal</h1>
+                <h4>All modes</h4>
+                <div class="row">
+                    <div class="col-6 CBox">.col-6</div>
+                    <div class="col-6 CBox">.col-6</div>
+                </div>
 
-		<code>Chiara.modal.open()</code> open the loader<br />
-		<p>
-		Modal with simple message
-		</p>
-		<button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
-		
-		<p>
-		Finestra completa con header, body e footer<br />
-		Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
-		</p>
-		<button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
-		
-		<p>
-		Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
-		</p>
-		<button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
-		
+                <div class="row">
+                    <div class="col-4 CBox">.col-4</div>
+                    <div class="col-4 CBox">.col-4</div>
+                    <div class="col-4 CBox">.col-4</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 CBox">.col-3</div>
+                    <div class="col-3 CBox">.col-3</div>
+                    <div class="col-3 CBox">.col-3</div>
+                    <div class="col-3 CBox">.col-3</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-1 CBox">.col-1</div>
+                </div>
+
+                <h4>Base tutorial</h4>
+                <p>
+                    <code>.container</code> - Is the container class, responsive by the Width reference<br />
+                    <code>.container.fluid</code> - All page width
+                    <strong>The grid</strong>
+                    Every grid is inset on <code>.row</code> class and divided until 12 column with <code>.col-</code> class.
+                </p>
+
+
+                <h4>First view</h4>
+
+                <div class="row">
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-4 CBox">.col-4</div>
+                    <div class="col-3 CBox">.col-3</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                </div>
+
+                <div class="CodeBox pad">
+
+                    <button class="btn" onclick="$('#GridEx1').toggle('slide')">View source</button>
+
+                    <div id="GridEx1" class="hidden">
+                        <code>
+                            &lt;div class=&quot;row&quot;&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-1 CBox&quot;&gt;.col-1&lt;/div&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4 CBox&quot;&gt;.col-4&lt;/div&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-2 CBox&quot;&gt;.col-2&lt;/div&gt;<br />
+                            &lt;/div&gt;
+                        </code>
+                    </div>
+                </div>
+
+
+                <h3>Fix columns</h3>
+                <div class="row fixed">
+                    <div class="col-1 CBox">.col-1</div>
+                    <div class="col-4 CBox">.col-4</div>
+                    <div class="col-3 CBox">.col-3</div>
+                    <div class="col-2 CBox">.col-2</div>
+                    <div class="col-2 CBox">.col-2</div>
+                </div>
+
+                <div class="CodeBox pad">
+
+                    <button class="btn" onclick="$('#GridEx2').toggle('slide')">View source</button>
+
+                    <div id="GridEx2" class="hidden">
+                        <code>
+                            &lt;div class=&quot;row fixed&quot;&gt;<br />
+                            &nbsp;&nbsp;&nbsp;...<br />
+                            &lt;/div&gt;
+                        </code>
+                    </div>
+                </div>
+
+                <h4>Offset column</h4>
+
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-3 CBox">.col-3</div>
+                </div>
+
+                <div class="CodeBox pad">
+
+                    <button class="btn" onclick="$('#GridEx3').toggle('slide')">View source</button>
+
+                    <div id="GridEx3" class="hidden">
+                        <code>
+                            &lt;div class=&quot;row&quot;&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4&quot;&gt;&lt;/div&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;.col-3&lt;/div&gt;<br />
+                            &lt;/div&gt;
+                        </code>
+                    </div>
+                </div>
+
+                <h1 class="title" id="sections">Sections</h1>
+                <p>Same utils classes</p>
+                <p>
+                    <code>.pad</code> - Add padding<br />
+                    <code>.mrg</code> - Add margin<br />
+                    <code>.rnd</code> - Add round box<br />
+                    <code>.separe</code> - A line break<br />
+                    <code>.hidden</code> - Hide the object on page load<br />
+                </p>
+
+                <h1 class="title">Typografy</h1>
+                <p>
+                    This is normal text
+                </p>
+                <h1>Heading 1</h1>
+                <h2>Heading 2</h2>
+                <h3>Heading 3</h3>
+                <h4>Heading 4</h4>
+                <h5>Heading 5</h5>
+                <h6>Heading 6</h6>
+                <small>Small text</small><br />
+                <strong>Strong text</strong><br />
+                <p>
+                    <code>.big</code> class make all more big :)
+                </p>
+                <div class="big">
+
+                    <h1>Heading 1</h1>
+                    <h2>Heading 2</h2>
+                    <p>
+                        This is normal big text
+                    </p>
+                </div>
+
+
+                <h1 class="title">Table style</h1>
+                <p>
+                    Normal table is styling like this on header and body<br />
+                    <code>table.line</code> class add a light line<br />
+                    <code>table.hover</code> Allow line background on mousover<br />
+                </p>
+                <table class="hover line">
+                    <thead>
+                        <tr>
+                            <th>Title 1</th><th>Title 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value 1</td><td>value2</td>
+                        </tr>
+                        <tr>
+                            <td>value 1</td><td>value2</td>
+                        </tr>
+                        <tr>
+                            <td>value 1</td><td>value2</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                <h1 class="title">Forms style</h1>
+
+                <div class="row">
+                    <div class="col-3"><label>Normal input</label></div>
+                    <div class="col-4"><input type="text" /></div>
+                </div>
+
+
+
+                <h1 class="title">Buttons</h1>
+                <p>
+                    <code>.btn</code> class enhances visibility of your bottuns, link, launcher....<br />
+                    <code>.btn-orange</code> color it, and <code>.btn-blue</code>, <code>.btn-red</code>, <code>.btn-celeste</code>, <code>.btn-green</code> and <code>.btn-black</code><br />
+                </p>
+
+                <button class="btn">button</button>
+                <button class="btn btn-orange">button</button>
+                <button class="btn btn-red">button</button>
+                <button class="btn btn-green">button</button>
+                <button class="btn btn-celeste">button</button>
+                <button class="btn btn-blue">button</button>
+                <button class="btn btn-black">button</button>
+
+                <p>
+                    <code>.btn-mini</code> for mini button and <code>.btn-small</code> and <code>.btn-large</code><br />
+                </p>
+
+                <button class="btn btn-mini">button</button>
+                <button class="btn btn-small">button</button>
+                <button class="btn btn-large">button</button>
+
+                <h3>Group buttons</h3>
+                <p>
+                    <code class="css">
+                        .btn-group
+                    </code>
+                </p>
+                <div class="btn-group">
+                    <button class="btn">button 1</button>
+                    <button class="btn">button 2</button>
+                    <button class="btn">button 3</button>
+                </div>
+
+                <h3>Rounded buttons</h3>
+                <p>
+                    <code class="css">
+                        .btn-round
+                    </code>
+                </p>
+                <button class="btn btn-round">X</button>
+
+                <h3>Corner buttons</h3>
+                <p>
+                    <code class="css">
+                        .btn-corner
+                    </code>
+                </p>
+
+
+                <h1 class="title">Datatable</h1>
+                <p>
+                    bla bla
+                </p>
+                    <table id="DataTable" class="line datatable"
+                            data-c-requestdelay="800" data-c-editdata="app.editData"
+                            data-c-editrow="editRow"
+                            data-c-service="data.json">
+                        <thead>
+                            <tr>
+                                <th data-c-check-column="true">&nbsp;</th>
+                                <th style="width:6em">data1</th>
+                                <th style="width:6em">data2</th>
+                                <th style="width:7em">data3</th>
+                                <th style="width:2em">data4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-c-check-column="true"></td>
+                                <td ><a href="javascript:void(0);" onclick="alert('Click me');" data-c-param="param1"></a></td>
+                                <td data-c-param="param2" ></td>
+                                <td data-c-param="param3"></td>
+                                <td data-c-param="param4" data-c-orderable="false"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                <h1 class="title">Alert</h1>
+                <p>
+                    bla bla
+                </p>
+
+                <h1 class="title">Tags</h1>
+                <p>
+                    bla bla
+                </p>
+
+                <h1 class="title">Loader</h1>
+                <p>
+                <code>Chiara.loader.open()</code> open the loader
+                </p>
+                <button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
+
+
+                <h1 class="title">Modal</h1>
+
+                <code>Chiara.modal.open()</code> open the loader<br />
+                <p>
+                Modal with simple message
+                </p>
+                <button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
+
+                <p>
+                Finestra completa con header, body e footer<br />
+                Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
+                </p>
+                <button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
+
+                <p>
+                Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
+                </p>
+                <button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
+            </div>
+            <div class="col-2 right" id="RightMenu">
+                <ul>
+                    <li><a href="#layout">Layout</a>
+                        <ul>
+                            <li><a href="#grid">Grid</a></li>
+                            <li><a href="#sections">Sections</a></li>
+                            <li><a href="#navbar">Navbar</a></li>
+                            <li><a href="#fullscreen">Fullscreen box</a></li>
+                            <li><a href="#fix">Fix on scroll</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#style">Style</a>
+                        <ul class="hidden">
+                            <li><a href="#tipografy">Tipografy</a></li>
+                            <li><a href="#table">Tables</a></li>
+                            <li><a href="#form">Forms</a></li>
+                            <li><a href="#button">Buttons</a></li>
+                            <li><a href="#alert">Alert</a></li>
+                            <li><a href="#tags">Tags</a></li>
+                            <li><a href="#dropdown">Dropdown</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#widget">Widgets</a>
+                        <ul class="hidden">
+                            <li><a href="#request">Request</a></li>
+                            <li><a href="#loader">Loader</a></li>
+                            <li><a href="#modal">Modal</a></li>
+                            <li><a href="#message">Messages</a></li>
+                            <li><a href="#callbackScroll">Callback onScroll</a></li>
+                            <li><a href="#menu">Menu</a></li>
+                            <li><a href="#panel">Panel</a></li>
+                            <li><a href="#translator">Translator</a></li>
+                            <li><a href="#scrollBar">Scroll bars</a></li>
+                            <li><a href="#multipage">Multipage</a></li>
+                            <li><a href="#wizard">Wizard</a></li>
+                            <li><a href="#datatable">Datatable</a></li>
+                            <li><a href="#parallax">Parallax</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
 	</div>
 	
 
