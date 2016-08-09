@@ -2,13 +2,22 @@
 a{color:#ff9900;text-decoration:none;}
 a:hover{text-decoration:underline;}
 
-.CBox{background-color:#eeeeee;padding:4px;border:1px solid #cccccc;}
-.banner{background:#FF922E;padding:2em;color:#000000;}
+.cBox{background-color:#eeeeee;padding:4px;border:1px solid #cccccc;margin:px;}
+.banner{background:#FF922E;color:#000000;}
 .CodeBox{background-color:#eee;padding:4px;border:1px solid #ccc;}
 .btn .fa{width:1.4em;}
 code{border-left: 4px solid #aaa;margin: 10px 0;white-space: pre-wrap;}
-.title{border-bottom:1px solid #cccccc;padding-top:2em;font-weight:bold;}
+.title{}
 
-#RightMenu > ul{border-right:1px solid #aaa;padding-right:10px;}
-#RightMenu ul li{font-weight:bold;font-size:1.1em;}
+#RightMenu{    
+	position: absolute;
+    top: 20%;
+    right: 0;
+    z-index: 1;
+    text-align: right;
+    font-size: 1.2em;
+    margin: 0 10px 0 0;
+}
+#RightMenu a{color:#000000; text-shadow:0 0 6px #ffffff;}
+#RightMenu ul li{font-weight:bold;}
 #RightMenu ul li ul li{font-weight:normal;font-size:0.9em;}
