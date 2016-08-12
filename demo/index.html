@@ -24,18 +24,19 @@
 		<img class="bg" src="http://www.marcolonghin.it/wp-content/uploads/2016/05/chiara.jpg" />
 		<h1 class="middle center">Chiara Framework</h1>
 		<div id="RightMenu" data-c-fixto="fullscreen">
-			<ul>
-				<li><a href="#NULL" onclick="$(this).next().slideToggle()">Layout</a>
-					<ul class="hidden">
+			<ul class="c-accordion">
+				<li><a class="c-accordion-handler">Layout</a>
+					<ul class="c-accordion-content c-accordion-opened">
 						<li><a href="#grid">Grid</a></li>
 						<li><a href="#sections">Sections</a></li>
 						<li><a href="#navbar">Navbar</a></li>
+						<li><a href="#accordion">Accordion</a></li>
 						<li><a href="#fullscreen">Fullscreen box</a></li>
 						<li><a href="#fix">Fix on scroll</a></li>
 					</ul>
 				</li>
-				<li><a href="#NULL" onclick="$(this).next().slideToggle()">Style</a>
-					<ul class="hidden">
+				<li><a class="c-accordion-handler">Style</a>
+					<ul class="c-accordion-content">
 						<li><a href="#tipografy">Tipografy</a></li>
 						<li><a href="#table">Tables</a></li>
 						<li><a href="#form">Forms</a></li>
@@ -45,8 +46,8 @@
 						<li><a href="#dropdown">Dropdown</a></li>
 					</ul>
 				</li>
-				<li><a href="#NULL" onclick="$(this).next().slideToggle()">Widgets</a>
-					<ul class="hidden">
+				<li><a class="c-accordion-handler">Widgets</a>
+					<ul class="c-accordion-content">
 						<li><a href="#request">Request</a></li>
 						<li><a href="#loader">Loader</a></li>
 						<li><a href="#modal">Modal</a></li>
@@ -69,10 +70,10 @@
 
 				<div class="big center"><h1><span class="fa fa-file-o"></span> Layout</h1></div>
                 <h1 id="grid">Grid</h1>
-                <p>A simple grid, versatile for many uses, container or nested.</p>
+                <p>A simple grid, versatile for many uses, main wrapper or nested.</p>
 
                 <h4>Width reference</h4>
-				<p>This is the reference table of standard devices width.</p>
+				<p>This is the devices width reference table.</p>
 
                 <div class="row">
                     <div class="col-6 unpad">
@@ -218,17 +219,6 @@
 						<div class="col-2"><div class="cBox">.col-2</div></div>
 						<div class="col-2"><div class="cBox">.col-2</div></div>
 					</div>
-					<div class="right">
-						<a href="#NULL" onclick="$('#GridEx2').toggle('slide')">Toggle source</a>
-					</div>
-					<div id="GridEx2" class="hidden">
-						<code>
-					&lt;div class=&quot;row fixed&quot;&gt;
-					&nbsp;&nbsp;&nbsp;...
-					&lt;/div&gt;
-						</code>
-						
-					</div>
 				</div>
 
                 <h4>Offset column</h4>
@@ -237,18 +227,6 @@
                     <div class="col-4"></div>
                     <div class="col-3"><div class="cBox">.col-3</div></div>
                 </div>
-				<div class="right">
-					<a href="#NULL" onclick="$('#GridEx3').toggle('slide')">Toggle source</a>
-				</div>
-
-				<div id="GridEx3" class="hidden">
-					<code>
-			&lt;div class=&quot;row&quot;&gt;
-			&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-4&quot;&gt;&lt;/div&gt;
-			&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-3 CBox&quot;&gt;<div class="cBox">.col-3</div>&lt;/div&gt;
-			&lt;/div&gt;
-					</code>
-				</div>
 
                 <h1 class="title" id="sections">Sections</h1>
                 <p>Same utils classes</p>
@@ -262,9 +240,53 @@
 					</code>
                 </p>
 				
+                <h1 class="title" id="accordion">Accordion</h1>
+                <p>As the right menu, this property make an accordion </p>
+				
+                <p>
+                    <code class="css">
+		&lt;ul class=&quot;c-accordion&quot;&gt;
+			&lt;li&gt;&lt;a class=&quot;c-accordion-handler&quot;&gt;Handler 1&lt;/a&gt;
+				&lt;div class=&quot;c-accordion-content&quot;&gt; ... &lt;/div&gt;
+			&lt;/li&gt;
+			&lt;li&gt;&lt;a class=&quot;c-accordion-handler&quot;&gt;Handler 2&lt;/a&gt;
+				&lt;div class=&quot;c-accordion-content&quot;&gt; ... &lt;/div&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+					</code>
+                </p>
+				
+		        <h1 class="title" id="fullscreen">Fullscreen box</h1>
+                <p>A very used feature. A box always fullscreen for every devices and on resizing. Like the box on top this page.</p>
+				
+                <p>
+                    <code class="css">
+	&lt;div class=&quot;fsbox banner&quot;&gt;
+		&lt;img class=&quot;bg&quot; src=&quot;...&quot; /&gt;
+		&lt;h1 class=&quot;middle center&quot;&gt;Some text&lt;/h1&gt;
+	&lt;/div&gt;
+					</code>
+                </p>
+				<p>The <strong>.img.bg</strong> class make image on background always on best view</p>
+				<p>The <strong>.middle</strong> class make text on.. middle ;)</p>
+				
+				<h1 class="title" id="fix">Fix on scroll</h1>
+                <p>Make an element fixed on the page when scroll over specified value in <strong>.data-c-fixto</strong>.<br />Right menu is an example</p>
+				
+                <p>
+                    <code class="css">
+		&lt;div data-c-fixto=&quot;300&quot;&gt; .. &lt;/div&gt;
+		&lt;div data-c-fixto=&quot;fullscreen&quot;&gt; .. &lt;/div&gt;
+					</code>
+                </p>
+				<p>With <strong>fullscreen</strong> value, take the window height.</p>
+				
+				
+				
+				
 				<div class="big center"><h1><span class="fa fa-picture-o"></span> Style</h1></div>
 
-                <h1 class="title">Typografy</h1>
+                <h1 class="title" id="tipografy">Typografy</h1>
                 <p>
                     This is normal text
                 </p>
@@ -289,7 +311,7 @@
                 </div>
 
 
-                <h1 class="title">Table style</h1>
+                <h1 class="title" id="table">Table style</h1>
                 <p>
                     Normal table is styling like this on header and body<br />
                     <code>table.line</code> class add a light line<br />
@@ -316,7 +338,7 @@
 
 
 
-                <h1 class="title">Forms style</h1>
+                <h1 class="title" id="form">Forms style</h1>
 
                 <div class="row">
                     <div class="col-3"><label>Normal input</label></div>
@@ -325,11 +347,15 @@
 
 
 
-                <h1 class="title">Buttons</h1>
+                <h1 class="title" id="button">Buttons</h1>
                 <p>
-                    <code>.btn</code> class enhances visibility of your bottuns, link, launcher....<br />
-                    <code>.btn-orange</code> color it, and <code>.btn-blue</code>, <code>.btn-red</code>, <code>.btn-celeste</code>, <code>.btn-green</code> and <code>.btn-black</code><br />
+                    <strong>.btn</strong> class enhances visibility of your bottuns, links, launchers....<br />
+                    <strong>.btn-orange</strong> color it, and <strong>.btn-blue</strong>, <strong>.btn-red</strong>, <strong>.btn-celeste</strong>, <strong>.btn-green</strong> and <strong>.btn-black</strong><br />
                 </p>
+				<code>
+		&lt;button class=&quot;btn&quot;&gt;text&lt;/button&gt;
+		&lt;a class=&quot;btn btn-small btn-red&quot;&gt;text&lt;/a&gt;
+				</code>
 
                 <button class="btn">button</button>
                 <button class="btn btn-orange">button</button>
@@ -340,19 +366,24 @@
                 <button class="btn btn-black">button</button>
 
                 <p>
-                    <code>.btn-mini</code> for mini button and <code>.btn-small</code> and <code>.btn-large</code><br />
+                    <strong>.btn-mini</strong> for mini button and <strong>.btn-small</strong> and <strong>.btn-large</strong><br />
                 </p>
 
-                <button class="btn btn-mini">button</button>
-                <button class="btn btn-small">button</button>
-                <button class="btn btn-large">button</button>
+                <button class="btn btn-mini">mini</button>
+                <button class="btn btn-small">small</button>
+				<button class="btn">normal</button>
+                <button class="btn btn-large">large</button>
 
-                <h3>Group buttons</h3>
-                <p>
-                    <code class="css">
-                        .btn-group
-                    </code>
-                </p>
+                <h3>Buttons group</h3>
+                <p><strong>.btn-group</strong> to aggregate more buttons</p>
+				<code>
+		&lt;div class=&quot;btn-group&quot;&gt;
+			&lt;button class=&quot;btn&quot;&gt;button 1&lt;/button&gt;
+			&lt;button class=&quot;btn&quot;&gt;button 2&lt;/button&gt;
+			&lt;button class=&quot;btn&quot;&gt;button 3&lt;/button&gt;
+		&lt;/div&gt;
+				</code>
+                
                 <div class="btn-group">
                     <button class="btn">button 1</button>
                     <button class="btn">button 2</button>
@@ -360,40 +391,81 @@
                 </div>
 
                 <h3>Rounded buttons</h3>
-                <p>
-                    <code class="css">
-                        .btn-round
-                    </code>
-                </p>
+                <p><strong>.btn-round</strong> for rounded buttons</p>
                 <button class="btn btn-round">X</button>
 
                 <h3>Corner buttons</h3>
-                <p>
-                    <code class="css">
-                        .btn-corner
-                    </code>
-                </p>
+                <p><strong>.btn-corner</strong> for corner buttons</p>
+				
+				<h3>Fixed</h3>
+                <p><strong>.btn-fix</strong> to fix a button on page</p>
+				<code>
+		.btn-top-right // fix on top right
+		.btn-top-left // fix on top left
+		.btn-bottom-right // fix on bottom right
+		.btn-bottom-left // fix on bottom left
+				</code>
 
 
-                <h1 class="title">Alert</h1>
-                <p>
-                    bla bla
-                </p>
+                <h1 class="title" id="alert">Alert</h1>
+                <code>
+		&lt;div class=&quot;alert&quot;&gt; ... &lt;/div&gt;
+		&lt;div class=&quot;alert alert-green&quot;&gt; &lt;h3&gt;... title ... &lt;/h3&gt; ... &lt;/code&gt;
+		&lt;div class=&quot;alert alert-red&quot;&gt; ... &lt;/code&gt;
+		&lt;div class=&quot;alert alert-celeste&quot;&gt; &lt;a class=&quot;close&quot;&gt;&lt;span class=&quot;fa fa-close&quot;&gt;&lt;/span&gt;&lt;/a&gt; &lt;/code&gt;
+				</code>
+				
+				<div class="alert">
+					An alert
+				</div>
+				
+				<div class="alert alert-green">
+					<h3>An alert with title</h3>
+					... and text ... green ;)
+				</div>
+				<div class="alert alert-red">
+					...and red...
+				</div>
+				<div class="alert alert-info">
+					<a class="close"><span class="fa fa-close"></span></a>
+					and celeste.. with close
+				</div>
 
-                <h1 class="title">Tags</h1>
-                <p>
-                    bla bla
-                </p>
+                <h1 class="title" id="tags">Tags</h1>
+				<p>Colored tags with <strong>.tag</strong> class and <strong>.tag-'color'</strong> class.</p>
+                <span class="tag">nromal grey tag</span>
+				<span class="tag tag-red">.tag-red</span>
+				<span class="tag tag-orange">.tag-orange</span>
+				<span class="tag tag-yellow">.tag-yellow</span>
+				<span class="tag tag-green">.tag-green</span>
+				<span class="tag tag-celeste">.tag-celeste</span>
+				<span class="tag tag-blue">.tag-blue</span>
+				<span class="tag tag-black">.tag-black</span>
+				
+				
+				
 				
 				<div class="big center"><h1><span class="fa fa-futbol-o"></span> Widgets</h1></div>
 
-                <h1 class="title">Loader</h1>
-                <p>
-                <code>Chiara.loader.open()</code> open the loader
-                </p>
+                <h1 class="title" id="request">Server request</h1>
+                <p>make a post ajax call</p>
+                <code>Chiara.req.post(url, data, callback, timeout)</code>
+				
+				<p>Make post document request (not ajax) with a simple link.<br />
+				Like submit a form.</p>
+                <code>Chiara.req.linkPost(url, data)</code>
+                
+				
+				<h1 class="title" id="loader">Loader</h1>
+                
+                <code>
+		Chiara.loader.open() // open the loader
+		Chiara.loader.close() // ...to close
+				</code>
+                
                 <button onclick="Chiara.loader.open();setTimeout(Chiara.loader.close, 3000);" class="btn">Try loader</button>
 
-				<h1 class="title">Datatable</h1>
+				<h1 class="title" id="datatable">Datatable</h1>
                 <p>
                     bla bla
                 </p>
@@ -421,7 +493,7 @@
                         </tbody>
                     </table>
 
-                <h1 class="title">Modal</h1>
+                <h1 class="title" id="#modal">Modal</h1>
 
                 <code>Chiara.modal.open()</code> open the loader<br />
                 <p>
@@ -430,13 +502,13 @@
                 <button onclick="Chiara.modal.open('#Dialog1')" class="btn btn-info">Open example</button>
 
                 <p>
-                Finestra completa con header, body e footer<br />
-                Agli eventi di apertura e chiusura della finestra viene aperta una notifica.<br />
+                complete window with header, body and footer<br />
+                A notification fire on opening and closing window.<br />
                 </p>
                 <button onclick="Chiara.modal.open('#Dialog2')" class="btn btn-info">Open example</button>
 
                 <p>
-                Apertura di finestre in sequenza: Dialog1, Dialog2, Dialog3<br />
+                A sequence of dialog windows: Dialog1, Dialog2, Dialog3<br />
                 </p>
                 <button onclick="Chiara.modal.open(['#Dialog1', '#Dialog2', '#Dialog1'])" class="btn btn-info">Open example</button>
             
@@ -447,21 +519,31 @@
 	
 <div class="modal" id="Dialog1">
 
-	Ciao,<br /> questo è un messaggio di esempio
+	Hi,guy!
 	<br /><br />
-	<div class="right">Saluti</div>
+	<div class="right">Greats</div>
 	
 </div>
 
 <div class="modal" id="Dialog2" data-c-open="pf.dialogOpen" data-c-close="pf.dialogClose">
 
-	<div class="head"><h3>Titolo della dialog</h3></div>
-	<div class="body">Corpo della dialog</div>
+	<div class="head"><h3>Hey guy</h3></div>
+	<div class="body">What about a beer?</div>
 	<div class="foot">
 		<button class="btn" onclick="Chiara.modal.close()">Close</button>
 	</div>
 </div>
 
+<script>
+var pf = {
+	dialogOpen:function(){
+		alert('opening...')
+	},
+	dialogClose:function(){
+		alert('Closing...')
+	}
+}
+</script>
 
 
 </BODY>

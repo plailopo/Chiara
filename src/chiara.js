@@ -20,7 +20,7 @@ var Chiara = {
 		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
 		if(typeof Chiara.datatable != 'undefined') Chiara.datatable.init();
 		Chiara.loader.init();
-		
+		Chiara.accordion.init();
 	}
 };
 
@@ -427,6 +427,27 @@ $.extend( Chiara, {
 					$(e).css( 'margin-top', -(($(e).height()-$(window).height())/2) + 'px');
 				}
 				
+			});
+		}
+	}
+});
+
+/*********** ACCORDION ******/
+$.extend( Chiara, {
+	
+	accordion : {
+		
+		init: function(){
+			$('.c-accordion').children().addClass('c-accordion-box');
+			$('.c-accordion .c-accordion-content').hide();
+			$('.c-accordion .c-accordion-opened').show();
+			$('.c-accordion .c-accordion-handler').click(function(){
+				var acc = $(this).closest('.c-accordion');
+				var box = $(this).closest('.c-accordion-box');
+				var cnt = box.find('.c-accordion-content');
+				if(cnt.hasClass('c-accordion-opened')) return;
+				acc.find('.c-accordion-content').removeClass('c-accordion-opened').slideUp();
+				cnt.addClass('c-accordion-opened').slideDown();
 			});
 		}
 	}
