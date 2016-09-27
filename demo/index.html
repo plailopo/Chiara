@@ -41,9 +41,9 @@
 						<li><a href="#table">Tables</a></li>
 						<li><a href="#form">Forms</a></li>
 						<li><a href="#button">Buttons</a></li>
+						<li><a href="#dropdown">Dropdown</a></li>
 						<li><a href="#alert">Alert</a></li>
 						<li><a href="#tags">Tags</a></li>
-						<li><a href="#dropdown">Dropdown</a></li>
 					</ul>
 				</li>
 				<li><a class="c-accordion-handler">Widgets</a>
@@ -59,6 +59,7 @@
 						<li><a href="#multipage">Multipage</a></li>
 						<li><a href="#wizard">Wizard</a></li>
 						<li><a href="#datatable">Datatable</a></li>
+						<li><a href="#wall">Wall</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -406,6 +407,28 @@
 		.btn-bottom-left // fix on bottom left
 				</code>
 
+				<h1 class="title" id="dropdown">Drowpdown</h1>
+                <p>
+                    <strong>.dropdown</strong> base class to create dropdown menu<br />
+                </p>
+				<div class="dropdown">
+					<button class="btn dropdown-handler">Dropdown <span class="fa fa-caret-down"></button>
+					<div class="dropdown-content">
+						<ul>
+							<li><a>Link 1</a></li>
+							<li><a>Link 2</a></li>
+							<li><a>Link 3</a></li>
+							<li><a>Link 4</a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="dropdown">
+					<button class="btn dropdown-handler dropdown-click">Dropdown on click<span class="fa fa-caret-down"></button>
+					<div class="dropdown-content">
+						<h2>Another content</h2>
+					</div>
+				</div>
 
                 <h1 class="title" id="alert">Alert</h1>
                 <code>
@@ -493,6 +516,24 @@
                         </tbody>
                     </table>
 
+				<h1 class="title" id="wall">Wall</h1>
+                <div class="c-wall" data-c-border="10">
+					<div class="c-wall-item"><h3>This is one</h3></div>
+					<div class="c-wall-item">This is two</div>
+					<div class="c-wall-item">This is three</div>
+					<div class="c-wall-item">This is four</div>
+					<div class="c-wall-item"><h1>This is five</h1></div>
+					<div class="c-wall-item">This is six</div>
+					<div class="c-wall-item">This is seven</div>
+					<div class="c-wall-item"><h2>This is another</h2></div>
+					<div class="c-wall-item"><h5>...and another</h5></div>
+					<div class="c-wall-item"><h4>...and another</h4></div>
+					<div class="c-wall-item"><h3>...and another</h3></div>
+					<div class="c-wall-item"><h2>...and another</h2></div>
+					<div class="c-wall-item"><h1>...and another</h1></div>
+					<div class="c-wall-item"><strong>...and another</strong></div>
+				</div>
+					
                 <h1 class="title" id="#modal">Modal</h1>
 
                 <code>Chiara.modal.open()</code> open the loader<br />

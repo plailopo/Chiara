@@ -17,12 +17,11 @@ var Chiara = {
 		if(typeof Chiara.panel != 'undefined') Chiara.panel.init();
 		if(typeof Chiara.modal != 'undefined') Chiara.modal.init();
 		if(typeof Chiara.multipage != 'undefined') Chiara.multipage.init();
-    if(typeof Chiara.live != 'undefined') Chiara.live.init();
+    		if(typeof Chiara.live != 'undefined') Chiara.live.init();
 		if(typeof Chiara.wizard != 'undefined') Chiara.wizard.init();
 		if(typeof Chiara.translator != 'undefined') Chiara.translator.init();
 		if(typeof Chiara.datatable != 'undefined') Chiara.datatable.init();
 		Chiara.loader.init();
-
 	}
 };
 
@@ -420,8 +419,6 @@ $.extend( Chiara, {
 		loaded: false,
 		opened: false,
 
-		init: function(){},
-
 		open: function(id){
 			if(Chiara.panel.opened) return;
 			Chiara.panel.opened = true;
@@ -739,6 +736,7 @@ $.extend( Chiara, {
 			});
 		},
 
+
 		doFixto: function(){
 			$('[data-c-fixto]').each(function(){
 				var h = $(this).data('c-fixto');
@@ -753,9 +751,6 @@ $.extend( Chiara, {
 			});
 		},
 
-
-		doFullscreen: function(){
-
 			$('.fsbox').css({height: $(window).height()+'px'})
 			.find('.middle').each(function(){
 				$(this).css({'line-height': $(this).closest('.fsbox').height()+'px',margin:0, padding:0});
@@ -769,7 +764,6 @@ $.extend( Chiara, {
 				image.onload = function() {
 					var w = $(window).width();
 					var h = Math.ceil(w * this.naturalHeight / this.naturalWidth);
-
 					if( h < $(window).height()){
 						h = $(window).height();
 						$(e).css({width: 'auto', height: h+'px'});
@@ -835,6 +829,7 @@ $.extend( Chiara, {
 						return;
 					}
 					var remOn = e ? parseFloat(e.css('transition-duration')) * 1000 : 1000;
+
 					if($(e).length>0){
 						e.removeClass('open')
 						setTimeout(function(){e.remove()}, remOn);
@@ -866,7 +861,6 @@ $.extend( Chiara, {
 						close(this, ev);
 					});
 				}
-
 			});
 
 		},
@@ -958,6 +952,7 @@ $.extend( Chiara, {
 
 			$(window).resize(function(){
 				Chiara.wizard.create(this);
+
 			})
 		},
 

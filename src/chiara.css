@@ -819,10 +819,10 @@ input[type="submit"].btn::-moz-focus-inner {
 .c-wall-item:hover{border:1px solid #cccccc;box-shadow:0 0 4px #888;}
 
 
+
 /************** WIZARD *******************/
 .c-wizard{
 	position:relative;
-
 }
 .c-wizard-steps{}
 .c-wizard-steps:after{content:' ';clear:both;display:block;}
